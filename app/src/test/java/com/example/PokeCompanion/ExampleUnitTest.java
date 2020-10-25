@@ -1,4 +1,4 @@
-package com.example.template;
+package com.example.PokeCompanion;
 
 import org.junit.Test;
 
