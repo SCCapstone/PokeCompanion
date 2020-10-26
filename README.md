@@ -2,6 +2,12 @@ Welcome to the PokeCompanion ReadMe!!!!
 
 Currently under construction [WIP]
 
+- Login Screen
+    
+  Currently can only be accessed by a button from the home screen.
+  User can input username and password, but there is no logging in yet
+
+
 - Individual viewer
     
   Currently can access page via button.
