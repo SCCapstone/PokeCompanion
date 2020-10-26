@@ -10,10 +10,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Individual_Pokemon_view"
-            android:parentActivityName=".MainActivity"
-            android:label="@string/title_activity_individual__pokemon_view"
+            android:name=".teamStarter"
+            android:label="@string/title_activity_team_starter"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".Individual_Pokemon_view"
+            android:label="@string/title_activity_individual__pokemon_view"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -19,4 +19,5 @@
     <string name="button_text_display">Give me an average!</string>
     <string name="inst_display_foot">Individual Values can be 0-31</string>
     <string name="to_individual_view_button">To individual view [WIP]</string>
+    <string name="title_activity_team_starter">teamStarter</string>
 </resources>
