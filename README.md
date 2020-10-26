@@ -12,3 +12,11 @@ Currently under construction [WIP]
 
    You can generate random Pokemon Team from Pokemon currently stored on the app
    Only 6 member team or lower can be generated
+
+- Newsfeed
+
+    Unimplemented
+
+- Settings
+
+    Unimplemented
