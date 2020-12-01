@@ -20,4 +20,18 @@
     <string name="inst_display_foot">Individual Values can be 0-31</string>
     <string name="to_individual_view_button">To individual view [WIP]</string>
     <string name="title_activity_team_starter">teamStarter</string>
+    <string name="defense">Defense</string>
+    <string name="s_attack">S. Attack</string>
+    <string name="s_defense">S. Defense</string>
+    <string name="speed">Speed</string>
+    <string name="calculate_stats">Calculate Stats</string>
+    <string name="base_atk_val">-</string>
+    <string name="base_satk_val">-</string>
+    <string name="base_hp_val">-</string>
+    <string name="base_spd_val">-</string>
+    <string name="base_def_val">-</string>
+    <string name="base_sdef_val">-</string>
+    <string name="health">Health</string>
+    <string name="attack">Attack</string>
+    <string name="pokemon_display_name">Growlithe</string>
 </resources>

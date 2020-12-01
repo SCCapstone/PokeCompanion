@@ -7,18 +7,58 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/instDisplayHead"
+        android:id="@+id/base_atk_num"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/instruction_display"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.505"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.146" />
+        android:layout_marginTop="16dp"
+        android:text="@string/base_atk_val"
+        app:layout_constraintStart_toStartOf="@+id/base_atk"
+        app:layout_constraintTop_toBottomOf="@+id/base_atk" />
+
+    <TextView
+        android:id="@+id/base_satk_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/base_satk_val"
+        app:layout_constraintStart_toStartOf="@+id/base_satk"
+        app:layout_constraintTop_toBottomOf="@+id/base_satk" />
+
+    <TextView
+        android:id="@+id/base_hp_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/base_hp_val"
+        app:layout_constraintStart_toStartOf="@+id/base_hp"
+        app:layout_constraintTop_toBottomOf="@+id/base_hp" />
+
+    <TextView
+        android:id="@+id/base_speed_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/base_spd_val"
+        app:layout_constraintStart_toStartOf="@+id/base_speed"
+        app:layout_constraintTop_toBottomOf="@+id/base_speed" />
+
+    <TextView
+        android:id="@+id/base_def_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/base_def_val"
+        app:layout_constraintStart_toStartOf="@+id/base_def"
+        app:layout_constraintTop_toBottomOf="@+id/base_def" />
+
+    <TextView
+        android:id="@+id/base_sdef_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/base_sdef_val"
+        app:layout_constraintStart_toStartOf="@+id/base_sdef"
+        app:layout_constraintTop_toBottomOf="@+id/base_sdef" />
 
     <EditText
         android:id="@+id/atkInput"
@@ -31,7 +71,8 @@
         android:inputType="number"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:importantForAutofill="no" />
 
     <EditText
         android:id="@+id/hpInput"
@@ -43,7 +84,8 @@
         android:hint="@string/hp_display"
         android:inputType="number"
         app:layout_constraintBottom_toTopOf="@+id/atkInput"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:importantForAutofill="no" />
 
     <EditText
         android:id="@+id/defInput"
@@ -55,7 +97,8 @@
         android:hint="@string/defense_display"
         android:inputType="number"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/atkInput" />
+        app:layout_constraintTop_toBottomOf="@+id/atkInput"
+        android:importantForAutofill="no" />
 
     <EditText
         android:id="@+id/spdInput"
@@ -67,7 +110,8 @@
         app:layout_constraintBottom_toTopOf="@+id/satkInput"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.151"
-        app:layout_constraintStart_toEndOf="@+id/hpInput" />
+        app:layout_constraintStart_toEndOf="@+id/hpInput"
+        android:importantForAutofill="no" />
 
     <EditText
         android:id="@+id/satkInput"
@@ -80,7 +124,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.151"
         app:layout_constraintStart_toEndOf="@+id/atkInput"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:importantForAutofill="no" />
 
     <EditText
         android:id="@+id/sdefInput"
@@ -92,14 +137,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.151"
         app:layout_constraintStart_toEndOf="@+id/defInput"
-        app:layout_constraintTop_toBottomOf="@+id/satkInput" />
+        app:layout_constraintTop_toBottomOf="@+id/satkInput"
+        android:importantForAutofill="no" />
 
     <Button
-        android:id="@+id/showAverage"
+        android:id="@+id/calcStats"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="208dp"
-        android:text="@string/button_text_display"
+        android:text="@string/calculate_stats"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -107,16 +153,101 @@
         app:layout_constraintTop_toBottomOf="@+id/defInput" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/base_hp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="@string/inst_display_foot"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="196dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:text="@string/health"
+        app:layout_constraintEnd_toStartOf="@+id/base_atk"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/instDisplayHead" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/base_atk"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="196dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:text="@string/attack"
+        app:layout_constraintEnd_toStartOf="@+id/base_def"
+        app:layout_constraintStart_toEndOf="@+id/base_hp"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/base_def"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="196dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:text="@string/defense"
+        app:layout_constraintEnd_toStartOf="@+id/base_satk"
+        app:layout_constraintStart_toEndOf="@+id/base_atk"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/base_satk"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="196dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:text="@string/s_attack"
+        app:layout_constraintEnd_toStartOf="@+id/base_sdef"
+        app:layout_constraintStart_toEndOf="@+id/base_def"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/base_sdef"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="196dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:text="@string/s_defense"
+        app:layout_constraintEnd_toStartOf="@+id/base_speed"
+        app:layout_constraintStart_toEndOf="@+id/base_satk"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/base_speed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="196dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:text="@string/speed"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.283"
+        app:layout_constraintStart_toEndOf="@+id/base_sdef"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/pokemon_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="@string/pokemon_display_name"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "835732700059",
+    "firebase_url": "https://pokecompanion-database.firebaseio.com",
+    "project_id": "pokecompanion-database",
+    "storage_bucket": "pokecompanion-database.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:835732700059:android:aefb1655f4287fc8d7ff3e",
+        "android_client_info": {
+          "package_name": "com.example.template"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "835732700059-pntdvpfvo714u20osjpo5i4l0k6s1hbc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.template",
+            "certificate_hash": "fdee7ab3afa97bc9d7f41e2517bf1a61a9f744e9"
+          }
+        },
+        {
+          "client_id": "835732700059-qlsuljshlo35rbae693kl7r0ojpp20aj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtcJQ0jQ2cAvopFVL5H86YjU-ShDpkSv0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "835732700059-qlsuljshlo35rbae693kl7r0ojpp20aj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -33,13 +33,22 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.Objects;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class Individual_Pokemon_view extends AppCompatActivity {
+
+    private FirebaseDatabase db = FirebaseDatabase.getInstance();
+    DatabaseReference dbRef = db.getReference().child("users").child("user_test");
+
+    // Temporary reference to the example node
+    dbRef
 
     int HP, ATK, DEF, SPD, SATK, SDEF;
     double IRR_FACTOR = 0.85;
@@ -51,7 +60,9 @@ public class Individual_Pokemon_view extends AppCompatActivity {
     EditText satkInput;
     EditText sdefInput;
 
-    Button showAverage;
+    Button statCalculation;
+
+
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -71,8 +82,8 @@ public class Individual_Pokemon_view extends AppCompatActivity {
         satkInput = findViewById(R.id.satkInput);
         sdefInput = findViewById(R.id.sdefInput);
 
-        showAverage = findViewById(R.id.showAverage);
-        showAverage.setOnClickListener(new View.OnClickListener() {
+        statCalculation = findViewById(R.id.calcStats);
+        statCalculation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
@@ -93,16 +104,16 @@ public class Individual_Pokemon_view extends AppCompatActivity {
                 else if (HP<0 | ATK<0 | DEF<0 | SPD<0 | SATK<0 | SDEF<0) {
                     showToast("Individual Values must exist!");
                 }
-                else showToast("Your weighted average is: " + weightedAverage(HP, ATK, DEF, SPD, SATK, SDEF));
+                //else showToast("Your weighted average is: " + weightedAverage(HP, ATK, DEF, SPD, SATK, SDEF));
+                else showToast("data from database: " + db.orderByChild("pokedex").c);
             }
         });
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -132,6 +143,12 @@ public class Individual_Pokemon_view extends AppCompatActivity {
     }
     private void showToast(String t) {
         Toast.makeText(Individual_Pokemon_view.this, t, Toast.LENGTH_LONG).show();
+    }
+
+    public void pullBaseStats(@org.jetbrains.annotations.NotNull DataSnapshot dataSnapshot) {
+        if(dataSnapshot.exists()) {
+
+        }
     }
 }
 
