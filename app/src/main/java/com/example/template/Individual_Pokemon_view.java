@@ -26,6 +26,7 @@ package com.example.template;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,16 +40,22 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class Individual_Pokemon_view extends AppCompatActivity {
 
     private FirebaseDatabase db = FirebaseDatabase.getInstance();
-    DatabaseReference dbRef = db.getReference().child("users").child("user_test");
+    DatabaseReference dbRefDex = db.getReference().child("users").child("user_test").child("pokedex").child("growlithe");
+    DatabaseReference dbRefBase = db.getReference().child("Pokemon").child("058");
+
+
+
 
     // Temporary reference to the example node
-    dbRef
+
 
     int HP, ATK, DEF, SPD, SATK, SDEF;
     double IRR_FACTOR = 0.85;
@@ -62,7 +69,7 @@ public class Individual_Pokemon_view extends AppCompatActivity {
 
     Button statCalculation;
 
-
+    Stats currStats;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -75,12 +82,27 @@ public class Individual_Pokemon_view extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
+        dbRefDex.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                currStats = snapshot.child("stats").getValue(Stats.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(Individual_Pokemon_view.this,"Error: "+ error.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
         hpInput = findViewById(R.id.hpInput);
         atkInput = findViewById(R.id.atkInput);
         defInput = findViewById(R.id.defInput);
         spdInput = findViewById(R.id.spdInput);
         satkInput = findViewById(R.id.satkInput);
         sdefInput = findViewById(R.id.sdefInput);
+
+
 
         statCalculation = findViewById(R.id.calcStats);
         statCalculation.setOnClickListener(new View.OnClickListener() {
@@ -105,7 +127,7 @@ public class Individual_Pokemon_view extends AppCompatActivity {
                     showToast("Individual Values must exist!");
                 }
                 //else showToast("Your weighted average is: " + weightedAverage(HP, ATK, DEF, SPD, SATK, SDEF));
-                else showToast("data from database: " + db.orderByChild("pokedex").c);
+                else showToast("data from database: " + currStats.getSdef());
             }
         });
     }
@@ -145,7 +167,7 @@ public class Individual_Pokemon_view extends AppCompatActivity {
         Toast.makeText(Individual_Pokemon_view.this, t, Toast.LENGTH_LONG).show();
     }
 
-    public void pullBaseStats(@org.jetbrains.annotations.NotNull DataSnapshot dataSnapshot) {
+    public void onDataChange(@org.jetbrains.annotations.NotNull DataSnapshot dataSnapshot) {
         if(dataSnapshot.exists()) {
 
         }
