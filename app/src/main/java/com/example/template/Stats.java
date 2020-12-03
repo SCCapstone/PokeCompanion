@@ -6,7 +6,7 @@ public class Stats {
     public Stats() {
     }
 
-    public Stats(int hp, int atk, int def, int satk, int sdef, int spd) {
+    public Stats(int atk, int def, int hp, int satk, int sdef, int spd) {
         this.hp = hp;
         this.atk = atk;
         this.def = def;

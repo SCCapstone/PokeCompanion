@@ -7,6 +7,60 @@
     tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/iv_hp_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="72dp"
+        android:text="@string/iv_hp_val"
+        app:layout_constraintStart_toStartOf="@+id/base_hp"
+        app:layout_constraintTop_toBottomOf="@+id/base_hp" />
+
+    <TextView
+        android:id="@+id/iv_sdef_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="72dp"
+        android:text="@string/iv_sdef_val"
+        app:layout_constraintStart_toStartOf="@+id/base_sdef"
+        app:layout_constraintTop_toBottomOf="@+id/base_sdef" />
+
+    <TextView
+        android:id="@+id/iv_def_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="72dp"
+        android:text="@string/iv_def_val"
+        app:layout_constraintStart_toStartOf="@+id/base_def"
+        app:layout_constraintTop_toBottomOf="@+id/base_def" />
+
+    <TextView
+        android:id="@+id/iv_satk_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="72dp"
+        android:text="@string/iv_satk_val"
+        app:layout_constraintStart_toStartOf="@+id/base_satk"
+        app:layout_constraintTop_toBottomOf="@+id/base_satk" />
+
+    <TextView
+        android:id="@+id/iv_speed_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="72dp"
+        android:text="@string/iv_spd_val"
+        app:layout_constraintStart_toStartOf="@+id/base_speed"
+        app:layout_constraintTop_toBottomOf="@+id/base_speed" />
+
+    <TextView
+        android:id="@+id/iv_atk_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="72dp"
+        android:text="@string/iv_atk_val"
+        app:layout_constraintStart_toStartOf="@+id/base_atk"
+        app:layout_constraintTop_toBottomOf="@+id/base_atk" />
+
+    <TextView
         android:id="@+id/base_atk_num"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -61,57 +115,32 @@
         app:layout_constraintTop_toBottomOf="@+id/base_sdef" />
 
     <EditText
+        android:id="@+id/hpInput"
+        android:layout_width="128dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="72dp"
+        android:layout_marginLeft="72dp"
+        android:ems="10"
+        android:hint="@string/hp_display"
+        android:importantForAutofill="no"
+        android:inputType="number"
+        app:layout_constraintBottom_toTopOf="@+id/atkInput"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
         android:id="@+id/atkInput"
         android:layout_width="128dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="76dp"
-        android:layout_marginLeft="76dp"
+        android:layout_marginStart="72dp"
+        android:layout_marginLeft="72dp"
         android:ems="10"
         android:hint="@string/attack_display"
+        android:importantForAutofill="no"
         android:inputType="number"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:importantForAutofill="no" />
-
-    <EditText
-        android:id="@+id/hpInput"
-        android:layout_width="128dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="76dp"
-        android:layout_marginLeft="76dp"
-        android:ems="10"
-        android:hint="@string/hp_display"
-        android:inputType="number"
-        app:layout_constraintBottom_toTopOf="@+id/atkInput"
-        app:layout_constraintStart_toStartOf="parent"
-        android:importantForAutofill="no" />
-
-    <EditText
-        android:id="@+id/defInput"
-        android:layout_width="128dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="76dp"
-        android:layout_marginLeft="76dp"
-        android:ems="10"
-        android:hint="@string/defense_display"
-        android:inputType="number"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/atkInput"
-        android:importantForAutofill="no" />
-
-    <EditText
-        android:id="@+id/spdInput"
-        android:layout_width="128dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/speed_display"
-        android:inputType="number"
-        app:layout_constraintBottom_toTopOf="@+id/satkInput"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.151"
-        app:layout_constraintStart_toEndOf="@+id/hpInput"
-        android:importantForAutofill="no" />
+        app:layout_constraintVertical_bias="0.586" />
 
     <EditText
         android:id="@+id/satkInput"
@@ -119,38 +148,117 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/sp_attack_display"
+        android:importantForAutofill="no"
         android:inputType="number"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.151"
+        app:layout_constraintHorizontal_bias="0.156"
         app:layout_constraintStart_toEndOf="@+id/atkInput"
         app:layout_constraintTop_toTopOf="parent"
-        android:importantForAutofill="no" />
+        app:layout_constraintVertical_bias="0.586" />
 
     <EditText
         android:id="@+id/sdefInput"
         android:layout_width="128dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="@string/sp_defense_display"
+        android:importantForAutofill="no"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.151"
+        app:layout_constraintHorizontal_bias="0.156"
         app:layout_constraintStart_toEndOf="@+id/defInput"
-        app:layout_constraintTop_toBottomOf="@+id/satkInput"
-        android:importantForAutofill="no" />
+        app:layout_constraintTop_toBottomOf="@+id/satkInput" />
 
     <Button
         android:id="@+id/calcStats"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="208dp"
         android:text="@string/calculate_stats"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/defInput" />
+        app:layout_constraintTop_toBottomOf="@id/chooseMew"
+        app:layout_constraintVertical_bias="0.281" />
+
+    <Button
+        android:id="@+id/chooseStaryu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="208dp"
+        android:text="@string/staryu"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.721"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sdefInput"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/chooseCharizard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/charizard"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.258"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/defInput"
+        app:layout_constraintVertical_bias="0.344" />
+
+    <Button
+        android:id="@+id/chooseGrowlithe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="208dp"
+        android:text="@string/growlithe"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.255"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/defInput"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/chooseMew"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/mew"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.721"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/chooseStaryu"
+        app:layout_constraintVertical_bias="0.111" />
+
+    <EditText
+        android:id="@+id/spdInput"
+        android:layout_width="128dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/speed_display"
+        android:importantForAutofill="no"
+        android:inputType="number"
+        app:layout_constraintBottom_toTopOf="@+id/satkInput"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.156"
+        app:layout_constraintStart_toEndOf="@+id/hpInput" />
+
+    <EditText
+        android:id="@+id/defInput"
+        android:layout_width="128dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="72dp"
+        android:layout_marginLeft="72dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="@string/defense_display"
+        android:importantForAutofill="no"
+        android:inputType="number"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/atkInput" />
 
     <TextView
         android:id="@+id/base_hp"
