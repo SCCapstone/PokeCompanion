@@ -178,7 +178,7 @@ public class Individual_Pokemon_view extends AppCompatActivity {
         basePoke.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                showToast("basePoke updated");
+                //showToast("basePoke updated");
                 baseStats = snapshot.child("baseStats").getValue(Stats.class);
                 displayBaseStats();
             }
