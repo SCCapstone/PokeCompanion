@@ -59,12 +59,6 @@ public class Individual_Pokemon_view extends AppCompatActivity {
     DatabaseReference basePoke = dbRefBase.child("058");
     DatabaseReference dexPoke = dbRefDex.child("growlithe");
 
-
-
-
-    // Temporary reference to the example node
-
-
     int HP, ATK, DEF, SPD, SATK, SDEF;
     double IRR_FACTOR = 0.85;
 
@@ -162,7 +156,7 @@ public class Individual_Pokemon_view extends AppCompatActivity {
         dexPoke.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                showToast("dexpoke updated");
+                //showToast("dexpoke updated");
                 currStats = snapshot.child("stats").getValue(Stats.class);
                 try {
                     hpInput.setText(Integer.toString(currStats.getHp()));
@@ -184,7 +178,7 @@ public class Individual_Pokemon_view extends AppCompatActivity {
         basePoke.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                showToast("basePoke updated");
+                //showToast("basePoke updated");
                 baseStats = snapshot.child("baseStats").getValue(Stats.class);
                 displayBaseStats();
             }
@@ -204,10 +198,93 @@ public class Individual_Pokemon_view extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                dexPoke.child("stats").child("hp").setValue(Integer.parseInt(hpInput.getText().toString()));
+                try {
+                    dexPoke.child("stats").child("hp").setValue(Integer.parseInt(hpInput.getText().toString()));
+                } catch (NumberFormatException e) {
+                    dexPoke.child("stats").child("hp").setValue(0);
+                }
             }
         });
+        atkInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                try {
+                    dexPoke.child("stats").child("atk").setValue(Integer.parseInt(atkInput.getText().toString()));
+                } catch (NumberFormatException e) {
+                    dexPoke.child("stats").child("atk").setValue(0);
+                }
+            }
+        });
+        defInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                try {
+                    dexPoke.child("stats").child("def").setValue(Integer.parseInt(defInput.getText().toString()));
+                } catch (NumberFormatException e) {
+                    dexPoke.child("stats").child("def").setValue(0);
+                }
+            }
+        });
+        satkInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                try {
+                    dexPoke.child("stats").child("satk").setValue(Integer.parseInt(satkInput.getText().toString()));
+                } catch (NumberFormatException e) {
+                    dexPoke.child("stats").child("satk").setValue(0);
+                }
+            }
+        });
+        sdefInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                try {
+                    dexPoke.child("stats").child("sdef").setValue(Integer.parseInt(sdefInput.getText().toString()));
+                } catch (NumberFormatException e) {
+                    dexPoke.child("stats").child("sdef").setValue(0);
+                }
+            }
+        });
+        spdInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                try {
+                    dexPoke.child("stats").child("spd").setValue(Integer.parseInt(spdInput.getText().toString()));
+                } catch (NumberFormatException e) {
+                    dexPoke.child("stats").child("spd").setValue(0);
+                }
+            }
+        });
 
         statCalculation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -236,7 +313,7 @@ public class Individual_Pokemon_view extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 basePoke = dbRefBase.child("058");
-                dexPoke = dbRefDex.child("charizard");
+                dexPoke = dbRefDex.child("growlithe");
                 currStats = snap.child("users").child("user_test").child("pokedex").child("growlithe").child("stats").getValue(Stats.class);
                 baseStats = snap.child("Pokemon").child("058").child("baseStats").getValue(Stats.class);
                 try {
@@ -249,10 +326,10 @@ public class Individual_Pokemon_view extends AppCompatActivity {
                 } catch (NullPointerException e) {
                     showToast("Null exception");
                 }
-                showToast("Current HP: "+ Integer.toString(currStats.getHp()));
+                //showToast("Current HP: "+ Integer.toString(currStats.getHp()));
                 dispName.setText(R.string.growlithe);
                 displayBaseStats();
-                showToast("HP: " + Integer.toString(baseStats.getHp()));
+                //showToast("HP: " + Integer.toString(baseStats.getHp()));
             }
         });
         chooseStaryu.setOnClickListener(new View.OnClickListener() {
@@ -276,7 +353,7 @@ public class Individual_Pokemon_view extends AppCompatActivity {
 
                 dispName.setText(R.string.staryu);
                 displayBaseStats();
-                showToast("HP: " + Integer.toString(baseStats.getHp()));
+                //showToast("HP: " + Integer.toString(baseStats.getHp()));
 
             }
         });
@@ -299,7 +376,7 @@ public class Individual_Pokemon_view extends AppCompatActivity {
                 }
                 dispName.setText(R.string.charizard);
                 displayBaseStats();
-                showToast("HP: " + Integer.toString(baseStats.getHp()));
+                //showToast("HP: " + Integer.toString(baseStats.getHp()));
 
             }
         });
@@ -322,8 +399,7 @@ public class Individual_Pokemon_view extends AppCompatActivity {
                 }
                 dispName.setText(R.string.mew);
                 displayBaseStats();
-                showToast("HP: " + Integer.toString(baseStats.getHp()));
-
+                //showToast("HP: " + Integer.toString(baseStats.getHp()));
             }
         });
     }

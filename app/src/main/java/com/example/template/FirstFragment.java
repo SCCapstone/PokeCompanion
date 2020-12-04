@@ -1,34 +1,55 @@
-package com.example.template;
-
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+/*package com.example.template;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
+import androidx.appcompat.app.AppCompatActivity;
 
-public class FirstFragment extends Fragment {
+import android.os.Bundle;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+
+import com.example.template.MainActivity;
+import com.example.template.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+
+public class FirstFragment extends AppCompatActivity {
+
+    private Spinner pokemon1;
+    private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+    private ArrayList<String> arrayList= new ArrayList<>();
 
     @Override
-    public View onCreateView(
-            LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState
-    ) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_first, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        pokemon1 = findViewById(R.id.pokemon1);
+        showDataSpinner();
+
     }
 
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        view.findViewById(R.id.button_first).setOnClickListener(new View.OnClickListener() {
+    private void showDataSpinner() {
+        databaseReference.child("Pokemon").addValueEventListener(new ValueEventListener() {
             @Override
-            public void onClick(View view) {
-                NavHostFragment.findNavController(FirstFragment.this)
-                        .navigate(R.id.action_FirstFragment_to_SecondFragment);
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                arrayList.clear();
+                for(DataSnapshot item : dataSnapshot.getChildren()){
+                    arrayList.add(item.child("Name").getValue(String.class));
+                }
+                ArrayAdapter arrayAdapter = new ArrayAdapter<>(FirstFragment.this,R.layout.style_spinner,arrayList);
+                pokemon1.setAdapter(arrayAdapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
     }
-}
+
+}*/
