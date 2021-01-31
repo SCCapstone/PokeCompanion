@@ -444,7 +444,7 @@ public class Individual_Pokemon_view extends AppCompatActivity {
 
 
 
-    private int weightedAverage(int hp, int atk, int def, int spd, int satk, int sdef) {
+    public int weightedAverage(int hp, int atk, int def, int spd, int satk, int sdef) {
         int avg = 0;
         int sum = 0;
         int count = 6;
