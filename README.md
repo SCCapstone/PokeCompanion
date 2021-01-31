@@ -21,6 +21,9 @@
 
 ## Testing
 
+The current working test for the method weightedAverage is located in /app/src/androidTest/Java/com/example/template and is called ExampleInstrumentedTest.
+It can be ran by right clicking on the method and clicking run. The build will compile and the terminal will say "Test Ran Successfully" after it has completed.
+
 ## Testing technology
 
 ## Running tests
