@@ -44,4 +44,6 @@
     <string name="charizard">Charizard</string>
     <string name="staryu">Staryu</string>
     <string name="growlithe">Growlithe</string>
+
+    <string name="to_rss_view_button">Newsfeed</string>
 </resources>
