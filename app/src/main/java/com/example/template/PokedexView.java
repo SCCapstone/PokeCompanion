@@ -4,6 +4,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +20,8 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,25 +33,39 @@ import java.util.jar.Attributes;
 
 // this class is coded by
 public class PokedexView extends AppCompatActivity {
-    private final FirebaseDatabase db = FirebaseDatabase.getInstance();
+    private final FirebaseDatabase fb = FirebaseDatabase.getInstance();
+    DatabaseReference db = fb.getReference();
+    // the actual thing being displayed
     ListView dex;
+    // this is the array list we will be passing onto the ListView item
     ArrayList<String> arrList = new ArrayList<>();
 
+    // Array Adapter lets ListView find the array list it is supposed to display
     ArrayAdapter<String> arrAdapter;
-    DatabaseReference dbRefBase = db.getReference().child("Pokemon");
+    // these references allow us to access data from firebase
     DataSnapshot snap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        db.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                snap = snapshot;
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(PokedexView.this,"Error: "+ error.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+        });
         populate();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pokedexview);
         dex = (ListView)findViewById(R.id.listviewtxt);
         arrAdapter = new ArrayAdapter<String> (this, android.R.layout.simple_list_item_1, arrList);
         dex.setAdapter(arrAdapter);
-
-
     }
+
     private void populate() {
         // 'i' will represent our spot in the pokedex
         String currMon;
@@ -65,10 +82,9 @@ public class PokedexView extends AppCompatActivity {
             else
                 currMon = "" + i;
             // finds the name of the pokemon associated with the current number
-            currMonName = (String)snap.child("Pokemon").child(currMon).getValue(true);
+            currMonName = (String)snap.child("Pokemon").child(currMon).child("Name").getValue();
             // add that pokemon to the array list
             arrList.add(currMon + "\t" + currMonName);
-
         }
     }
 
