@@ -68,7 +68,7 @@ public class PokedexView extends AppCompatActivity {
             else
                 currMon = "" + i;
             // finds the name of the pokemon associated with the current number
-            currMonName = (String)snap.child("Pokemon").child(currMon).child("Name");
+            currMonName = (String)snap.child("Pokemon").child(currMon).child("Name").getValue();
             // add that pokemon to the array list
             arrList.add(currMon + "\t" + currMonName);
         }
