@@ -4,6 +4,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +20,8 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,7 +33,8 @@ import java.util.jar.Attributes;
 
 // this class is coded by
 public class PokedexView extends AppCompatActivity {
-    private final FirebaseDatabase db = FirebaseDatabase.getInstance();
+    private final FirebaseDatabase fb = FirebaseDatabase.getInstance();
+    DatabaseReference db = fb.getReference();
     // the actual thing being displayed
     ListView dex;
     // this is the array list we will be passing onto the ListView item
@@ -39,11 +43,21 @@ public class PokedexView extends AppCompatActivity {
     // Array Adapter lets ListView find the array list it is supposed to display
     ArrayAdapter<String> arrAdapter;
     // these references allow us to access data from firebase
-    DatabaseReference dbRefBase = db.getReference().child("Pokemon");
     DataSnapshot snap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        db.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                snap = snapshot;
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(PokedexView.this,"Error: "+ error.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+        });
         populate();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pokedexview);
