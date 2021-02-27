@@ -31,10 +31,14 @@ import java.util.jar.Attributes;
 // this class is coded by
 public class PokedexView extends AppCompatActivity {
     private final FirebaseDatabase db = FirebaseDatabase.getInstance();
+    // the actual thing being displayed
     ListView dex;
+    // this is the array list we will be passing onto the ListView item
     ArrayList<String> arrList = new ArrayList<>();
 
+    // Array Adapter lets ListView find the array list it is supposed to display
     ArrayAdapter<String> arrAdapter;
+    // these references allow us to access data from firebase
     DatabaseReference dbRefBase = db.getReference().child("Pokemon");
     DataSnapshot snap;
 
@@ -46,9 +50,8 @@ public class PokedexView extends AppCompatActivity {
         dex = (ListView)findViewById(R.id.listviewtxt);
         arrAdapter = new ArrayAdapter<String> (this, android.R.layout.simple_list_item_1, arrList);
         dex.setAdapter(arrAdapter);
-
-
     }
+
     private void populate() {
         // 'i' will represent our spot in the pokedex
         String currMon;
@@ -65,10 +68,9 @@ public class PokedexView extends AppCompatActivity {
             else
                 currMon = "" + i;
             // finds the name of the pokemon associated with the current number
-            currMonName = (String)snap.child("Pokemon").child(currMon).getValue(true);
+            currMonName = (String)snap.child("Pokemon").child(currMon).child("Name");
             // add that pokemon to the array list
             arrList.add(currMon + "\t" + currMonName);
-
         }
     }
 
