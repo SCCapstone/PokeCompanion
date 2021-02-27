@@ -10,11 +10,24 @@
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="132dp"
-        android:layout_marginRight="132dp"
-        android:layout_marginBottom="120dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="160dp"
         android:onClick="gotoLoginView"
         android:text="GO TO LOGIN VIEW"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="112dp"
+        android:layout_marginRight="112dp"
+        android:layout_marginBottom="72dp"
+        android:onClick="gotoPokedexView"
+        android:text="GO TO POKEDEX VIEW"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -40,7 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="124dp"
         android:layout_marginRight="124dp"
-        android:layout_marginBottom="232dp"
+        android:layout_marginBottom="276dp"
         android:onClick="gotoIndView"
         android:text="@string/to_individual_view_button"
         app:layout_constraintBottom_toBottomOf="parent"
