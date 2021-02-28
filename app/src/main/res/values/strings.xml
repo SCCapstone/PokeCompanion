@@ -46,4 +46,9 @@
     <string name="growlithe">Growlithe</string>
 
     <string name="to_rss_view_button">Newsfeed</string>
+    <string name="feed_source">Feed source</string>
+    <string name="fetch_url">GO</string>
+    <string name="feed_title">Feed Title:</string>
+    <string name="feed_description">Feed Description:</string>
+    <string name="feed_link">Feed Link:</string>
 </resources>
