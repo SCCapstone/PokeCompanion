@@ -1,20 +1,18 @@
 package com.example.template;
 
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Arrays;
 import java.util.List;
@@ -27,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     List<AuthUI.IdpConfig> providers = Arrays.asList(
             new AuthUI.IdpConfig.EmailBuilder().build(),
             new AuthUI.IdpConfig.GoogleBuilder().build());
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         mAuth = FirebaseAuth.getInstance();
@@ -41,16 +40,21 @@ public class MainActivity extends AppCompatActivity {
                 RC_SIGN_IN);
     }
 
+    FirebaseDatabase db =  FirebaseDatabase.getInstance();
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == RC_SIGN_IN) {
-            IdpResponse response = IdpResponse.fromResultIntent(data);
+           // IdpResponse response = IdpResponse.fromResultIntent(data);
 
             if (resultCode == RESULT_OK) {
                 // Successfully signed in
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 updateUI(user);
+
+                DatabaseReference mRef = db.getReference().child("users").push();
+                String userId = user.getUid();
+                mRef.setValue(userId);
                 Toast.makeText(this, "sign in successful", Toast.LENGTH_LONG).show();
                 // ...
             }
@@ -67,15 +71,20 @@ public class MainActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        //updateUI(currentUser);
+        updateUI(currentUser);
     }
 
     // temp UI update, will eventually take the user to a home screen where
     // they can access the other screens of the app
     public void updateUI(FirebaseUser account){
         if(account != null){
-            Toast.makeText(this,"Updating UI (WIP)",Toast.LENGTH_LONG).show();
-            startActivity(new Intent(this,MainActivity.class));
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            String userId = user.getUid();
+            String userName = user.getDisplayName();
+            DatabaseReference mRef = db.getReference().child("users").child(userName);
+            mRef.child("uid").setValue(userId);
+            Toast.makeText(this,"Welcome!",Toast.LENGTH_LONG).show();
+            startActivity(new Intent(this, Main_menu_view.class));
         }
         else {
             Toast.makeText(this,"something went wrong",Toast.LENGTH_LONG).show();
@@ -102,16 +111,6 @@ public class MainActivity extends AppCompatActivity {
             // ...
         }
     });*/
-
-    public void gotoLoginView(View view) {
-        Intent intent = new Intent(this, Login_view.class);
-        startActivity(intent);
-    }
-
-    public void gotoIndView(View view) {
-        Intent intent = new Intent(this, Individual_Pokemon_view.class);
-        startActivity(intent);
-    }
 
 
 
