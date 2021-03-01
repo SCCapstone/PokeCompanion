@@ -113,10 +113,10 @@ public class MainActivity extends AppCompatActivity {
     });*/
 
 
-    public void gotoLoginView(View view) {
+    /*public void gotoLoginView(View view) {
         Intent intent = new Intent(this, Login_view.class);
         startActivity(intent);
-    }
+    }*/
 
     public void gotoPokedexView(View view) {
         Intent intent = new Intent(this, PokedexView.class);

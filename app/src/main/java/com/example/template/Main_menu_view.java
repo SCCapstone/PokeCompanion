@@ -16,6 +16,11 @@ public class Main_menu_view extends AppCompatActivity {
         setContentView(R.layout.activity_main_menu_view);
     }
 
+    public void gotoPokedexView(View view) {
+        Intent intent = new Intent(this, PokedexView.class);
+        startActivity(intent);
+    }
+
     public void gotoIndView(View view) {
         Intent intent = new Intent(this, Individual_Pokemon_view.class);
         startActivity(intent);
