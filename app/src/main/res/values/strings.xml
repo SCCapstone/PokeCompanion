@@ -45,10 +45,12 @@
     <string name="staryu">Staryu</string>
     <string name="growlithe">Growlithe</string>
 
+    <!--Some strings for the RSS/Newsfeed-->
     <string name="to_rss_view_button">Newsfeed</string>
     <string name="feed_source">Feed source</string>
-    <string name="fetch_url">GO</string>
-    <string name="feed_title">Feed Title:</string>
-    <string name="feed_description">Feed Description:</string>
-    <string name="feed_link">Feed Link:</string>
+    <string name="fetch_url">LOAD</string>
+    <string name="feed_title">Title:</string>
+    <string name="feed_description">Description:</string>
+    <string name="feed_link">Link:</string>
+    <string name="feed_url">https://pokemondb.net/news/feed</string>
 </resources>
