@@ -113,5 +113,22 @@ public class MainActivity extends AppCompatActivity {
     });*/
 
 
+    public void gotoLoginView(View view) {
+        Intent intent = new Intent(this, Login_view.class);
+        startActivity(intent);
+    }
+
+    public void gotoPokedexView(View view) {
+        Intent intent = new Intent(this, PokedexView.class);
+        startActivity(intent);
+    }
+
+    public void gotoIndView(View view) {
+        Intent intent = new Intent(this, Individual_Pokemon_view.class);
+        startActivity(intent);
+    }
+
+
+
 
 }

@@ -58,6 +58,13 @@ Noah Jackson
    You can generate random Pokemon Team from Pokemon currently stored on the app
    Only 6 member team or lower can be generated
 
+- PokedexView
+    Should be accessed via main page by button on the bottom
+    Shows a view of all of the pokemon in the database (does not just show caught pokemon)
+    WIP: Eventually will go to individual view for each pokemon when that is clicked from the list
+    WIP: Add a search bar with options to restrict the search (ex: by type or by stats etc etc)
+
+
 - Newsfeed
 
     Unimplemented
