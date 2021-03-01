@@ -301,12 +301,12 @@ public class Individual_Pokemon_view extends AppCompatActivity {
                     showToast("Stat values cannot be empty!");
                 }
 
-                ivHpDisplay.setText(Integer.toString(calculateHP(baseStats.getHp(), ivStats.getHp(), currStats.getHp(), 50)));
-                ivAtkDisplay.setText(Integer.toString(calculateIV(baseStats.getAtk(), ivStats.getAtk(), currStats.getAtk(), 50)));
-                ivDefDisplay.setText(Integer.toString(calculateIV(baseStats.getDef(), ivStats.getDef(), currStats.getDef(), 50)));
-                ivSatkDisplay.setText(Integer.toString(calculateIV(baseStats.getSatk(), ivStats.getSatk(), currStats.getSatk(), 50)));
-                ivSdefDisplay.setText(Integer.toString(calculateIV(baseStats.getSdef(), ivStats.getSdef(), currStats.getSdef(), 50)));
-                ivSpdDisplay.setText(Integer.toString(calculateIV(baseStats.getSpd(), ivStats.getSpd(), currStats.getSpd(), 50)));
+                ivHpDisplay.setText(Integer.toString(calculateHP(baseStats.getHp(), ivStats.getHp(), HP, 50)));
+                ivAtkDisplay.setText(Integer.toString(calculateIV(baseStats.getAtk(), ivStats.getAtk(), ATK, 50)));
+                ivDefDisplay.setText(Integer.toString(calculateIV(baseStats.getDef(), ivStats.getDef(), DEF, 50)));
+                ivSatkDisplay.setText(Integer.toString(calculateIV(baseStats.getSatk(), ivStats.getSatk(), SATK, 50)));
+                ivSdefDisplay.setText(Integer.toString(calculateIV(baseStats.getSdef(), ivStats.getSdef(), SDEF, 50)));
+                ivSpdDisplay.setText(Integer.toString(calculateIV(baseStats.getSpd(), ivStats.getSpd(), SPD, 50)));
             }
         });
         chooseGrowlithe.setOnClickListener(new View.OnClickListener() {

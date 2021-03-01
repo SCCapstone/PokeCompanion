@@ -24,6 +24,8 @@
 The current working test for the method weightedAverage is located in /app/src/androidTest/Java/com/example/template and is called ExampleInstrumentedTest.
 It can be ran by right clicking on the method and clicking run. The build will compile and the terminal will say "Test Ran Successfully" after it has completed.
 
+Unfortunately, we built our behavioral test in Firebase, and from working on it learned that we must pay to actually test the code. We intend to potentially change our method of behavioral testing.
+
 ## Testing technology
 
 ## Running tests
@@ -55,6 +57,13 @@ Noah Jackson
 
    You can generate random Pokemon Team from Pokemon currently stored on the app
    Only 6 member team or lower can be generated
+
+- PokedexView
+    Should be accessed via main page by button on the bottom
+    Shows a view of all of the pokemon in the database (does not just show caught pokemon)
+    WIP: Eventually will go to individual view for each pokemon when that is clicked from the list
+    WIP: Add a search bar with options to restrict the search (ex: by type or by stats etc etc)
+
 
 - Newsfeed
 
