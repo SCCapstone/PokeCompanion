@@ -128,6 +128,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void gotoRSSView(View view) {
+        Intent intent = new Intent(this, RSS_view.class);
+        startActivity(intent);
+    }
+
 
 
 
