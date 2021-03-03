@@ -67,7 +67,9 @@ Noah Jackson
 
 - Newsfeed
 
-    Unimplemented
+    Accessed from the homepage using the "Newsfeed" button. Currently loads an RSS reader than can process XML files.
+    WIP: Retrieve feed from pokemondb.net
+    WIP: Display articles with clickable icons
 
 - Settings
 
