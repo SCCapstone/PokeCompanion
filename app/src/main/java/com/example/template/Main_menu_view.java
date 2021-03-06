@@ -9,6 +9,13 @@ import android.view.View;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class Main_menu_view extends AppCompatActivity {
+    // the 5 views we want
+    /*home/newsfeed
+    pokedex view
+    add pokemon
+    settings
+    team view*/
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
