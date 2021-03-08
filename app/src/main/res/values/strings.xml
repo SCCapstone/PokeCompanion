@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">template</string>
+    <string name="app_name">Poke Companion</string>
     <string name="title_activity_individual__pokemon_view">Individual_Pokemon_view</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
@@ -17,6 +17,51 @@
     <string name="sp_attack_display">Sp. Attack</string>
     <string name="sp_defense_display">Sp. Defense</string>
     <string name="button_text_display">Give me an average!</string>
-    <string name="inst_display_foot">Individual Values can be 0-31</string>
-    <string name="to_individual_view_button">To individual view [WIP]</string>
+    <string name="inst_display_foot">Individual Values can be 0–31</string>
+    <string name="to_individual_view_button">To individual view</string>
+    <string name="title_activity_team_starter">teamStarter</string>
+    <string name="defense">Defense</string>
+    <string name="s_attack">S. Attack</string>
+    <string name="s_defense">S. Defense</string>
+    <string name="speed">Speed</string>
+    <string name="calculate_stats">Calculate Stats</string>
+    <string name="base_atk_val">-</string>
+    <string name="base_satk_val">-</string>
+    <string name="base_hp_val">-</string>
+    <string name="base_spd_val">-</string>
+    <string name="base_def_val">-</string>
+    <string name="base_sdef_val">-</string>
+    <string name="iv_atk_val">-</string>
+    <string name="iv_satk_val">-</string>
+    <string name="iv_hp_val">-</string>
+    <string name="iv_spd_val">-</string>
+    <string name="iv_def_val">-</string>
+    <string name="iv_sdef_val">-</string>
+    <string name="health">Health</string>
+    <string name="attack">Attack</string>
+    <string name="pokemon_display_name">Growlithe</string>
+    <string name="mew">Mew</string>
+    <string name="charizard">Charizard</string>
+    <string name="staryu">Staryu</string>
+    <string name="growlithe">Growlithe</string>
+
+    <!--Some strings for the RSS/Newsfeed-->
+    <string name="to_rss_view_button">Newsfeed</string>
+    <string name="feed_source">Feed source</string>
+    <string name="fetch_url">LOAD</string>
+    <string name="feed_title">Title:</string>
+    <string name="feed_description">Description:</string>
+    <string name="feed_link">Link:</string>
+    <string name="feed_url">https://pokemondb.net/news/feed</string>
+
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+
 </resources>
