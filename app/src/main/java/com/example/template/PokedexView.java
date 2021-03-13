@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -91,7 +92,19 @@ public class PokedexView extends AppCompatActivity {
         listView.setAdapter(arrAdapter);
         Log.e("dsc", "data set is changing");
         arrAdapter.notifyDataSetChanged();
+
+        // this occurs when the list is clicked, should route to add pokemon view of that pokemon
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+           @Override
+           public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+               Toast.makeText(PokedexView.this, arrList.get(position)+"", Toast.LENGTH_SHORT).show();
+               // go to add pokemon w/ the pokemon that was just clicked
+           }
+        });
     }
+
+
+
 
     /*private void populate() {
         // 'i' will represent our spot in the pokedex
