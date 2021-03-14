@@ -24,6 +24,7 @@
 
 package com.example.template;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
@@ -402,6 +403,31 @@ public class Individual_Pokemon_view extends AppCompatActivity {
                 //showToast("HP: " + Integer.toString(baseStats.getHp()));
             }
         });
+    }
+
+    public void gotoAddView(View view) {
+        Intent intent = new Intent(this, team_builder.class);
+        startActivity(intent);
+    }
+
+    public void gotoDexView(View view) {
+        Intent intent = new Intent(this, PokedexView.class);
+        startActivity(intent);
+    }
+
+    public void gotoNewsView(View view) {
+        Intent intent = new Intent(this, RSS_view.class);
+        startActivity(intent);
+    }
+
+    public void gotoTeamView(View view) {
+        Intent intent = new Intent(this, Individual_Pokemon_view.class);
+        startActivity(intent);
+    }
+
+    public void gotoSettingsView(View view) {
+        Intent intent = new Intent(this, Main_menu_view.class);
+        startActivity(intent);
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
