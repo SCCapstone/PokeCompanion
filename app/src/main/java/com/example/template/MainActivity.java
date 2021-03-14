@@ -134,6 +134,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public void gotoAddView(View view) {
+        Intent intent = new Intent(this, team_builder.class);
+        startActivity(intent);
+    }
 
+    public void gotoDexView(View view) {
+        //Intent intent = new Intent(this, PokedexView.class);
+        //startActivity(intent);
+    }
 
+    public void gotoNewsView(View view) {
+        Intent intent = new Intent(this, RSS_view.class);
+        startActivity(intent);
+    }
+
+    public void gotoTeamView(View view) {
+        Intent intent = new Intent(this, Individual_Pokemon_view.class);
+        startActivity(intent);
+    }
+
+    public void gotoSettingsView(View view) {
+        Intent intent = new Intent(this, Main_menu_view.class);
+        startActivity(intent);
+    }
 }
