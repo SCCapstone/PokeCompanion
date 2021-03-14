@@ -1,6 +1,8 @@
 package com.example.template;
 
+import android.content.Intent;
 import android.os.Build;
+
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -73,12 +75,12 @@ public class PokedexView extends AppCompatActivity {
                     // finds the name of the pokemon associated with the current number
                     currMonName = (String)snapshot.child("Pokemon").child(currMon).child("Name").getValue();
                     // add that pokemon to the array list
-                    arrList.add(currMon + "\t\t" + currMonName);
+                    arrList.add(currMon + " " + currMonName);
                 }
-                Log.e("firebase", "exiting dataChange");
+                //Log.e("firebase", "exiting dataChange");
                 listView = (ListView)findViewById(R.id.listviewtxt);
                 listView.setAdapter(arrAdapter);
-                Log.e("dsc", "data set is changing");
+                //Log.e("dsc", "data set is changing");
                 arrAdapter.notifyDataSetChanged();
             }
 
@@ -90,17 +92,51 @@ public class PokedexView extends AppCompatActivity {
         listView = (ListView)findViewById(R.id.listviewtxt);
         arrAdapter = new ArrayAdapter<String> (this, android.R.layout.simple_list_item_1, arrList);
         listView.setAdapter(arrAdapter);
-        Log.e("dsc", "data set is changing");
+        //Log.e("dsc", "data set is changing");
         arrAdapter.notifyDataSetChanged();
 
         // this occurs when the list is clicked, should route to add pokemon view of that pokemon
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
            @Override
            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+               String temp = arrList.get(position).substring(0, 3);
+               Intent intent = new Intent(getBaseContext(), team_builder.class);
+               intent.putExtra("pokemon", temp);
                Toast.makeText(PokedexView.this, arrList.get(position)+"", Toast.LENGTH_SHORT).show();
-               // go to add pokemon w/ the pokemon that was just clicked
+
+               startActivity(intent);
+               Toast.makeText(PokedexView.this, "past start activity", Toast.LENGTH_SHORT).show();
+
            }
         });
+
+
+    }
+
+    // this is the code for transitioning between views with the buttons on the bottom
+    public void gotoAddView(View view) {
+        Intent intent = new Intent(this, team_builder.class);
+        startActivity(intent);
+    }
+
+    public void gotoDexView(View view) {
+        //Intent intent = new Intent(this, PokedexView.class);
+        //startActivity(intent);
+    }
+
+    public void gotoNewsView(View view) {
+        Intent intent = new Intent(this, RSS_view.class);
+        startActivity(intent);
+    }
+
+    public void gotoTeamView(View view) {
+        Intent intent = new Intent(this, Individual_Pokemon_view.class);
+        startActivity(intent);
+    }
+
+    public void gotoSettingsView(View view) {
+        Intent intent = new Intent(this, Main_menu_view.class);
+        startActivity(intent);
     }
 
 
