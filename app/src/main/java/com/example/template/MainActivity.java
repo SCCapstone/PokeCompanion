@@ -140,9 +140,13 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void gotoSettingsView(View view) {
-        //Intent intent = new Intent(this, Main_menu_view.class);
-        //startActivity(intent);
+    public void gotoTeamView(View view) {
+        Intent intent = new Intent(this, Individual_Pokemon_view.class);
+        startActivity(intent);
     }
 
+    public void gotoSettingsView(View view) {
+        Intent intent = new Intent(this, Main_menu_view.class);
+        startActivity(intent);
+    }
 }
