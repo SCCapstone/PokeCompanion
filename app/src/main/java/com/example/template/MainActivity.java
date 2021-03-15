@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == RC_SIGN_IN) {
-           // IdpResponse response = IdpResponse.fromResultIntent(data);
+            IdpResponse response = IdpResponse.fromResultIntent(data);
 
             if (resultCode == RESULT_OK) {
                 // Successfully signed in
@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
                 // ...
             }
             else {
+                System.out.printf(String.valueOf(response.getError().getErrorCode()));
                 Toast.makeText(this,"sign in failed",Toast.LENGTH_LONG).show();
                 // Sign in failed. If response is null the user canceled the
                 // sign-in flow using the back button. Otherwise check
@@ -71,7 +72,12 @@ public class MainActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        updateUI(currentUser);
+        if(currentUser != null) {
+            updateUI(currentUser);
+        }
+        else {
+            super.onStart();
+        }
     }
 
     // temp UI update, will eventually take the user to a home screen where
@@ -83,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
             String userName = user.getDisplayName();
             DatabaseReference mRef = db.getReference().child("users").child(userName);
             mRef.child("uid").setValue(userId);
-            Toast.makeText(this,"Welcome!",Toast.LENGTH_LONG).show();
             startActivity(new Intent(this, Main_menu_view.class));
         }
         else {
@@ -113,35 +118,16 @@ public class MainActivity extends AppCompatActivity {
     });*/
 
 
-    /*public void gotoLoginView(View view) {
-        Intent intent = new Intent(this, Login_view.class);
-        startActivity(intent);
-    }*/
 
-    public void gotoPokedexView(View view) {
-        Intent intent = new Intent(this, PokedexView.class);
-        startActivity(intent);
-    }
-
-    public void gotoIndView(View view) {
-        Intent intent = new Intent(this, Individual_Pokemon_view.class);
-        startActivity(intent);
-    }
-
-    public void gotoRSSView(View view) {
-        Intent intent = new Intent(this, RSS_view.class);
-        startActivity(intent);
-    }
-
-
+    // this is the code for transitioning between views with the buttons on the bottom
     public void gotoAddView(View view) {
         Intent intent = new Intent(this, team_builder.class);
         startActivity(intent);
     }
 
     public void gotoDexView(View view) {
-        //Intent intent = new Intent(this, PokedexView.class);
-        //startActivity(intent);
+        Intent intent = new Intent(this, PokedexView.class);
+        startActivity(intent);
     }
 
     public void gotoNewsView(View view) {
