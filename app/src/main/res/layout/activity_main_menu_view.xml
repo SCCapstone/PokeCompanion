@@ -16,6 +16,55 @@
             android:layout_height="match_parent"
             tools:context=".MainActivity">
 
+            <ImageButton
+                android:id="@+id/homebutton"
+                android:layout_width="82dp"
+                android:layout_height="82dp"
+                android:onClick="gotoNewsView"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/pokedexbutton"
+                app:layout_constraintStart_toStartOf="parent"
+                app:srcCompat="@drawable/fui_ic_googleg_color_24dp" />
+
+            <ImageButton
+                android:id="@+id/pokedexbutton"
+                android:layout_width="82dp"
+                android:layout_height="82dp"
+                android:onClick="gotoDexView"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/addpkmnbutton"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/homebutton"
+                app:srcCompat="@drawable/fui_ic_facebook_white_22dp" />
+
+            <ImageButton
+                android:id="@+id/addpkmnbutton"
+                android:layout_width="82dp"
+                android:layout_height="82dp"
+                android:onClick="gotoAddView"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/yourpkmnbutton"
+                app:srcCompat="@android:drawable/btn_plus" />
+
+            <ImageButton
+                android:id="@+id/yourpkmnbutton"
+                android:layout_width="82dp"
+                android:layout_height="82dp"
+                android:onClick="gotoTeamView"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/settingsbutton"
+                app:srcCompat="@drawable/fui_ic_github_white_24dp" />
+
+            <ImageButton
+                android:id="@+id/settingsbutton"
+                android:layout_width="82dp"
+                android:layout_height="82dp"
+                android:onClick="gotoSettingsView"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:srcCompat="@android:drawable/ic_menu_set_as" />
+
+
             <TextView
                 android:id="@+id/Home_display"
                 android:layout_width="wrap_content"
@@ -25,24 +74,12 @@
                 android:textSize="30sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintHorizontal_bias="0.627"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.48" />
-
-            <Button
-                android:id="@+id/button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="124dp"
-                android:layout_marginRight="124dp"
-                android:layout_marginBottom="232dp"
-                android:onClick="gotoIndView"
-                android:text="@string/to_individual_view_button"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintVertical_bias="0.129" />
 
             <Button
                 android:id="@+id/button2"
@@ -57,18 +94,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.061" />
 
-            <Button
-                android:id="@+id/button3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="64dp"
-                android:layout_marginBottom="120dp"
-                android:onClick="gotoPokedexView"
-                android:text="GO TO POKEDEX VIEW"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/button" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
