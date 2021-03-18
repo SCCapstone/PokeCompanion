@@ -114,7 +114,7 @@ public class Individual_Pokemon_view extends AppCompatActivity {
 
         hpInput = (EditText)findViewById(R.id.hpInput);
         atkInput = (EditText)findViewById(R.id.atkInput);
-        defInput = (EditText)findViewById(R.id.defInput);
+        defInput = (EditText)findViewById(R.id.defenseInput);
         spdInput = (EditText)findViewById(R.id.spdInput);
         satkInput = (EditText)findViewById(R.id.satkInput);
         sdefInput = (EditText)findViewById(R.id.sdefInput);
