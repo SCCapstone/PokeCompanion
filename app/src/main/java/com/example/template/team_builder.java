@@ -92,20 +92,18 @@ public class team_builder extends AppCompatActivity {
         //databaseReference.push().setValue(pokemon);
     }
 
-    public void gotoAddView(View view) {
-        //Intent intent = new Intent(this, team_builder.class);
-        //startActivity(intent);
-    }
+
 
     public void submit(View view) {
 
     }
 
-
-
-
-
     // methods for going between the screens
+    public void gotoAddView(View view) {
+        //Intent intent = new Intent(this, team_builder.class);
+        //startActivity(intent);
+    }
+
     public void gotoDexView(View view) {
         Intent intent = new Intent(this, PokedexView.class);
         startActivity(intent);
@@ -117,7 +115,7 @@ public class team_builder extends AppCompatActivity {
     }
 
     public void gotoTeamView(View view) {
-        Intent intent = new Intent(this, Individual_Pokemon_view.class);
+        Intent intent = new Intent(this, PersonalDex.class);
         startActivity(intent);
     }
 
