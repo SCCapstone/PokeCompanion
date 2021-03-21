@@ -53,6 +53,8 @@ public class Main_menu_view extends AppCompatActivity {
         //startActivity(intent);
     }
 
+
+
     public void signOut(View view) {
         AuthUI.getInstance()
                 .signOut(this)

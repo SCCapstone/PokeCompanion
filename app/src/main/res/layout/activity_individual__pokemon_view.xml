@@ -56,7 +56,7 @@
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.156"
-        app:layout_constraintStart_toEndOf="@+id/defInput"
+        app:layout_constraintStart_toEndOf="@+id/defenseInput"
         app:layout_constraintTop_toBottomOf="@+id/satkInput" />
 
     <Button
@@ -93,7 +93,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.338"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/defInput"
+        app:layout_constraintTop_toBottomOf="@id/defenseInput"
         app:layout_constraintVertical_bias="0.191" />
 
     <Button
@@ -106,7 +106,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.336"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/defInput"
+        app:layout_constraintTop_toBottomOf="@+id/defenseInput"
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
@@ -136,7 +136,7 @@
         app:layout_constraintTop_toBottomOf="@+id/iv_sdef_num" />
 
     <EditText
-        android:id="@+id/defInput"
+        android:id="@+id/defenseInput"
         android:layout_width="128dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="72dp"
