@@ -59,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
                 // ...
             }
             else {
-                System.out.printf(String.valueOf(response.getError().getErrorCode()));
                 Toast.makeText(this,"sign in failed",Toast.LENGTH_LONG).show();
                 // Sign in failed. If response is null the user canceled the
                 // sign-in flow using the back button. Otherwise check
@@ -86,38 +85,18 @@ public class MainActivity extends AppCompatActivity {
         if(account != null){
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             String userId = user.getUid();
-            String userName = user.getDisplayName();
+            String userName = user.getEmail().replace('.', ',');
             DatabaseReference mRef = db.getReference().child("users").child(userName);
             mRef.child("uid").setValue(userId);
+            mRef.child("pokedex").child("pkm1").child("species").setValue("Pikachu");
+            mRef.child("pokedex").child("pkm2").setValue("dummy");
+
             startActivity(new Intent(this, Main_menu_view.class));
         }
         else {
             Toast.makeText(this,"something went wrong",Toast.LENGTH_LONG).show();
         }
     }
-
-   /* mAuth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-        @Override
-        public void onComplete(@NonNull Task<AuthResult> task) {
-            if (task.isSuccessful()) {
-                // Sign in success, update UI with the signed-in user's information
-                Log.d(TAG, "createUserWithEmail:success");
-                FirebaseUser user = mAuth.getCurrentUser();
-                updateUI(user);
-            } else {
-                // If sign in fails, display a message to the user.
-                Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                Toast.makeText(EmailPasswordActivity.this, "Authentication failed.",
-                        Toast.LENGTH_SHORT).show();
-                updateUI(null);
-            }
-
-            // ...
-        }
-    });*/
-
-
 
     // this is the code for transitioning between views with the buttons on the bottom
     public void gotoAddView(View view) {
