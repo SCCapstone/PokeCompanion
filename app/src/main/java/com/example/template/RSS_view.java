@@ -1,9 +1,13 @@
 package com.example.template;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,7 +30,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class RSS_view extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
@@ -43,19 +46,24 @@ public class RSS_view extends AppCompatActivity {
     private String mFeedDescription;
     private static final String TAG = "RSS_view";
 
+    ListView listView;
+    ArrayAdapter<String> arrAdapter;
+    ArrayList<String> arrList = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rss_view);
 
         // RecyclerView creates widgets that display useful information (ie: articles)
-        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        //Adding the navigation menu messed this up, will fix soon
+        /*mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         mEditText = (EditText) findViewById(R.id.rssFeedEditText);
         mFetchFeedButton = (Button) findViewById(R.id.fetchFeedButton);
         mSwipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
         mFeedTitleTextView = (TextView) findViewById(R.id.feedTitle);
         mFeedDescriptionTextView = (TextView) findViewById(R.id.feedDescription);
-        mFeedLinkTextView = (TextView) findViewById(R.id.feedLink);
+        mFeedLinkTextView = (TextView) findViewById(R.id.feedLink);*/
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -71,6 +79,55 @@ public class RSS_view extends AppCompatActivity {
                 new FetchFeed().execute((Void) null);
             }
         });
+
+        listView = (ListView)findViewById(R.id.listviewtxt);
+        arrAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, arrList);
+        listView.setAdapter(arrAdapter);
+        //Log.e("dsc", "data set is changing");
+        arrAdapter.notifyDataSetChanged();
+
+        // this occurs when the list is clicked, should route to add pokemon view of that pokemon
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String temp = arrList.get(position).substring(0, 3);
+                Intent intent = new Intent(getBaseContext(), team_builder.class);
+                intent.putExtra("pokemon", temp);
+                Toast.makeText(RSS_view.this, arrList.get(position)+"", Toast.LENGTH_SHORT).show();
+
+                startActivity(intent);
+                Toast.makeText(RSS_view.this, "past start activity", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+
+    }
+
+    // this is the code for transitioning between views with the buttons on the bottom
+    public void gotoAddView(View view) {
+        Intent intent = new Intent(this, team_builder.class);
+        startActivity(intent);
+    }
+
+    public void gotoDexView(View view) {
+        Intent intent = new Intent(this, PokedexView.class);
+        startActivity(intent);
+    }
+
+    public void gotoNewsView(View view) {
+        //Intent intent = new Intent(this, RSS_view.class);
+        //startActivity(intent);
+    }
+
+    public void gotoTeamView(View view) {
+        Intent intent = new Intent(this, PersonalDex.class);
+        startActivity(intent);
+    }
+
+    public void gotoSettingsView(View view) {
+        Intent intent = new Intent(this, Main_menu_view.class);
+        startActivity(intent);
     }
 
     public List<RssFeedModel> parseFeed(InputStream inputStream) throws XmlPullParserException, IOException {

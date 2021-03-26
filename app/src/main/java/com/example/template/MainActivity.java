@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == RC_SIGN_IN) {
-           // IdpResponse response = IdpResponse.fromResultIntent(data);
+            IdpResponse response = IdpResponse.fromResultIntent(data);
 
             if (resultCode == RESULT_OK) {
                 // Successfully signed in
@@ -71,7 +71,12 @@ public class MainActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        updateUI(currentUser);
+        if(currentUser != null) {
+            updateUI(currentUser);
+        }
+        else {
+            super.onStart();
+        }
     }
 
     // temp UI update, will eventually take the user to a home screen where
@@ -80,10 +85,12 @@ public class MainActivity extends AppCompatActivity {
         if(account != null){
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             String userId = user.getUid();
-            String userName = user.getDisplayName();
+            String userName = user.getEmail().replace('.', ',');
             DatabaseReference mRef = db.getReference().child("users").child(userName);
             mRef.child("uid").setValue(userId);
-            Toast.makeText(this,"Welcome!",Toast.LENGTH_LONG).show();
+            mRef.child("pokedex").child("pkm1").child("species").setValue("Pikachu");
+            mRef.child("pokedex").child("pkm2").setValue("dummy");
+
             startActivity(new Intent(this, Main_menu_view.class));
         }
         else {
@@ -91,49 +98,29 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-   /* mAuth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-        @Override
-        public void onComplete(@NonNull Task<AuthResult> task) {
-            if (task.isSuccessful()) {
-                // Sign in success, update UI with the signed-in user's information
-                Log.d(TAG, "createUserWithEmail:success");
-                FirebaseUser user = mAuth.getCurrentUser();
-                updateUI(user);
-            } else {
-                // If sign in fails, display a message to the user.
-                Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                Toast.makeText(EmailPasswordActivity.this, "Authentication failed.",
-                        Toast.LENGTH_SHORT).show();
-                updateUI(null);
-            }
-
-            // ...
-        }
-    });*/
-
-
-    /*public void gotoLoginView(View view) {
-        Intent intent = new Intent(this, Login_view.class);
+    // this is the code for transitioning between views with the buttons on the bottom
+    public void gotoAddView(View view) {
+        Intent intent = new Intent(this, team_builder.class);
         startActivity(intent);
-    }*/
+    }
 
-    public void gotoPokedexView(View view) {
+    public void gotoDexView(View view) {
         Intent intent = new Intent(this, PokedexView.class);
         startActivity(intent);
     }
 
-    public void gotoIndView(View view) {
-        Intent intent = new Intent(this, Individual_Pokemon_view.class);
-        startActivity(intent);
-    }
-
-    public void gotoRSSView(View view) {
+    public void gotoNewsView(View view) {
         Intent intent = new Intent(this, RSS_view.class);
         startActivity(intent);
     }
 
+    public void gotoTeamView(View view) {
+        Intent intent = new Intent(this, PersonalDex.class);
+        startActivity(intent);
+    }
 
-
-
+    public void gotoSettingsView(View view) {
+        Intent intent = new Intent(this, Main_menu_view.class);
+        startActivity(intent);
+    }
 }

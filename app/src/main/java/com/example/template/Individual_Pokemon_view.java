@@ -24,6 +24,7 @@
 
 package com.example.template;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
@@ -113,7 +114,7 @@ public class Individual_Pokemon_view extends AppCompatActivity {
 
         hpInput = (EditText)findViewById(R.id.hpInput);
         atkInput = (EditText)findViewById(R.id.atkInput);
-        defInput = (EditText)findViewById(R.id.defInput);
+        defInput = (EditText)findViewById(R.id.defenseInput);
         spdInput = (EditText)findViewById(R.id.spdInput);
         satkInput = (EditText)findViewById(R.id.satkInput);
         sdefInput = (EditText)findViewById(R.id.sdefInput);
@@ -402,6 +403,31 @@ public class Individual_Pokemon_view extends AppCompatActivity {
                 //showToast("HP: " + Integer.toString(baseStats.getHp()));
             }
         });
+    }
+
+    public void gotoAddView(View view) {
+        Intent intent = new Intent(this, team_builder.class);
+        startActivity(intent);
+    }
+
+    public void gotoDexView(View view) {
+        Intent intent = new Intent(this, PokedexView.class);
+        startActivity(intent);
+    }
+
+    public void gotoNewsView(View view) {
+        Intent intent = new Intent(this, RSS_view.class);
+        startActivity(intent);
+    }
+
+    public void gotoTeamView(View view) {
+        Intent intent = new Intent(this, PersonalDex.class);
+        startActivity(intent);
+    }
+
+    public void gotoSettingsView(View view) {
+        Intent intent = new Intent(this, Main_menu_view.class);
+        startActivity(intent);
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
