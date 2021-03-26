@@ -23,6 +23,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Button;
 
 import java.util.ArrayList;
 
@@ -57,6 +58,8 @@ public class team_builder extends AppCompatActivity {
     EditText spdInput;
     EditText satkInput;
     EditText sdefInput;
+    Button send;
+
 
 
     @Override
@@ -73,6 +76,8 @@ public class team_builder extends AppCompatActivity {
         spdInput = (EditText)findViewById(R.id.speedInput);
         satkInput = (EditText)findViewById(R.id.sattackInput);
         sdefInput = (EditText)findViewById(R.id.sdefenseInput);
+        send = (Button)findViewById(R.id.send);
+
 
         natureSpinner = (Spinner)findViewById(R.id.nature);
         abilitySpinner = (Spinner)findViewById(R.id.ability);
@@ -96,7 +101,7 @@ public class team_builder extends AppCompatActivity {
         abilityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         abilitySpinner.setAdapter(abilityAdapter);
 
-        //TODO repeat this method for each stat (Stat), level (pokemonUser), nickname (pokemonUser)
+        //Text Watcher for each stat edit text box
         hpInput.addTextChangedListener(new TextWatcher() {
             int temp;
             @Override
@@ -110,6 +115,96 @@ public class team_builder extends AppCompatActivity {
                     stats.setHp(Integer.parseInt(hpInput.getText().toString()));
                 } catch (NumberFormatException e) {
                     stats.setHp(0);
+                }
+
+            }
+        });
+
+        atkInput.addTextChangedListener(new TextWatcher() {
+            int temp;
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            public void afterTextChanged(Editable s) {
+                try {
+                    stats.setAtk(Integer.parseInt(atkInput.getText().toString()));
+                } catch (NumberFormatException e) {
+                    stats.setAtk(0);
+                }
+
+            }
+        });
+
+        defInput.addTextChangedListener(new TextWatcher() {
+            int temp;
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            public void afterTextChanged(Editable s) {
+                try {
+                    stats.setDef(Integer.parseInt(defInput.getText().toString()));
+                } catch (NumberFormatException e) {
+                    stats.setDef(0);
+                }
+
+            }
+        });
+
+        spdInput.addTextChangedListener(new TextWatcher() {
+            int temp;
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            public void afterTextChanged(Editable s) {
+                try {
+                    stats.setSpd(Integer.parseInt(spdInput.getText().toString()));
+                } catch (NumberFormatException e) {
+                    stats.setSpd(0);
+                }
+
+            }
+        });
+
+        satkInput.addTextChangedListener(new TextWatcher() {
+            int temp;
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            public void afterTextChanged(Editable s) {
+                try {
+                    stats.setSatk(Integer.parseInt(satkInput.getText().toString()));
+                } catch (NumberFormatException e) {
+                    stats.setSatk(0);
+                }
+
+            }
+        });
+
+        sdefInput.addTextChangedListener(new TextWatcher() {
+            int temp;
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            public void afterTextChanged(Editable s) {
+                try {
+                    stats.setSdef(Integer.parseInt(sdefInput.getText().toString()));
+                } catch (NumberFormatException e) {
+                    stats.setSdef(0);
                 }
 
             }
@@ -140,6 +235,8 @@ public class team_builder extends AppCompatActivity {
         });
     }*/
 
+
+
     private void addPokemon() {
         int temp = 0;
         //TODO level thing replace the 1, and replace the Base with the stat from the pokedex
@@ -152,12 +249,13 @@ public class team_builder extends AppCompatActivity {
 
     public void submit(View view) {
 
+
     }
 
     // methods for going between the screens
     public void gotoAddView(View view) {
-        //Intent intent = new Intent(this, team_builder.class);
-        //startActivity(intent);
+        Intent intent = new Intent(this, team_builder.class);
+        startActivity(intent);
     }
 
     public void gotoDexView(View view) {
