@@ -15,9 +15,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -25,10 +30,17 @@ public class team_builder extends AppCompatActivity {
 
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
+    pokemonUser pkmnUser;
+    Stats stats;
+    private final FirebaseDatabase fb = FirebaseDatabase.getInstance();
+    DatabaseReference db = fb.getReference();
+
     String pokemonName = "";
+    int currPkmnLevel;
+    int currPkmnBase;
     String[] natures = {"Hardy", "Lonely", "Brave", "Adamant", "Naughty", "Bold", "Docile", "Relaxed", "Impish", "Lax", "Timid", "Hasty",
                         "Serious", "Jolly", "Naive", "Modest", "Mild", "Quiet", "Bashful", "Rash", "Calm", "Gentle", "Sassy", "Careful", "Quirky"};
-    String[] abilities = {""};
+    String[] abilities = {"Overgrow", "Blaze", "Torrent"};
 
     Spinner natureSpinner;
     ArrayAdapter<String> natureAdapter;
@@ -36,28 +48,72 @@ public class team_builder extends AppCompatActivity {
     Spinner abilitySpinner;
     ArrayAdapter<String> abilityAdapter;
 
+    TextView topDisplay;
+
+    // all the edits texts so that we can set event listeners when they are changed
+    EditText hpInput;
+    EditText atkInput;
+    EditText defInput;
+    EditText spdInput;
+    EditText satkInput;
+    EditText sdefInput;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_team_builder);
+
+        topDisplay = (TextView)findViewById(R.id.topDisplay);
+        // all the edit texts have to be instantiated
+        hpInput = (EditText)findViewById(R.id.HPInput);
+        atkInput = (EditText)findViewById(R.id.attackInput);
+        defInput = (EditText)findViewById(R.id.defenseInput);
+        spdInput = (EditText)findViewById(R.id.speedInput);
+        satkInput = (EditText)findViewById(R.id.sattackInput);
+        sdefInput = (EditText)findViewById(R.id.sdefenseInput);
 
         natureSpinner = (Spinner)findViewById(R.id.nature);
         abilitySpinner = (Spinner)findViewById(R.id.ability);
 
-        abilities = getIntent().getStringArrayExtra("abilities");
-        pokemonName = getIntent().getStringExtra("pokemon");
+        if (!(getIntent().getStringArrayExtra("abilities") == null))
+            abilities = getIntent().getStringArrayExtra("abilities");
+
+
+        if (!(getIntent().getStringExtra("pokemon") == null)) {
+            pokemonName = getIntent().getStringExtra("pokemon");
+            topDisplay.setText(pokemonName);
+        }
 
         // setting up the spinner for the natures
         natureAdapter = new ArrayAdapter<String> (this, android.R.layout.simple_spinner_item, natures);
         natureAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         natureSpinner.setAdapter(natureAdapter);
 
-        /*// setting up the spinners for the abilities
+        // setting up the spinners for the abilities
         abilityAdapter = new ArrayAdapter<String> (this, android.R.layout.simple_spinner_item, abilities);
         abilityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        abilitySpinner.setAdapter(abilityAdapter);*/
+        abilitySpinner.setAdapter(abilityAdapter);
+
+        //TODO repeat this method for each stat (Stat), level (pokemonUser), nickname (pokemonUser)
+        hpInput.addTextChangedListener(new TextWatcher() {
+            int temp;
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            public void afterTextChanged(Editable s) {
+                try {
+                    stats.setHp(Integer.parseInt(hpInput.getText().toString()));
+                } catch (NumberFormatException e) {
+                    stats.setHp(0);
+                }
+
+            }
+        });
 
     }
 
@@ -84,28 +140,26 @@ public class team_builder extends AppCompatActivity {
         });
     }*/
 
-    private void insertPokemonData(){
-        //String stat = pokemon_stat.getText().toString();
+    private void addPokemon() {
+        int temp = 0;
+        //TODO level thing replace the 1, and replace the Base with the stat from the pokedex
+        if (temp < ((((2 * currPkmnBase + 0) * currPkmnLevel)/100) + currPkmnLevel + 10)) {
 
-        //Pokemon pokemon = new Pokemon(stat);
-
-        //databaseReference.push().setValue(pokemon);
+        }
     }
 
-    public void gotoAddView(View view) {
-        //Intent intent = new Intent(this, team_builder.class);
-        //startActivity(intent);
-    }
+
 
     public void submit(View view) {
 
     }
 
-
-
-
-
     // methods for going between the screens
+    public void gotoAddView(View view) {
+        //Intent intent = new Intent(this, team_builder.class);
+        //startActivity(intent);
+    }
+
     public void gotoDexView(View view) {
         Intent intent = new Intent(this, PokedexView.class);
         startActivity(intent);
@@ -117,7 +171,7 @@ public class team_builder extends AppCompatActivity {
     }
 
     public void gotoTeamView(View view) {
-        Intent intent = new Intent(this, Individual_Pokemon_view.class);
+        Intent intent = new Intent(this, PersonalDex.class);
         startActivity(intent);
     }
 
