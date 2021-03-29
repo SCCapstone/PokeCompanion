@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,7 +27,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Button;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class team_builder extends AppCompatActivity {
 
@@ -60,6 +64,8 @@ public class team_builder extends AppCompatActivity {
     EditText sdefInput;
     Button send;
 
+    int pokemonID;
+
 
 
     @Override
@@ -67,6 +73,8 @@ public class team_builder extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_team_builder);
+
+        stats = new Stats();
 
         topDisplay = (TextView)findViewById(R.id.topDisplay);
         // all the edit texts have to be instantiated
@@ -81,6 +89,8 @@ public class team_builder extends AppCompatActivity {
 
         natureSpinner = (Spinner)findViewById(R.id.nature);
         abilitySpinner = (Spinner)findViewById(R.id.ability);
+
+        pokemonID = getIntent().getIntExtra("pokemonID", 0);
 
         if (!(getIntent().getStringArrayExtra("abilities") == null))
             abilities = getIntent().getStringArrayExtra("abilities");
@@ -130,7 +140,7 @@ public class team_builder extends AppCompatActivity {
 
             public void afterTextChanged(Editable s) {
                 try {
-                    stats.setAtk(Integer.parseInt(atkInput.getText().toString()));
+                    stats.setAtk(Integer.parseInt(s.toString()));
                 } catch (NumberFormatException e) {
                     stats.setAtk(0);
                 }
@@ -259,8 +269,43 @@ public class team_builder extends AppCompatActivity {
     }
 
     public void gotoDexView(View view) {
-        Intent intent = new Intent(this, PokedexView.class);
-        startActivity(intent);
+        // Intent intent = new Intent(this, PokedexView.class);
+        // startActivity(intent);
+        int hp = stats.getHp();
+        int atk = stats.getAtk();
+        int def = stats.getDef();
+        int satk = stats.getSatk();
+        int sdef = stats.getSdef();
+        int spd = stats.getSpd();
+        System.out.println(hp + " " + atk);
+
+        Spinner spinner1 = (Spinner)findViewById(R.id.nature);
+        String nature = spinner1.getSelectedItem().toString();
+
+        Spinner spinner2 = (Spinner)findViewById(R.id.ability);
+        String ability = spinner2.getSelectedItem().toString();
+        System.out.println(nature + " " + ability);
+
+        EditText editLevel = (EditText)findViewById(R.id.level);
+        String level = editLevel.getText().toString();
+        System.out.println(level);
+
+        FirebaseDatabase db =  FirebaseDatabase.getInstance();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String userName = user.getEmail().replace('.', ',');
+        DatabaseReference mRef = db.getReference().child("users").child(userName);
+        // String pkmId = "pkm" + pokemonID;
+        String pkmId = pokemonName;
+
+        mRef.child("pokedex").child(pkmId).child("hp").setValue(hp);
+        mRef.child("pokedex").child(pkmId).child("atk").setValue(atk);
+        mRef.child("pokedex").child(pkmId).child("def").setValue(def);
+        mRef.child("pokedex").child(pkmId).child("satk").setValue(satk);
+        mRef.child("pokedex").child(pkmId).child("sdef").setValue(sdef);
+        mRef.child("pokedex").child(pkmId).child("spd").setValue(spd);
+        mRef.child("pokedex").child(pkmId).child("nature").setValue(nature);
+        mRef.child("pokedex").child(pkmId).child("ability").setValue(ability);
+        mRef.child("pokedex").child(pkmId).child("level").setValue(level);
     }
 
     public void gotoNewsView(View view) {
