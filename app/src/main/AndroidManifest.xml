@@ -35,6 +35,11 @@
             android:label="PokedexView"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".PersonalDex"
+            android:label="PersonalDex"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
