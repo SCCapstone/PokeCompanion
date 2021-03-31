@@ -50,14 +50,14 @@ public class team_builder extends AppCompatActivity {
         pokemonName = getIntent().getStringExtra("pokemon");
 
         // setting up the spinner for the natures
-        natureAdapter = new ArrayAdapter<String> (this, android.R.layout.simple_spinner_item, natures);
+        //natureAdapter = new ArrayAdapter<String> (this, android.R.layout.simple_spinner_item, natures);
         natureAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         natureSpinner.setAdapter(natureAdapter);
 
-        /*// setting up the spinners for the abilities
-        abilityAdapter = new ArrayAdapter<String> (this, android.R.layout.simple_spinner_item, abilities);
+        // setting up the spinners for the abilities
+        //abilityAdapter = new ArrayAdapter<String> (this, android.R.layout.simple_spinner_item, abilities);
         abilityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        abilitySpinner.setAdapter(abilityAdapter);*/
+        abilitySpinner.setAdapter(abilityAdapter);
 
     }
 
