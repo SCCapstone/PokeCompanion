@@ -77,8 +77,10 @@ public class PersonalDex extends AppCompatActivity {
                     Log.e("data", "reading from personal dex");
                     String currMon;
                     String currMonName = "";
-                    //TODO fix username to pull from database
-                    String userName = "jacobjletizia@gmail,com";
+                    String userName = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+                    userName = userName.replace('.', ',');
+                    Log.e("username", userName);
+
                     //Log.e("name", "user name: " + userName);
                     // this should return the number of pokemon the user currently have
                     // I am subtracting 2 because we populate each user with 2 dummy pokemon
