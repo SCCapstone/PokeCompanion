@@ -23,7 +23,7 @@
         android:layout_width="183dp"
         android:layout_height="48dp"
         android:layout_marginTop="100dp"
-        android:onClick="addPokemon"
+        android:onClick="goPickOne"
         android:text="Pick a Pokemon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.245"
@@ -52,12 +52,11 @@
         android:layout_marginLeft="60dp"
         android:layout_marginTop="180dp"
         android:ems="10"
+        android:hint="HP"
         android:inputType="numberDecimal"
-        android:hint="Name"
         android:textColor="#000000"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
- />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/speedInput"
@@ -67,8 +66,8 @@
         android:layout_marginEnd="60dp"
         android:layout_marginRight="60dp"
         android:ems="10"
+        android:hint="Speed"
         android:inputType="numberDecimal"
-        android:hint="Name"
         android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.666"
@@ -83,8 +82,8 @@
         android:layout_marginLeft="60dp"
         android:layout_marginTop="260dp"
         android:ems="10"
+        android:hint="Attack"
         android:inputType="numberDecimal"
-        android:hint="Name"
         android:textColor="#000000"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -97,11 +96,11 @@
         android:layout_marginLeft="60dp"
         android:layout_marginTop="330dp"
         android:ems="10"
+        android:hint="Defense"
         android:inputType="numberDecimal"
-        android:hint="Name"
         android:textColor="#000000"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/sdefenseInput"
@@ -111,13 +110,13 @@
         android:layout_marginEnd="60dp"
         android:layout_marginRight="60dp"
         android:ems="10"
+        android:hint="Special Defense"
         android:inputType="numberDecimal"
-        android:hint="Name"
         android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintStart_toEndOf="@+id/defenseInput"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/sattackInput"
@@ -127,8 +126,8 @@
         android:layout_marginEnd="60dp"
         android:layout_marginRight="60dp"
         android:ems="10"
+        android:hint="Special Attack"
         android:inputType="numberDecimal"
-        android:hint="Name"
         android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.666"
