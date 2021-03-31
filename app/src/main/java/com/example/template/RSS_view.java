@@ -55,15 +55,14 @@ public class RSS_view extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rss_view);
 
-        // RecyclerView creates widgets that display useful information (ie: articles)
-        //Adding the navigation menu messed this up, will fix soon
-        /*mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        // RecyclerView creates widgets that display articles
+        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         mEditText = (EditText) findViewById(R.id.rssFeedEditText);
         mFetchFeedButton = (Button) findViewById(R.id.fetchFeedButton);
-        mSwipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
+        //mSwipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
         mFeedTitleTextView = (TextView) findViewById(R.id.feedTitle);
         mFeedDescriptionTextView = (TextView) findViewById(R.id.feedDescription);
-        mFeedLinkTextView = (TextView) findViewById(R.id.feedLink);*/
+        mFeedLinkTextView = (TextView) findViewById(R.id.feedLink);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -73,14 +72,14 @@ public class RSS_view extends AppCompatActivity {
                 new FetchFeed().execute((Void) null);
             }
         });
-        mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        /*mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 new FetchFeed().execute((Void) null);
             }
-        });
+        });*/
 
-        listView = (ListView)findViewById(R.id.listviewtxt);
+        /*listView = (ListView)findViewById(R.id.listviewtxt);
         arrAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, arrList);
         listView.setAdapter(arrAdapter);
         //Log.e("dsc", "data set is changing");
@@ -99,7 +98,7 @@ public class RSS_view extends AppCompatActivity {
                 Toast.makeText(RSS_view.this, "past start activity", Toast.LENGTH_SHORT).show();
 
             }
-        });
+        });*/
 
 
     }
@@ -121,7 +120,7 @@ public class RSS_view extends AppCompatActivity {
     }
 
     public void gotoTeamView(View view) {
-        Intent intent = new Intent(this, Individual_Pokemon_view.class);
+        Intent intent = new Intent(this, PersonalDex.class);
         startActivity(intent);
     }
 
@@ -130,6 +129,7 @@ public class RSS_view extends AppCompatActivity {
         startActivity(intent);
     }
 
+    // The XML reader
     public List<RssFeedModel> parseFeed(InputStream inputStream) throws XmlPullParserException, IOException {
         String title = null;
         String link = null;
@@ -207,6 +207,7 @@ public class RSS_view extends AppCompatActivity {
 
         private String urlLink;
 
+        // Prepare reader to parse XML file
         @Override
         protected void onPreExecute() {
             mSwipeLayout.setRefreshing(true);
@@ -219,6 +220,7 @@ public class RSS_view extends AppCompatActivity {
             urlLink = mEditText.getText().toString();
         }
 
+        // Create hyperlinks
         @Override
         protected Boolean doInBackground(Void... voids) {
             if (TextUtils.isEmpty(urlLink))
@@ -240,6 +242,7 @@ public class RSS_view extends AppCompatActivity {
             return false;
         }
 
+        // Display feed info, ask for input
         @Override
         protected void onPostExecute(Boolean success) {
             mSwipeLayout.setRefreshing(false);

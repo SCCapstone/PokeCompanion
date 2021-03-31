@@ -15,7 +15,10 @@
             android:name=".team_builder"
             android:label="@string/title_activity_team_builder"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".RSS_view" />
+        <activity
+            android:name=".RSS_view"
+            android:label="@string/title_activity_rss_view"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".Login_view" />
         <activity
             android:name=".ui.login.LoginActivity"
@@ -33,6 +36,11 @@
         <activity
             android:name=".PokedexView"
             android:label="PokedexView"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".PersonalDex"
+            android:label="PersonalDex"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".MainActivity">

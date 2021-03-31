@@ -44,7 +44,7 @@ public class Main_menu_view extends AppCompatActivity {
     }
 
     public void gotoTeamView(View view) {
-        Intent intent = new Intent(this, Individual_Pokemon_view.class);
+        Intent intent = new Intent(this, PersonalDex.class);
         startActivity(intent);
     }
 

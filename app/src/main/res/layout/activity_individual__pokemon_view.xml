@@ -379,51 +379,54 @@
 
     <ImageButton
         android:id="@+id/homebutton"
-        android:layout_width="82dp"
-        android:layout_height="82dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="#3166B1"
         android:onClick="gotoNewsView"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/pokedexbutton"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/fui_ic_googleg_color_24dp" />
+        app:srcCompat="@mipmap/home_button_foreground" />
 
     <ImageButton
         android:id="@+id/pokedexbutton"
-        android:layout_width="82dp"
-        android:layout_height="82dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="#3166B1"
         android:onClick="gotoDexView"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/addpkmnbutton"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/homebutton"
-        app:srcCompat="@drawable/fui_ic_facebook_white_22dp" />
+        app:srcCompat="@mipmap/pokedex_button_foreground" />
 
     <ImageButton
         android:id="@+id/addpkmnbutton"
-        android:layout_width="82dp"
-        android:layout_height="82dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="#3166B1"
         android:onClick="gotoAddView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/yourpkmnbutton"
-        app:srcCompat="@android:drawable/btn_plus" />
+        app:layout_constraintStart_toEndOf="@+id/pokedexbutton"
+        app:srcCompat="@mipmap/addpokemon_button_foreground" />
 
     <ImageButton
         android:id="@+id/yourpkmnbutton"
-        android:layout_width="82dp"
-        android:layout_height="82dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="#3166B1"
         android:onClick="gotoTeamView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/settingsbutton"
-        app:srcCompat="@drawable/fui_ic_github_white_24dp" />
+        app:srcCompat="@mipmap/yourpokemon_button_foreground" />
 
     <ImageButton
         android:id="@+id/settingsbutton"
-        android:layout_width="82dp"
-        android:layout_height="82dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="#3166B1"
         android:onClick="gotoSettingsView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_set_as" />
+        app:srcCompat="@mipmap/settings_button_foreground" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

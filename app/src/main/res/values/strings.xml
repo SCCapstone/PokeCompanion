@@ -53,6 +53,8 @@
     <string name="feed_description">Description:</string>
     <string name="feed_link">Link:</string>
     <string name="feed_url">https://pokemondb.net/news/feed</string>
+    <string name="title_activity_rss_view">RSS_view</string>
+    <!--<string name="textInputLayout">textInputLayout</string>-->
 
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
@@ -64,5 +66,33 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="title_activity_team_builder">team_builder</string>
+
+    <string-array name = "natures_array">
+        <item>Hardy</item>
+        <item>Lonely</item>
+        <item>Brave</item>
+        <item>Adamant</item>
+        <item>Naughty</item>
+        <item>Bold</item>
+        <item>Docile</item>
+        <item>Relaxed</item>
+        <item>Impish</item>
+        <item>Lax</item>
+        <item>Timid</item>
+        <item>Hasty</item>
+        <item>Serious</item>
+        <item>Jolly</item>
+        <item>Naive</item>
+        <item>Modest</item>
+        <item>Mild</item>
+        <item>Quiet</item>
+        <item>Bashful</item>
+        <item>Rash</item>
+        <item>Calm</item>
+        <item>Gentle</item>
+        <item>Sassy</item>
+        <item>Careful</item>
+        <item>Quirky</item>
+    </string-array>
 
 </resources>
