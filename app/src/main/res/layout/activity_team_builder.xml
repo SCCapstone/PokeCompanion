@@ -3,102 +3,137 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/topDisplay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Choose Pokemon from the Pokedex"
+        android:textSize="22sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.456"
+        app:layout_constraintHorizontal_bias="0.571"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.085" />
+        app:layout_constraintVertical_bias="0.084" />
+
+    <Button
+        android:id="@+id/choosePokemon"
+        android:layout_width="183dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="100dp"
+        android:onClick="addPokemon"
+        android:text="Pick a Pokemon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.245"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/HPinput"
-        android:layout_width="105dp"
-        android:layout_height="25dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginBottom="480dp"
+        android:id="@+id/level"
+        android:layout_width="81dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="52dp"
+        android:layout_marginRight="52dp"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:inputType="numberDecimal"
+        android:hint="Level"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/HPInput"
+        android:layout_width="105dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="180dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:hint="Name"
+        android:textColor="#000000"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+ />
 
     <EditText
         android:id="@+id/speedInput"
         android:layout_width="105dp"
-        android:layout_height="25dp"
-        android:layout_marginTop="232dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="180dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginRight="60dp"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name"
+        android:inputType="numberDecimal"
+        android:hint="Name"
+        android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.104"
-        app:layout_constraintStart_toEndOf="@+id/HPinput"
+        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintStart_toEndOf="@+id/HPInput"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/attackInput"
         android:layout_width="105dp"
-        android:layout_height="25dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="36dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="260dp"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name"
+        android:inputType="numberDecimal"
+        android:hint="Name"
+        android:textColor="#000000"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/HPinput" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/defenseInput"
         android:layout_width="105dp"
-        android:layout_height="25dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginBottom="352dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="330dp"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:inputType="numberDecimal"
+        android:hint="Name"
+        android:textColor="#000000"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/sdefenseInput"
         android:layout_width="105dp"
-        android:layout_height="25dp"
-        android:layout_marginEnd="176dp"
-        android:layout_marginRight="176dp"
-        android:layout_marginBottom="352dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="330dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginRight="60dp"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:inputType="numberDecimal"
+        android:hint="Name"
+        android:textColor="#000000"
+        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintStart_toEndOf="@+id/defenseInput"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <EditText
         android:id="@+id/sattackInput"
         android:layout_width="105dp"
-        android:layout_height="25dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="260dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginRight="60dp"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name"
+        android:inputType="numberDecimal"
+        android:hint="Name"
+        android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.112"
+        app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintStart_toEndOf="@+id/attackInput"
-        app:layout_constraintTop_toBottomOf="@+id/speedInput" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/homebutton"
@@ -148,61 +183,51 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@android:drawable/ic_menu_set_as" />
 
-    <Button
-        android:id="@+id/submit"
-        android:layout_width="80dp"
-        android:layout_height="42dp"
-        android:layout_marginBottom="96dp"
-        android:onClick="gotoDexView"
-        android:text="Submit"
-        app:layout_constraintBottom_toBottomOf="@+id/addpkmnbutton"
+    <Spinner
+        android:id="@+id/nature"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="400dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/choosePokemon"
-        android:layout_width="183dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="132dp"
-        android:onClick="gotoDexView"
-        android:text="Pick a Pokemon"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.421"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
         android:id="@+id/ability"
-        android:layout_width="200dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
-        app:layout_constraintBottom_toTopOf="@+id/nature"
+        android:layout_marginTop="25dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nature" />
 
-    <Spinner
-        android:id="@+id/nature"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="212dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.454"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
-        android:id="@+id/level"
-        android:layout_width="81dp"
-        android:layout_height="42dp"
-        android:layout_marginTop="136dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name"
-        app:layout_constraintEnd_toEndOf="parent"
+    <Button
+        android:id="@+id/send"
+        android:layout_width="105dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="500dp"
+        android:text="Add"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:ems="10"
+        android:textColor="#000000"
+        android:id="@+id/submit"
+        android:layout_width="105dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="500dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginRight="60dp"
+        android:onClick="gotoDexView"
+        android:text="Submit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/send"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
