@@ -76,17 +76,38 @@ public class PersonalDex extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     Log.e("data", "reading from personal dex");
                     String currMon;
-                    String currMonName;
-                    String userName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
-                    Log.e("name", "user name: " + userName);
+                    String currMonName = "";
+                    //TODO fix username to pull from database
+                    String userName = "jacobjletizia@gmail,com";
+                    //Log.e("name", "user name: " + userName);
                     // this should return the number of pokemon the user currently have
+                    // I am subtracting 2 because we populate each user with 2 dummy pokemon
                     long numInDex = snapshot.child("users").child(userName).child("pokedex").getChildrenCount();
                     Log.e("dex number", "number of pokemon counted: " + numInDex);
+                    for (DataSnapshot ds: snapshot.child("users").child(userName).child("pokedex").getChildren()) {
+                        currMonName = ds.getKey();
+                        if (!currMonName.equals("pkm1"))
+                            if (!currMonName.equals("pkm2"))
+                                arrList.add(currMonName);
+                    }
+
+                    listView = (ListView)findViewById(R.id.listViewPersonalDex);
+                    arrayAdapter.notifyDataSetChanged();
                 }
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
                     Log.e("error","error reading");
+                }
+            });
+
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    String temp = arrList.get(position);
+                    Intent intent = new Intent(getBaseContext(), Individual_Pokemon_view.class);
+                    intent.putExtra("nickname", temp);
+                    Toast.makeText(PersonalDex.this, arrList.get(position) + "", Toast.LENGTH_LONG).show();
                 }
             });
         }

@@ -268,6 +268,11 @@ public class team_builder extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void goPickOne(View view) {
+        Intent intent = new Intent(this, PokedexView.class);
+        startActivity(intent);
+    }
+
     public void gotoDexView(View view) {
         // Intent intent = new Intent(this, PokedexView.class);
         // startActivity(intent);
