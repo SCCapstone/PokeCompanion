@@ -90,6 +90,11 @@ public class PersonalDex extends AppCompatActivity {
                             if (!currMonName.equals("pkm2"))
                                 arrList.add(currMonName);
                     }
+                    /*
+                    for (int i = 0; i < arrList.size(); i++) {
+                        String temp = arrList.get(i);
+                        Log.e("error", temp);
+                    }*/
 
                     listView = (ListView)findViewById(R.id.listViewPersonalDex);
                     arrayAdapter.notifyDataSetChanged();
