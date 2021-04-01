@@ -114,6 +114,7 @@ public class PersonalDex extends AppCompatActivity {
                     String temp = arrList.get(position);
                     Intent intent = new Intent(getBaseContext(), Individual_Pokemon_view.class);
                     intent.putExtra("nickname", temp);
+                    startActivity(intent);
                     Toast.makeText(PersonalDex.this, arrList.get(position) + "", Toast.LENGTH_LONG).show();
                 }
             });
