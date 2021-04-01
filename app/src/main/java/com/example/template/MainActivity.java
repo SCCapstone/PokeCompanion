@@ -52,9 +52,16 @@ public class MainActivity extends AppCompatActivity {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 updateUI(user);
 
-                DatabaseReference mRef = db.getReference().child("users").push();
                 String userId = user.getUid();
-                mRef.setValue(userId);
+                String userName = user.getEmail().replace('.', ',');
+                DatabaseReference mRef = db.getReference().child("users").child(userName);
+                mRef.child("uid").setValue(userId);
+                mRef.child("pokedex").child("pkm1").child("species").setValue("Pikachu");
+                mRef.child("pokedex").child("pkm2").setValue("dummy");
+
+                //DatabaseReference mRef = db.getReference().child("users").push();
+                //String userId = user.getUid();
+                //mRef.setValue(userId);
                 Toast.makeText(this, "sign in successful", Toast.LENGTH_LONG).show();
                 // ...
             }

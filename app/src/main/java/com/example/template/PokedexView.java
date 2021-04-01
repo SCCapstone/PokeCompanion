@@ -59,7 +59,7 @@ public class PokedexView extends AppCompatActivity {
         db.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Log.e("data", "entered onDataChange");
+                Log.e("data", "reading from pokedex");
                 // 'i' will represent our spot in the pokedex
                 String currMon;
                 String currMonName;
