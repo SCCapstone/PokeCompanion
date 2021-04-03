@@ -124,10 +124,10 @@ public class PokedexView extends AppCompatActivity {
                Intent intent = new Intent(getBaseContext(), team_builder.class);
                intent.putExtra("pokemon", temp);
                intent.putExtra("abilities", possibleAbilities);
-               Toast.makeText(PokedexView.this, arrList.get(position)+"", Toast.LENGTH_SHORT).show();
+               //Toast.makeText(PokedexView.this, arrList.get(position)+"", Toast.LENGTH_SHORT).show();
 
                startActivity(intent);
-               Toast.makeText(PokedexView.this, "past start activity", Toast.LENGTH_SHORT).show();
+               //Toast.makeText(PokedexView.this, "past start activity", Toast.LENGTH_SHORT).show();
 
            }
         });
