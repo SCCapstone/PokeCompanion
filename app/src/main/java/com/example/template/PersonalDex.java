@@ -79,18 +79,24 @@ public class PersonalDex extends AppCompatActivity {
                     String currMonName = "";
                     String userName = FirebaseAuth.getInstance().getCurrentUser().getEmail();
                     userName = userName.replace('.', ',');
-                    Log.e("username", userName);
+                    //Log.e("username", userName);
 
                     //Log.e("name", "user name: " + userName);
                     // this should return the number of pokemon the user currently have
                     // I am subtracting 2 because we populate each user with 2 dummy pokemon
                     long numInDex = snapshot.child("users").child(userName).child("pokedex").getChildrenCount();
-                    Log.e("dex number", "number of pokemon counted: " + numInDex);
+                    //Log.e("dex number", "number of pokemon counted: " + numInDex);
+                    int temp = 1;
                     for (DataSnapshot ds: snapshot.child("users").child(userName).child("pokedex").getChildren()) {
                         currMonName = ds.getKey();
                         if (!currMonName.equals("pkm1"))
-                            if (!currMonName.equals("pkm2"))
-                                arrList.add(currMonName);
+                            if (!currMonName.equals("pkm2")) {
+                                arrList.add("" + temp + ".\t" + currMonName);
+                                temp++;
+                                //Articuno
+                                //0123456
+                                Log.e("substring", currMonName.substring(3));
+                            }
                     }
                     /*
                     for (int i = 0; i < arrList.size(); i++) {
@@ -111,7 +117,9 @@ public class PersonalDex extends AppCompatActivity {
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    String temp = arrList.get(position);
+                    // 1. Mewtwo
+                    // 0123
+                    String temp = arrList.get(position).substring(3);
                     Intent intent = new Intent(getBaseContext(), Individual_Pokemon_view.class);
                     intent.putExtra("nickname", temp);
                     startActivity(intent);

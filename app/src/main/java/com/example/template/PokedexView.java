@@ -92,6 +92,7 @@ public class PokedexView extends AppCompatActivity {
                         abilities[i][2] = "none";
 
                     currMonName = (String)snapshot.child("Pokemon").child(currMon).child("Name").getValue();
+                    currMonName = (currMonName.substring(0,1).toUpperCase()) + currMonName.substring(1);
                     // add that pokemon to the array list
                     arrList.add(currMon + " " + currMonName);
                 }
