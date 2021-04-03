@@ -12,6 +12,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
+// in addition to being a pseudo main menu, this page functions as the settings page, and is accessed by pressing the cog button
 public class Main_menu_view extends AppCompatActivity {
     // the 5 views we want
     /*home/newsfeed
@@ -64,6 +65,12 @@ public class Main_menu_view extends AppCompatActivity {
                     }
                 });
         Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+
+    }
+
+    public void gotoFAQ(View view) {
+        Intent intent = new Intent(this, FAQ.class);
         startActivity(intent);
 
     }

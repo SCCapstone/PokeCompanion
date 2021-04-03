@@ -34,6 +34,11 @@
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".FAQ"
+            android:label="FAQ"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".PokedexView"
             android:label="PokedexView"
             android:parentActivityName=".MainActivity"

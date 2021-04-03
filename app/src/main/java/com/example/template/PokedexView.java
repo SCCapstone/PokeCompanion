@@ -92,8 +92,9 @@ public class PokedexView extends AppCompatActivity {
                         abilities[i][2] = "none";
 
                     currMonName = (String)snapshot.child("Pokemon").child(currMon).child("Name").getValue();
+                    currMonName = (currMonName.substring(0,1).toUpperCase()) + currMonName.substring(1);
                     // add that pokemon to the array list
-                    arrList.add(currMon + " " + currMonName);
+                    arrList.add(currMon + "\t\t" + currMonName);
                 }
                 //Log.e("firebase", "exiting dataChange");
                 listView = (ListView)findViewById(R.id.listviewtxt);
@@ -123,10 +124,10 @@ public class PokedexView extends AppCompatActivity {
                Intent intent = new Intent(getBaseContext(), team_builder.class);
                intent.putExtra("pokemon", temp);
                intent.putExtra("abilities", possibleAbilities);
-               Toast.makeText(PokedexView.this, arrList.get(position)+"", Toast.LENGTH_SHORT).show();
+               //Toast.makeText(PokedexView.this, arrList.get(position)+"", Toast.LENGTH_SHORT).show();
 
                startActivity(intent);
-               Toast.makeText(PokedexView.this, "past start activity", Toast.LENGTH_SHORT).show();
+               //Toast.makeText(PokedexView.this, "past start activity", Toast.LENGTH_SHORT).show();
 
            }
         });
