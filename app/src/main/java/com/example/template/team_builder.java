@@ -314,6 +314,9 @@ public class team_builder extends AppCompatActivity {
         mRef.child("pokedex").child(pkmId).child("nature").setValue(nature);
         mRef.child("pokedex").child(pkmId).child("ability").setValue(ability);
         mRef.child("pokedex").child(pkmId).child("level").setValue(level);
+
+        Intent intent = new Intent(this, PersonalDex.class);
+        startActivity(intent);
     }
 
     public void gotoNewsView(View view) {

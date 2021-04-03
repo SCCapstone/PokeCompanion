@@ -95,7 +95,6 @@ public class PersonalDex extends AppCompatActivity {
                                 temp++;
                                 //Articuno
                                 //0123456
-                                Log.e("substring", currMonName.substring(3));
                             }
                     }
                     /*
