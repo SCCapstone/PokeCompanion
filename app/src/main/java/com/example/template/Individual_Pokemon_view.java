@@ -29,6 +29,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -50,6 +51,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import static java.lang.Integer.parseInt;
 import static java.lang.Math.floor;
 
 public class Individual_Pokemon_view extends AppCompatActivity {
@@ -97,10 +99,6 @@ public class Individual_Pokemon_view extends AppCompatActivity {
     TextView ivSpdDisplay;
 
     Button statCalculation;
-    Button chooseGrowlithe;
-    Button chooseStaryu;
-    Button chooseCharizard;
-    Button chooseMew;
 
     TextView dispName;
 
@@ -122,17 +120,27 @@ public class Individual_Pokemon_view extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        if((getIntent().getStringExtra("nickname"))!=null) {
+        // whenever this page is accessed, we should get a nickname value from PersonalDex
+        if((getIntent().getStringExtra("nickname"))!=null)
             pokemonID = getIntent().getStringExtra("nickname");
-            //dexNum = dbRefDex.child(pokemonID).child("number").get().toString();
 
-            /*basePoke = dbRefBase.child(dexNum);
-            basePoke.notify();
-            dexPoke = dbRefDex.child(pokemonID);
-            dexNum.notify();*/
-        }
+        // whenever this page is accessed, we should also get all the stats for the pokemon that we are currently looking at
+        if(getIntent().getStringExtra("pkmnHP") != null)
+            currStats.setHp(parseInt(getIntent().getStringExtra("pkmnHP")));
+        if(getIntent().getStringExtra("pkmnSPD") != null)
+            currStats.setSpd(parseInt(getIntent().getStringExtra("pkmnSPD")));
+        if(getIntent().getStringExtra("pkmnATK") != null)
+            currStats.setAtk(parseInt(getIntent().getStringExtra("pkmnATK")));
+        if(getIntent().getStringExtra("pkmnDEF") != null)
+            currStats.setDef(parseInt(getIntent().getStringExtra("pkmnDEF")));
+        if(getIntent().getStringExtra("pkmnSATK") != null)
+            currStats.setSatk(parseInt(getIntent().getStringExtra("pkmnSATK")));
+        if(getIntent().getStringExtra("pkmnSDEF") != null)
+            currStats.setSdef(parseInt(getIntent().getStringExtra("pkmnSDEF")));
+        Log.e("stats", currStats.toString());
 
 
+        // assigning all of our views so that we can manipulate them later
         hpInput = (EditText)findViewById(R.id.hpInput);
         atkInput = (EditText)findViewById(R.id.atkInput);
         defInput = (EditText)findViewById(R.id.defenseInput);
@@ -140,6 +148,10 @@ public class Individual_Pokemon_view extends AppCompatActivity {
         satkInput = (EditText)findViewById(R.id.satkInput);
         sdefInput = (EditText)findViewById(R.id.sdefInput);
 
+
+        displayCurrStats();
+
+=======
          /* Commented out by JD to reduce data load from activity_individual__pokemon_view.xml
             2021 April 4
          baseHpDisplay = (TextView)findViewById(R.id.base_hp_num);
@@ -158,25 +170,31 @@ public class Individual_Pokemon_view extends AppCompatActivity {
          ivSpdDisplay = (TextView)findViewById(R.id.iv_speed_num);
 
         statCalculation = (Button)findViewById(R.id.calcStats);
-        //chooseGrowlithe = (Button)findViewById(R.id.chooseGrowlithe);
-        //chooseStaryu = (Button)findViewById(R.id.chooseStaryu);
-        //chooseCharizard = (Button)findViewById(R.id.chooseCharizard);
-        //chooseMew = (Button)findViewById(R.id.chooseMew);
 
         dispName = (TextView) findViewById(R.id.pokemon_name);
 
 
-
+        // accessing the user's stored pokemon information and getting the base stats
         dbRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 snap = snapshot;
-                //currStats = snap.child("users").child(userName).child("pokedex").child(pokemonID).child("stats").getValue(Stats.class);
-                dexNum = String.valueOf(snap.child("users").child(userName).child("pokedex").child(pokemonID).child("number").getValue());
-                //showToast(dexNum);
-                //baseStats = snap.child("Pokemon").child(dexNum).child("baseStats").getValue(Stats.class);
+                dexNum = (String)snap.child("users").child(userName).child("pokedex").child(pokemonID).child("number").getValue();
                 basePoke = dbRefBase.child(dexNum);
-                //showToast(basePoke.getKey());
+
+                // reading all the base stats from the database and converting them from longs to ints
+                Long tempAtk = (long)snapshot.child("Pokemon").child(dexNum).child("baseStats").child("atk").getValue();
+                baseStats.setAtk(tempAtk.intValue());
+                Long tempDef = (long)snapshot.child("Pokemon").child(dexNum).child("baseStats").child("def").getValue();
+                baseStats.setDef(tempDef.intValue());
+                Long tempHp = (long)snapshot.child("Pokemon").child(dexNum).child("baseStats").child("hp").getValue();
+                baseStats.setHp(tempHp.intValue());
+                Long tempSpd = (long)snapshot.child("Pokemon").child(dexNum).child("baseStats").child("spd").getValue();
+                baseStats.setSpd(tempSpd.intValue());
+                Long tempSatk = (long)snapshot.child("Pokemon").child(dexNum).child("baseStats").child("satk").getValue();
+                baseStats.setSatk(tempSatk.intValue());
+                Long tempSdef = (long)snapshot.child("Pokemon").child(dexNum).child("baseStats").child("sdef").getValue();
+                baseStats.setSdef(tempSdef.intValue());
 
                 dexPoke = dbRefDex.child(pokemonID);
 
@@ -188,29 +206,11 @@ public class Individual_Pokemon_view extends AppCompatActivity {
             }
         });
 
-
-
-        dexPoke.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                //showToast("dexpoke updated");
-                //currStats = snapshot.child("stats").getValue(Stats.class);
-                //displayCurrStats();
-                showToast(""+snapshot.getChildrenCount());
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(Individual_Pokemon_view.this,"Error: "+ error.getMessage(),Toast.LENGTH_SHORT).show();
-            }
-        });
         basePoke.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                //showToast("basePoke updated");
-                showToast(""+snapshot.getChildrenCount());
                 baseStats = snapshot.child("baseStats").getValue(Stats.class);
-                displayBaseStats();
+                //displayBaseStats();
             }
 
             @Override
@@ -224,7 +224,7 @@ public class Individual_Pokemon_view extends AppCompatActivity {
         displayCurrStats();
         //showToast("Current HP: "+ Integer.toString(currStats.getHp()));
         dispName.setText(pokemonID);
-        displayBaseStats();
+
 
 
 
@@ -238,7 +238,7 @@ public class Individual_Pokemon_view extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 try {
-                    dexPoke.child("stats").child("hp").setValue(Integer.parseInt(hpInput.getText().toString()));
+                    dexPoke.child("stats").child("hp").setValue(parseInt(hpInput.getText().toString()));
                 } catch (NumberFormatException e) {
                     dexPoke.child("stats").child("hp").setValue(0);
                 }
@@ -254,7 +254,7 @@ public class Individual_Pokemon_view extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 try {
-                    dexPoke.child("stats").child("atk").setValue(Integer.parseInt(atkInput.getText().toString()));
+                    dexPoke.child("stats").child("atk").setValue(parseInt(atkInput.getText().toString()));
                 } catch (NumberFormatException e) {
                     dexPoke.child("stats").child("atk").setValue(0);
                 }
@@ -270,7 +270,7 @@ public class Individual_Pokemon_view extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 try {
-                    dexPoke.child("stats").child("def").setValue(Integer.parseInt(defInput.getText().toString()));
+                    dexPoke.child("stats").child("def").setValue(parseInt(defInput.getText().toString()));
                 } catch (NumberFormatException e) {
                     dexPoke.child("stats").child("def").setValue(0);
                 }
@@ -286,7 +286,7 @@ public class Individual_Pokemon_view extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 try {
-                    dexPoke.child("stats").child("satk").setValue(Integer.parseInt(satkInput.getText().toString()));
+                    dexPoke.child("stats").child("satk").setValue(parseInt(satkInput.getText().toString()));
                 } catch (NumberFormatException e) {
                     dexPoke.child("stats").child("satk").setValue(0);
                 }
@@ -302,7 +302,7 @@ public class Individual_Pokemon_view extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 try {
-                    dexPoke.child("stats").child("sdef").setValue(Integer.parseInt(sdefInput.getText().toString()));
+                    dexPoke.child("stats").child("sdef").setValue(parseInt(sdefInput.getText().toString()));
                 } catch (NumberFormatException e) {
                     dexPoke.child("stats").child("sdef").setValue(0);
                 }
@@ -318,7 +318,7 @@ public class Individual_Pokemon_view extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 try {
-                    dexPoke.child("stats").child("spd").setValue(Integer.parseInt(spdInput.getText().toString()));
+                    dexPoke.child("stats").child("spd").setValue(parseInt(spdInput.getText().toString()));
                 } catch (NumberFormatException e) {
                     dexPoke.child("stats").child("spd").setValue(0);
                 }
@@ -329,12 +329,12 @@ public class Individual_Pokemon_view extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    HP = Integer.parseInt(hpInput.getText().toString());
-                    ATK = Integer.parseInt(atkInput.getText().toString());
-                    DEF = Integer.parseInt(defInput.getText().toString());
-                    SPD = Integer.parseInt(spdInput.getText().toString());
-                    SATK = Integer.parseInt(satkInput.getText().toString());
-                    SDEF = Integer.parseInt(sdefInput.getText().toString());
+                    HP = parseInt(hpInput.getText().toString());
+                    ATK = parseInt(atkInput.getText().toString());
+                    DEF = parseInt(defInput.getText().toString());
+                    SPD = parseInt(spdInput.getText().toString());
+                    SATK = parseInt(satkInput.getText().toString());
+                    SDEF = parseInt(sdefInput.getText().toString());
                 } catch (NumberFormatException e) {
                     e.printStackTrace();
                     showToast("Stat values cannot be empty!");
@@ -444,12 +444,12 @@ public class Individual_Pokemon_view extends AppCompatActivity {
     }
 
     private void displayCurrStats() {
-        hpInput.setText(Integer.toString(currStats.getHp()));
-        atkInput.setText(Integer.toString(currStats.getAtk()));
-        defInput.setText(Integer.toString(currStats.getDef()));
-        satkInput.setText(Integer.toString(currStats.getSatk()));
-        sdefInput.setText(Integer.toString(currStats.getSdef()));
-        spdInput.setText(Integer.toString(currStats.getSpd()));
+        hpInput.setText(currStats.getHp() + "");
+        atkInput.setText(currStats.getAtk() + "");
+        defInput.setText(currStats.getDef() + "");
+        satkInput.setText(currStats.getSatk() + "");
+        sdefInput.setText(currStats.getSdef() + "");
+        spdInput.setText(currStats.getSpd() + "");
     }
 
     public void gotoAddView(View view) {
