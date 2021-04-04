@@ -150,8 +150,6 @@ public class Individual_Pokemon_view extends AppCompatActivity {
 
 
         displayCurrStats();
-
-=======
          /* Commented out by JD to reduce data load from activity_individual__pokemon_view.xml
             2021 April 4
          baseHpDisplay = (TextView)findViewById(R.id.base_hp_num);
@@ -179,7 +177,7 @@ public class Individual_Pokemon_view extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 snap = snapshot;
-                dexNum = (String)snap.child("users").child(userName).child("pokedex").child(pokemonID).child("number").getValue();
+                dexNum = String.valueOf(snap.child("users").child(userName).child("pokedex").child(pokemonID).child("number").getValue());
                 basePoke = dbRefBase.child(dexNum);
 
                 // reading all the base stats from the database and converting them from longs to ints
