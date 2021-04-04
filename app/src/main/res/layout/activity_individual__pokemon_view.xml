@@ -15,6 +15,7 @@
         android:layout_marginTop="40dp"
         android:ems="10"
         android:hint="@string/hp_display"
+        android:textColorHint="#FFFFFF"
         android:importantForAutofill="no"
         android:inputType="number"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,6 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="72dp"
         android:layout_marginLeft="72dp"
+        android:textColorHint="#FFFFFF"
         android:ems="10"
         android:hint="@string/attack_display"
         android:importantForAutofill="no"
@@ -39,6 +41,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/sp_attack_display"
+        android:textColorHint="#FFFFFF"
         android:importantForAutofill="no"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
@@ -53,6 +56,7 @@
         android:ems="10"
         android:hint="@string/sp_defense_display"
         android:importantForAutofill="no"
+        android:textColorHint="#FFFFFF"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.156"
@@ -63,63 +67,11 @@
         android:id="@+id/calcStats"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="60dp"
         android:text="@string/calculate_stats"
         app:layout_constraintBottom_toTopOf="@+id/addpkmnbutton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chooseMew"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <Button
-        android:id="@+id/chooseStaryu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="208dp"
-        android:text="@string/staryu"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/chooseGrowlithe"
-        app:layout_constraintTop_toBottomOf="@id/sdefInput"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <Button
-        android:id="@+id/chooseCharizard"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/charizard"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.338"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/defenseInput"
-        app:layout_constraintVertical_bias="0.191" />
-
-    <Button
-        android:id="@+id/chooseGrowlithe"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="208dp"
-        android:text="@string/growlithe"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.336"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/defenseInput"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <Button
-        android:id="@+id/chooseMew"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/mew"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.637"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/chooseStaryu"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/spdInput"
@@ -129,6 +81,8 @@
         android:ems="10"
         android:hint="@string/speed_display"
         android:importantForAutofill="no"
+        android:textColorHint="#FFFFFF"
+
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.156"
@@ -141,6 +95,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="72dp"
         android:layout_marginLeft="72dp"
+        android:textColorHint="#FFFFFF"
         android:ems="10"
         android:hint="@string/defense_display"
         android:importantForAutofill="no"
