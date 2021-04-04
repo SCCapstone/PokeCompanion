@@ -119,10 +119,12 @@ public class PokedexView extends AppCompatActivity {
            @Override
            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                String temp = arrList.get(position).substring(4);
+
                //001 bulba
                //0123
                String tempID = arrList.get(position).substring(0,3);
                Log.e("tempID",tempID);
+
                int pokemonID = Integer.parseInt(arrList.get(position).substring(0,3));
                String[] possibleAbilities = abilities[pokemonID];
                Intent intent = new Intent(getBaseContext(), team_builder.class);

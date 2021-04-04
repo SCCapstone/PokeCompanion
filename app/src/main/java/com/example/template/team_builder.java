@@ -69,7 +69,9 @@ public class team_builder extends AppCompatActivity {
     EditText sdefInput;
     Button send;
 
+
     String pokemonIDs;
+
 
 
 
@@ -109,6 +111,7 @@ public class team_builder extends AppCompatActivity {
         Log.e("picture id", id + "");
 
         imageView.setImageResource(id);
+
 
         if (!(getIntent().getStringArrayExtra("abilities") == null))
             abilities = getIntent().getStringArrayExtra("abilities");
