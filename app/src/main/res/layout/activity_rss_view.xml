@@ -17,6 +17,7 @@
     <!--Displays list of news articles-->
 
     <!--Bottom menu buttons-->
+
     <ListView
         android:id="@android:id/list"
         style="@android:style/Widget.DeviceDefault.ExpandableListView"
@@ -29,7 +30,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.051" />
+        app:layout_constraintVertical_bias="0.021" />
 
     <ImageButton
         android:id="@+id/homebutton"
