@@ -88,12 +88,8 @@
         android:ems="10"
         android:hint="@string/speed_display"
         android:importantForAutofill="no"
-
-        android:textColorHint="#FFFFFF"
         android:textColor="#FFFFFF"
-
         android:inputType="number"
-
         android:textColorHint="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.156"
