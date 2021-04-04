@@ -119,11 +119,13 @@ public class PokedexView extends AppCompatActivity {
            @Override
            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                String temp = arrList.get(position).substring(4);
+               String tempID = arrList.get(position).substring(0,3);
                int pokemonID = Integer.parseInt(arrList.get(position).substring(0,3));
                String[] possibleAbilities = abilities[pokemonID];
                Intent intent = new Intent(getBaseContext(), team_builder.class);
                intent.putExtra("pokemon", temp);
                intent.putExtra("abilities", possibleAbilities);
+               intent.putExtra("pokemonID", tempID);
                //Toast.makeText(PokedexView.this, arrList.get(position)+"", Toast.LENGTH_SHORT).show();
 
                startActivity(intent);

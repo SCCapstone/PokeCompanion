@@ -64,7 +64,7 @@ public class team_builder extends AppCompatActivity {
     EditText sdefInput;
     Button send;
 
-    int pokemonID;
+    String pokemonID;
 
 
 
@@ -90,7 +90,8 @@ public class team_builder extends AppCompatActivity {
         natureSpinner = (Spinner)findViewById(R.id.nature);
         abilitySpinner = (Spinner)findViewById(R.id.ability);
 
-        pokemonID = getIntent().getIntExtra("pokemonID", 0);
+        if (!(getIntent().getStringExtra("pokemonID") == null))
+            pokemonID = getIntent().getStringExtra("pokemonID");
 
         if (!(getIntent().getStringArrayExtra("abilities") == null))
             abilities = getIntent().getStringArrayExtra("abilities");

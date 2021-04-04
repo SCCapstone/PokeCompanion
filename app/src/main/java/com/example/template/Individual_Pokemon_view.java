@@ -60,9 +60,10 @@ public class Individual_Pokemon_view extends AppCompatActivity {
     String userName = currUser.getEmail().replace('.', ',');
     DatabaseReference dbRefDex = db.getReference().child("users").child(userName).child("pokedex");
     DatabaseReference dbRefBase = db.getReference().child("Pokemon");
-
-    DatabaseReference basePoke;// = dbRefBase.child("058");
-    DatabaseReference dexPoke;// = dbRefDex.child("growlithe");
+    String dexNum = "001";
+    String pokemonID = "Bulbasaur";
+    DatabaseReference basePoke = dbRefBase.child(dexNum);
+    DatabaseReference dexPoke = dbRefDex.child(pokemonID);
 
 
 
@@ -71,7 +72,7 @@ public class Individual_Pokemon_view extends AppCompatActivity {
 
     pokemonUser displayMon;
 
-    String pokemonID;
+
     String pokemonName="";
 
     EditText hpInput;
@@ -123,6 +124,12 @@ public class Individual_Pokemon_view extends AppCompatActivity {
 
         if((getIntent().getStringExtra("nickname"))!=null) {
             pokemonID = getIntent().getStringExtra("nickname");
+            //dexNum = dbRefDex.child(pokemonID).child("number").get().toString();
+
+            /*basePoke = dbRefBase.child(dexNum);
+            basePoke.notify();
+            dexPoke = dbRefDex.child(pokemonID);
+            dexNum.notify();*/
         }
 
 
@@ -161,8 +168,15 @@ public class Individual_Pokemon_view extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 snap = snapshot;
-                currStats = snap.child("users").child(userName).child("pokedex").child(pokemonID).child("stats").getValue(Stats.class);
-                baseStats = snap.child("Pokemon").child("001").child("baseStats").getValue(Stats.class);
+                //currStats = snap.child("users").child(userName).child("pokedex").child(pokemonID).child("stats").getValue(Stats.class);
+                dexNum = String.valueOf(snap.child("users").child(userName).child("pokedex").child(pokemonID).child("number").getValue());
+                //showToast(dexNum);
+                //baseStats = snap.child("Pokemon").child(dexNum).child("baseStats").getValue(Stats.class);
+                basePoke = dbRefBase.child(dexNum);
+                //showToast(basePoke.getKey());
+
+                dexPoke = dbRefDex.child(pokemonID);
+
             }
 
             @Override
@@ -171,24 +185,15 @@ public class Individual_Pokemon_view extends AppCompatActivity {
             }
         });
 
-        basePoke = dbRefBase.child("001");
-        dexPoke = dbRefDex.child(pokemonID);
+
 
         dexPoke.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 //showToast("dexpoke updated");
-                currStats = snapshot.child("stats").getValue(Stats.class);
-                try {
-                    hpInput.setText(Integer.toString(currStats.getHp()));
-                    atkInput.setText(Integer.toString(currStats.getAtk()));
-                    defInput.setText(Integer.toString(currStats.getDef()));
-                    satkInput.setText(Integer.toString(currStats.getSatk()));
-                    sdefInput.setText(Integer.toString(currStats.getSdef()));
-                    spdInput.setText(Integer.toString(currStats.getSpd()));
-                } catch (NullPointerException e) {
-                    showToast("Null exception");
-                }
+                //currStats = snapshot.child("stats").getValue(Stats.class);
+                //displayCurrStats();
+                showToast(""+snapshot.getChildrenCount());
             }
 
             @Override
@@ -200,6 +205,7 @@ public class Individual_Pokemon_view extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 //showToast("basePoke updated");
+                showToast(""+snapshot.getChildrenCount());
                 baseStats = snapshot.child("baseStats").getValue(Stats.class);
                 displayBaseStats();
             }
@@ -212,16 +218,7 @@ public class Individual_Pokemon_view extends AppCompatActivity {
 
 
 
-        try {
-            hpInput.setText(Integer.toString(currStats.getHp()));
-            atkInput.setText(Integer.toString(currStats.getAtk()));
-            defInput.setText(Integer.toString(currStats.getDef()));
-            satkInput.setText(Integer.toString(currStats.getSatk()));
-            sdefInput.setText(Integer.toString(currStats.getSdef()));
-            spdInput.setText(Integer.toString(currStats.getSpd()));
-        } catch (NullPointerException e) {
-            showToast("Null exception");
-        }
+        displayCurrStats();
         //showToast("Current HP: "+ Integer.toString(currStats.getHp()));
         dispName.setText(pokemonID);
         displayBaseStats();
@@ -441,6 +438,15 @@ public class Individual_Pokemon_view extends AppCompatActivity {
                 //showToast("HP: " + Integer.toString(baseStats.getHp()));
             }
         });*/
+    }
+
+    private void displayCurrStats() {
+        hpInput.setText(Integer.toString(currStats.getHp()));
+        atkInput.setText(Integer.toString(currStats.getAtk()));
+        defInput.setText(Integer.toString(currStats.getDef()));
+        satkInput.setText(Integer.toString(currStats.getSatk()));
+        sdefInput.setText(Integer.toString(currStats.getSdef()));
+        spdInput.setText(Integer.toString(currStats.getSpd()));
     }
 
     public void gotoAddView(View view) {
