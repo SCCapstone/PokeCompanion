@@ -25,12 +25,12 @@
         android:layout_height="wrap_content"
         android:cacheColorHint="#FFFFFF"
         android:dividerHeight="1dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/addpkmnbutton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.021" />
+        app:layout_constraintVertical_bias="0.024" />
 
     <ImageButton
         android:id="@+id/homebutton"

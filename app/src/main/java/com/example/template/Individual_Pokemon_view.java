@@ -140,12 +140,15 @@ public class Individual_Pokemon_view extends AppCompatActivity {
         satkInput = (EditText)findViewById(R.id.satkInput);
         sdefInput = (EditText)findViewById(R.id.sdefInput);
 
+         /* Commented out by JD to reduce data load from activity_individual__pokemon_view.xml
+            2021 April 4
          baseHpDisplay = (TextView)findViewById(R.id.base_hp_num);
          baseAtkDisplay = (TextView)findViewById(R.id.base_atk_num);
          baseDefDisplay = (TextView)findViewById(R.id.base_def_num);
          baseSatkDisplay = (TextView)findViewById(R.id.base_satk_num);
          baseSdefDisplay = (TextView)findViewById(R.id.base_sdef_num);
          baseSpdDisplay = (TextView)findViewById(R.id.base_speed_num);
+         */
 
          ivHpDisplay = (TextView)findViewById(R.id.iv_hp_num);
          ivAtkDisplay = (TextView)findViewById(R.id.iv_atk_num);
