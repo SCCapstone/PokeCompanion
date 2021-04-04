@@ -94,7 +94,7 @@ public class PokedexView extends AppCompatActivity {
                     currMonName = (String)snapshot.child("Pokemon").child(currMon).child("Name").getValue();
                     currMonName = (currMonName.substring(0,1).toUpperCase()) + currMonName.substring(1);
                     // add that pokemon to the array list
-                    arrList.add(currMon + "\t\t" + currMonName);
+                    arrList.add(currMon + "\t" + currMonName);
                 }
                 //Log.e("firebase", "exiting dataChange");
                 listView = (ListView)findViewById(R.id.listviewtxt);

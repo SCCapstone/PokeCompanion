@@ -44,7 +44,7 @@ public class team_builder extends AppCompatActivity {
     int currPkmnLevel;
     int currPkmnBase;
     String[] natures = {"Hardy", "Lonely", "Brave", "Adamant", "Naughty", "Bold", "Docile", "Relaxed", "Impish", "Lax", "Timid", "Hasty",
-                        "Serious", "Jolly", "Naive", "Modest", "Mild", "Quiet", "Bashful", "Rash", "Calm", "Gentle", "Sassy", "Careful", "Quirky"};
+            "Serious", "Jolly", "Naive", "Modest", "Mild", "Quiet", "Bashful", "Rash", "Calm", "Gentle", "Sassy", "Careful", "Quirky"};
     String[] abilities = {"Overgrow", "Blaze", "Torrent"};
 
     Spinner natureSpinner;
@@ -237,10 +237,8 @@ public class team_builder extends AppCompatActivity {
                 ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(team_builder.this, R.layout.style_spinner, arrayList);
                 pokemon1.setAdapter(arrayAdapter);
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
     }*/
@@ -265,6 +263,11 @@ public class team_builder extends AppCompatActivity {
     // methods for going between the screens
     public void gotoAddView(View view) {
         Intent intent = new Intent(this, team_builder.class);
+        startActivity(intent);
+    }
+
+    public void goPickOne(View view) {
+        Intent intent = new Intent(this, PokedexView.class);
         startActivity(intent);
     }
 
