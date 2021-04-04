@@ -21,6 +21,10 @@
             android:name=".RSS_view"
             android:label="@string/title_activity_rss_view"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".RSSActivityBrowser"
+            android:label="@string/title_activity_rss_browser_view"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Login_view" />
         <activity
             android:name=".ui.login.LoginActivity"
