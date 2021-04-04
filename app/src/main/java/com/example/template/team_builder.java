@@ -1,5 +1,6 @@
 package com.example.template;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -26,6 +27,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Button;
+
+import android.widget.ImageView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -55,6 +58,8 @@ public class team_builder extends AppCompatActivity {
 
     TextView topDisplay;
 
+    ImageView imageView;
+
     // all the edits texts so that we can set event listeners when they are changed
     EditText hpInput;
     EditText atkInput;
@@ -64,7 +69,9 @@ public class team_builder extends AppCompatActivity {
     EditText sdefInput;
     Button send;
 
-    String pokemonID;
+
+    String pokemonIDs;
+
 
 
 
@@ -84,14 +91,27 @@ public class team_builder extends AppCompatActivity {
         spdInput = (EditText)findViewById(R.id.speedInput);
         satkInput = (EditText)findViewById(R.id.sattackInput);
         sdefInput = (EditText)findViewById(R.id.sdefenseInput);
-        send = (Button)findViewById(R.id.send);
+
+        imageView = (ImageView)findViewById((R.id.imageView));
 
 
         natureSpinner = (Spinner)findViewById(R.id.nature);
         abilitySpinner = (Spinner)findViewById(R.id.ability);
 
         if (!(getIntent().getStringExtra("pokemonID") == null))
-            pokemonID = getIntent().getStringExtra("pokemonID");
+            pokemonIDs = getIntent().getStringExtra("pokemonID");
+        else
+            pokemonIDs = "001";
+
+
+
+        String imageName = "icon" + pokemonIDs;
+        Context c = getApplicationContext();
+        int id = c.getResources().getIdentifier("drawable/" + imageName, null, c.getPackageName());
+        Log.e("picture id", id + "");
+
+        imageView.setImageResource(id);
+
 
         if (!(getIntent().getStringArrayExtra("abilities") == null))
             abilities = getIntent().getStringArrayExtra("abilities");
@@ -310,7 +330,7 @@ public class team_builder extends AppCompatActivity {
         mRef.child("pokedex").child(pkmId).child("ability").setValue(ability);
         mRef.child("pokedex").child(pkmId).child("level").setValue(level);
 
-        mRef.child("pokedex").child(pkmId).child("number").setValue(pokemonID);
+        mRef.child("pokedex").child(pkmId).child("number").setValue(pokemonIDs);
 
         Intent intent = new Intent(this, PersonalDex.class);
         startActivity(intent);
