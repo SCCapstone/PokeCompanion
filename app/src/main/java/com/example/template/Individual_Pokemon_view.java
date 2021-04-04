@@ -42,6 +42,8 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -54,16 +56,23 @@ public class Individual_Pokemon_view extends AppCompatActivity {
 
     private final FirebaseDatabase db = FirebaseDatabase.getInstance();
     DatabaseReference dbRef = db.getReference();
-    DatabaseReference dbRefDex = db.getReference().child("users").child("user_test").child("pokedex");
+    FirebaseUser currUser = FirebaseAuth.getInstance().getCurrentUser();
+    String userName = currUser.getEmail().replace('.', ',');
+    DatabaseReference dbRefDex = db.getReference().child("users").child(userName).child("pokedex");
     DatabaseReference dbRefBase = db.getReference().child("Pokemon");
 
-    DatabaseReference basePoke = dbRefBase.child("058");
-    DatabaseReference dexPoke = dbRefDex.child("growlithe");
+    DatabaseReference basePoke;// = dbRefBase.child("058");
+    DatabaseReference dexPoke;// = dbRefDex.child("growlithe");
+
+
 
     int HP, ATK, DEF, SPD, SATK, SDEF;
     double IRR_FACTOR = 0.85;
 
     pokemonUser displayMon;
+
+    String pokemonID;
+    String pokemonName="";
 
     EditText hpInput;
     EditText atkInput;
@@ -96,8 +105,8 @@ public class Individual_Pokemon_view extends AppCompatActivity {
 
     DataSnapshot snap;
 
-    Stats currStats;
-    Stats baseStats;
+    Stats currStats = new Stats(0,0,0,0,0,0);
+    Stats baseStats = new Stats(0,0,0,0,0,0);
     Stats evStats = new Stats(0, 0, 0, 0,0,0);
     Stats ivStats = new Stats(0, 0, 0, 0,0,0);
 
@@ -111,6 +120,11 @@ public class Individual_Pokemon_view extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+
+        if((getIntent().getStringExtra("nickname"))!=null) {
+            pokemonID = getIntent().getStringExtra("nickname");
+        }
+
 
         hpInput = (EditText)findViewById(R.id.hpInput);
         atkInput = (EditText)findViewById(R.id.atkInput);
@@ -134,18 +148,21 @@ public class Individual_Pokemon_view extends AppCompatActivity {
          ivSpdDisplay = (TextView)findViewById(R.id.iv_speed_num);
 
         statCalculation = (Button)findViewById(R.id.calcStats);
-        chooseGrowlithe = (Button)findViewById(R.id.chooseGrowlithe);
-        chooseStaryu = (Button)findViewById(R.id.chooseStaryu);
-        chooseCharizard = (Button)findViewById(R.id.chooseCharizard);
-        chooseMew = (Button)findViewById(R.id.chooseMew);
+        //chooseGrowlithe = (Button)findViewById(R.id.chooseGrowlithe);
+        //chooseStaryu = (Button)findViewById(R.id.chooseStaryu);
+        //chooseCharizard = (Button)findViewById(R.id.chooseCharizard);
+        //chooseMew = (Button)findViewById(R.id.chooseMew);
 
         dispName = (TextView) findViewById(R.id.pokemon_name);
+
 
 
         dbRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 snap = snapshot;
+                currStats = snap.child("users").child(userName).child("pokedex").child(pokemonID).child("stats").getValue(Stats.class);
+                baseStats = snap.child("Pokemon").child("001").child("baseStats").getValue(Stats.class);
             }
 
             @Override
@@ -153,6 +170,9 @@ public class Individual_Pokemon_view extends AppCompatActivity {
                 Toast.makeText(Individual_Pokemon_view.this,"Error: "+ error.getMessage(),Toast.LENGTH_SHORT).show();
             }
         });
+
+        basePoke = dbRefBase.child("001");
+        dexPoke = dbRefDex.child(pokemonID);
 
         dexPoke.addValueEventListener(new ValueEventListener() {
             @Override
@@ -189,6 +209,24 @@ public class Individual_Pokemon_view extends AppCompatActivity {
                 Toast.makeText(Individual_Pokemon_view.this,"Error: "+ error.getMessage(),Toast.LENGTH_SHORT).show();
             }
         });
+
+
+
+        try {
+            hpInput.setText(Integer.toString(currStats.getHp()));
+            atkInput.setText(Integer.toString(currStats.getAtk()));
+            defInput.setText(Integer.toString(currStats.getDef()));
+            satkInput.setText(Integer.toString(currStats.getSatk()));
+            sdefInput.setText(Integer.toString(currStats.getSdef()));
+            spdInput.setText(Integer.toString(currStats.getSpd()));
+        } catch (NullPointerException e) {
+            showToast("Null exception");
+        }
+        //showToast("Current HP: "+ Integer.toString(currStats.getHp()));
+        dispName.setText(pokemonID);
+        displayBaseStats();
+
+
 
         hpInput.addTextChangedListener(new TextWatcher() {
             @Override
@@ -302,15 +340,15 @@ public class Individual_Pokemon_view extends AppCompatActivity {
                     showToast("Stat values cannot be empty!");
                 }
 
-                ivHpDisplay.setText(Integer.toString(calculateHP(baseStats.getHp(), ivStats.getHp(), HP, 50)));
-                ivAtkDisplay.setText(Integer.toString(calculateIV(baseStats.getAtk(), ivStats.getAtk(), ATK, 50)));
-                ivDefDisplay.setText(Integer.toString(calculateIV(baseStats.getDef(), ivStats.getDef(), DEF, 50)));
-                ivSatkDisplay.setText(Integer.toString(calculateIV(baseStats.getSatk(), ivStats.getSatk(), SATK, 50)));
-                ivSdefDisplay.setText(Integer.toString(calculateIV(baseStats.getSdef(), ivStats.getSdef(), SDEF, 50)));
-                ivSpdDisplay.setText(Integer.toString(calculateIV(baseStats.getSpd(), ivStats.getSpd(), SPD, 50)));
+                ivHpDisplay.setText(Integer.toString(calculateHP(baseStats.getHp(), evStats.getHp(), HP, 50)));
+                ivAtkDisplay.setText(Integer.toString(calculateIV(baseStats.getAtk(), evStats.getAtk(), ATK, 50)));
+                ivDefDisplay.setText(Integer.toString(calculateIV(baseStats.getDef(), evStats.getDef(), DEF, 50)));
+                ivSatkDisplay.setText(Integer.toString(calculateIV(baseStats.getSatk(), evStats.getSatk(), SATK, 50)));
+                ivSdefDisplay.setText(Integer.toString(calculateIV(baseStats.getSdef(), evStats.getSdef(), SDEF, 50)));
+                ivSpdDisplay.setText(Integer.toString(calculateIV(baseStats.getSpd(), evStats.getSpd(), SPD, 50)));
             }
         });
-        chooseGrowlithe.setOnClickListener(new View.OnClickListener() {
+        /*chooseGrowlithe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 basePoke = dbRefBase.child("058");
@@ -402,7 +440,7 @@ public class Individual_Pokemon_view extends AppCompatActivity {
                 displayBaseStats();
                 //showToast("HP: " + Integer.toString(baseStats.getHp()));
             }
-        });
+        });*/
     }
 
     public void gotoAddView(View view) {

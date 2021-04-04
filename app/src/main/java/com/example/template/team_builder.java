@@ -106,6 +106,7 @@ public class team_builder extends AppCompatActivity {
         natureAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         natureSpinner.setAdapter(natureAdapter);
 
+
         // setting up the spinners for the abilities
         abilityAdapter = new ArrayAdapter<String> (this, android.R.layout.simple_spinner_item, abilities);
         abilityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -219,7 +220,9 @@ public class team_builder extends AppCompatActivity {
 
             }
         });
-
+        abilitySpinner.setAdapter(abilityAdapter);
+        abilityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        abilitySpinner.setAdapter(abilityAdapter);
     }
 
     // take the name of the pokemon (pokemonID) display it at the top and let them enter the values for their stats
@@ -311,6 +314,9 @@ public class team_builder extends AppCompatActivity {
         mRef.child("pokedex").child(pkmId).child("nature").setValue(nature);
         mRef.child("pokedex").child(pkmId).child("ability").setValue(ability);
         mRef.child("pokedex").child(pkmId).child("level").setValue(level);
+
+        Intent intent = new Intent(this, PersonalDex.class);
+        startActivity(intent);
     }
 
     public void gotoNewsView(View view) {
