@@ -14,7 +14,9 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".MainActivity">
+            tools:context=".MainActivity"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="-35dp">
 
             <ImageButton
                 android:id="@+id/homebutton"
@@ -77,37 +79,54 @@
                 android:textSize="30sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.531"
+                app:layout_constraintHorizontal_bias="0.053"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.089" />
+                app:layout_constraintVertical_bias="0.023" />
 
             <Button
                 android:id="@+id/button2"
-                android:layout_width="126dp"
-                android:layout_height="43dp"
+                android:layout_width="130dp"
+                android:layout_height="50dp"
+                android:background="#ff0000"
                 android:onClick="signOut"
                 android:text="Sign Out"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textColor="#ffffff"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.533"
+                app:layout_constraintHorizontal_bias="0.056"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.279" />
+                app:layout_constraintVertical_bias="0.367" />
 
             <Button
                 android:id="@+id/faqbutton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="130dp"
+                android:layout_height="50dp"
+                android:layout_marginBottom="384dp"
+                android:background="#566e3d"
                 android:onClick="gotoFAQ"
-                android:text="FAQ"
+                android:text="F.A.Q."
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 app:layout_constraintBottom_toTopOf="@+id/addpkmnbutton"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.056"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/button2" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.543" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="660dp"
+                android:background="@android:color/darker_gray"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/pub_date"
+                tools:layout_editor_absoluteX="0dp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
