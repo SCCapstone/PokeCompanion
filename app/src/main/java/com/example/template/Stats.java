@@ -62,4 +62,9 @@ public class Stats {
     public void setSpd(int spd) {
         this.spd = spd;
     }
+
+    public String toString() {
+        return "HP: " + this.hp + "\tSPD: " + this.spd + "\tATK: " + this.atk + "\tDEF: " + this.def +
+                "\tSATK: " + this.satk + "\tSDEF: " + this.sdef;
+    }
 }
