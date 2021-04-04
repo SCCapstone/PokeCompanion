@@ -106,7 +106,6 @@ public class team_builder extends AppCompatActivity {
         natureAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         natureSpinner.setAdapter(natureAdapter);
 
-
         // setting up the spinners for the abilities
         abilityAdapter = new ArrayAdapter<String> (this, android.R.layout.simple_spinner_item, abilities);
         abilityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -220,9 +219,7 @@ public class team_builder extends AppCompatActivity {
 
             }
         });
-        abilitySpinner.setAdapter(abilityAdapter);
-        abilityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        abilitySpinner.setAdapter(abilityAdapter);
+
     }
 
     // take the name of the pokemon (pokemonID) display it at the top and let them enter the values for their stats
@@ -271,14 +268,7 @@ public class team_builder extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void goPickOne(View view) {
-        Intent intent = new Intent(this, PokedexView.class);
-        startActivity(intent);
-    }
-
     public void gotoDexView(View view) {
-        // Intent intent = new Intent(this, PokedexView.class);
-        // startActivity(intent);
         int hp = stats.getHp();
         int atk = stats.getAtk();
         int def = stats.getDef();
@@ -305,15 +295,18 @@ public class team_builder extends AppCompatActivity {
         // String pkmId = "pkm" + pokemonID;
         String pkmId = pokemonName;
 
-        mRef.child("pokedex").child(pkmId).child("hp").setValue(hp);
-        mRef.child("pokedex").child(pkmId).child("atk").setValue(atk);
-        mRef.child("pokedex").child(pkmId).child("def").setValue(def);
-        mRef.child("pokedex").child(pkmId).child("satk").setValue(satk);
-        mRef.child("pokedex").child(pkmId).child("sdef").setValue(sdef);
-        mRef.child("pokedex").child(pkmId).child("spd").setValue(spd);
+        mRef.child("pokedex").child(pkmId).child("stats").child("hp").setValue(hp);
+        mRef.child("pokedex").child(pkmId).child("stats").child("atk").setValue(atk);
+        mRef.child("pokedex").child(pkmId).child("stats").child("def").setValue(def);
+        mRef.child("pokedex").child(pkmId).child("stats").child("satk").setValue(satk);
+        mRef.child("pokedex").child(pkmId).child("stats").child("sdef").setValue(sdef);
+        mRef.child("pokedex").child(pkmId).child("stats").child("spd").setValue(spd);
+
         mRef.child("pokedex").child(pkmId).child("nature").setValue(nature);
         mRef.child("pokedex").child(pkmId).child("ability").setValue(ability);
         mRef.child("pokedex").child(pkmId).child("level").setValue(level);
+
+        mRef.child("pokedex").child(pkmId).child("number").setValue(pokemonID);
 
         Intent intent = new Intent(this, PersonalDex.class);
         startActivity(intent);
