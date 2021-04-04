@@ -115,7 +115,7 @@
         android:layout_marginEnd="60dp"
         android:layout_marginRight="60dp"
         android:ems="10"
-        android:hint="Special Defense"
+        android:hint="Sp Defense"
         android:inputType="numberDecimal"
         android:textColor="#FFFFFF"
         android:textColorHint="#FFFFFF"
@@ -132,7 +132,7 @@
         android:layout_marginEnd="60dp"
         android:layout_marginRight="60dp"
         android:ems="10"
-        android:hint="Special Attack"
+        android:hint="Sp Attack"
         android:inputType="numberDecimal"
         android:textColor="#FFFFFF"
         android:textColorHint="#FFFFFF"
@@ -194,20 +194,21 @@
 
     <Spinner
         android:id="@+id/nature"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="400dp"
+        android:layout_width="185dp"
+        android:layout_height="26dp"
+        android:layout_marginTop="408dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.783"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
         android:id="@+id/ability"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
+        android:layout_width="185dp"
+        android:layout_height="26dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.783"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nature" />
 
@@ -238,5 +239,23 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toEndOf="@+id/send"
         />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="57dp"
+        android:layout_height="27dp"
+        android:text="Nature"
+        android:textSize="18sp"
+        tools:layout_editor_absoluteX="80dp"
+        tools:layout_editor_absoluteY="407dp" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Abilities"
+        android:textSize="18sp"
+        tools:layout_editor_absoluteX="80dp"
+        tools:layout_editor_absoluteY="452dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
