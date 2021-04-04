@@ -55,7 +55,7 @@
 
     <ImageButton
         android:id="@+id/addpkmnbutton"
-        android:layout_width="80dp"
+        android:layout_width="0dp"
         android:layout_height="80dp"
         android:background="#3166B1"
         android:onClick="gotoAddView"

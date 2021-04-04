@@ -67,9 +67,8 @@ Noah Jackson
 
 - Newsfeed
 
-    Accessed from the homepage using the "Newsfeed" button. Currently loads an RSS reader than can process XML files.
-    WIP: Retrieve feed from pokemondb.net
-    WIP: Display articles with clickable icons
+    Accessed from any page using the "home" button. Loads an RSS reader than displays articles from the pokemondb.net RSS feed.
+    Features an instance of Chrome within the app so users can read an article without opening the link in a separate browser application.
 
 - Settings
 

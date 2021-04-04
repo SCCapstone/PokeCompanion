@@ -54,6 +54,7 @@
     <string name="feed_link">Link:</string>
     <string name="feed_url">https://pokemondb.net/news/feed</string>
     <string name="title_activity_rss_view">RSS_view</string>
+    <string name="title_activity_rss_browser_view">RSSActivityBrowser</string>
     <!--<string name="textInputLayout">textInputLayout</string>-->
 
     <string name="title_activity_login">LoginActivity</string>

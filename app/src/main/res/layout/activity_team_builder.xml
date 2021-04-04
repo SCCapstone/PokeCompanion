@@ -40,7 +40,7 @@
         android:ems="10"
         android:inputType="numberDecimal"
         android:hint="Level"
-        android:textColor="#000000"
+        android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -54,7 +54,7 @@
         android:ems="10"
         android:hint="HP"
         android:inputType="numberDecimal"
-        android:textColor="#000000"
+        android:textColor="#FFFFFF"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -68,7 +68,7 @@
         android:ems="10"
         android:hint="Speed"
         android:inputType="numberDecimal"
-        android:textColor="#000000"
+        android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintStart_toEndOf="@+id/HPInput"
@@ -84,7 +84,7 @@
         android:ems="10"
         android:hint="Attack"
         android:inputType="numberDecimal"
-        android:textColor="#000000"
+        android:textColor="#FFFFFF"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -98,7 +98,7 @@
         android:ems="10"
         android:hint="Defense"
         android:inputType="numberDecimal"
-        android:textColor="#000000"
+        android:textColor="#FFFFFF"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -112,7 +112,7 @@
         android:ems="10"
         android:hint="Special Defense"
         android:inputType="numberDecimal"
-        android:textColor="#000000"
+        android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintStart_toEndOf="@+id/defenseInput"
@@ -128,7 +128,7 @@
         android:ems="10"
         android:hint="Special Attack"
         android:inputType="numberDecimal"
-        android:textColor="#000000"
+        android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintStart_toEndOf="@+id/attackInput"
@@ -149,14 +149,14 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:background="#3166B1"
-        android:onClick="gotoDexView"
+        android:onClick="goPickOne"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/homebutton"
         app:srcCompat="@mipmap/pokedex_button_foreground" />
 
     <ImageButton
         android:id="@+id/addpkmnbutton"
-        android:layout_width="80dp"
+        android:layout_width="0dp"
         android:layout_height="80dp"
         android:background="#3166B1"
         android:onClick="gotoAddView"
