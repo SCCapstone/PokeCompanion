@@ -141,7 +141,7 @@ public class RSS_view extends ListActivity {
 
             //lp.addRule(ConstraintLayout.CENTER_IN_PARENT);
             // rightMargin probably needs tweaking to display better
-            lp.rightMargin = 20;
+            lp.rightMargin = 2;
             pDialog.setLayoutParams(lp);
             pDialog.setVisibility(View.VISIBLE);
             //constraintLayout.addView(pDialog);
@@ -149,7 +149,7 @@ public class RSS_view extends ListActivity {
 
         @Override
         protected String doInBackground(String... args) {
-            // Set the actual RSS  url string from pokemondb.net
+            // Set the actual RSS url string from pokemondb.net
             String rss_url = "https://pokemondb.net/news/feed";
 
             // Set a list of all the RSS items

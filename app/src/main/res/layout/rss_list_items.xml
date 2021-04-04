@@ -27,12 +27,13 @@
         android:id="@+id/title"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="260dp"
+        android:layout_marginTop="16dp"
         android:paddingBottom="1dip"
         android:textColor="#212121"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -43,7 +44,7 @@
         android:layout_below="@id/title"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="164dp"
+        android:layout_marginTop="88dp"
         android:paddingBottom="3dip"
         android:textColor="#9b737775"
         android:textSize="14sp"
