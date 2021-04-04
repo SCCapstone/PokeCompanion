@@ -1,173 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >-->
+<!--JD Edwards  2021 April 4    CSCE 492
 
+    This file lets the user view the latest articles from the RSS feed in an organized list
+    Set by RSS_view.java
 
+    Created using Anupam Chugh's tutorial from:
+    https://www.journaldev.com/20126/android-rss-feed-app -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/constraintLayout"
+    android:orientation="vertical">
 
-    <!--Adding the navigation menu messes up this code since it's
-        constrained and not relative, will fix soon-->
-    <!--<Button
-        android:id="@+id/fetchFeedButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="14dp"
-        android:text="@string/fetch_url"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="14dp" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout"
+    <!--Displays list of news articles-->
+    <ListView
+        android:id="@android:id/list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="0dp"
-        android:layout_toStartOf="@id/fetchFeedButton"
-        android:hint="@string/feed_source"
-        android:text="@string/feed_source"
-        android:layout_marginRight="0dp"
-        android:layout_toLeftOf="@id/fetchFeedButton">
-
-        <EditText
-            android:id="@+id/rssFeedEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <TextView
-        android:id="@+id/feedTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textInputLayout"
-        android:layout_marginTop="82dp"
-        android:text="@string/feed_title" />
-
-    <TextView
-        android:id="@+id/feedDescription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/feedTitle"
-        android:text="@string/feed_description" />
-
-    <TextView
-        android:id="@+id/feedLink"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/feedDescription"
-        android:text="@string/feed_link" />
-        -->
-
-    <!--</RelativeLayout>-->
-
-    <!--<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipeRefreshLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/feedLink"
-        tools:layout_editor_absoluteX="88dp"
-        tools:layout_editor_absoluteY="300dp">-->
-    <!--android:layout_marginTop="@dimen/activity_vertical_margin">-->
-
-    <!--<androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>-->
-
-    <!--<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/swipeRefreshLayout"
-            android:layout_width="321dp"
-            android:layout_height="455dp"
-            android:layout_below="@id/feedLink"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/feedLink">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>-->
-
-    <TextView
-        android:id="@+id/feedDescription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/feedTitle"
-        android:layout_marginStart="40dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="4dp"
-        android:text="@string/feed_description"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/feedTitle" />
-
-    <TextView
-        android:id="@+id/feedLink"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/feedDescription"
-        android:layout_marginStart="40dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/feed_link"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/feedDescription" />
-
-    <TextView
-        android:id="@+id/feedTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="20dp"
-        android:text="@string/feed_title"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rssFeedEditText" />
-
-    <Button
-        android:id="@+id/fetchFeedButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="28dp"
-        android:text="@string/fetch_url"
+        android:dividerHeight="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/rssFeedEditText"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/rssFeedEditText"
-        android:layout_width="266dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="36dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.184" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="50dp"
-        android:layout_height="202dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="12dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/feedLink" />
-
+    <!--Bottom menu buttons-->
     <ImageButton
         android:id="@+id/homebutton"
         android:layout_width="80dp"

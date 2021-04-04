@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--JD Edwards  2021 April 4    CSCE 492
+
+    This file lets the user view an individual article within the app
+    Set by RSSActivityBrowser.java
+
+    Created using Anupam Chugh's tutorial from:
+    https://www.journaldev.com/20126/android-rss-feed-app -->
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Make a scrollable window so the user can read the entire article -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <!-- Display the article contents from webView -->
+        <WebView
+            android:id="@+id/webView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
