@@ -38,6 +38,10 @@ public class team_builder extends AppCompatActivity {
 
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
+    /*
+    Declarations
+     */
+
     pokemonUser pkmnUser;
     Stats stats;
     private final FirebaseDatabase fb = FirebaseDatabase.getInstance();
