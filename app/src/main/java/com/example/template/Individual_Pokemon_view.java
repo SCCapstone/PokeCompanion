@@ -24,6 +24,7 @@
 
 package com.example.template;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -35,6 +36,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -76,6 +78,8 @@ public class Individual_Pokemon_view extends AppCompatActivity {
 
 
     String pokemonName="";
+
+    ImageView imageView;
 
     EditText hpInput;
     EditText atkInput;
@@ -139,6 +143,17 @@ public class Individual_Pokemon_view extends AppCompatActivity {
             currStats.setSdef(parseInt(getIntent().getStringExtra("pkmnSDEF")));
         Log.e("stats", currStats.toString());
 
+        // the following chunk of code is for the sprite that will appear in the top left
+        String picID = "icon001";
+        if(getIntent().getStringExtra("pictureID") != null) {
+            picID = getIntent().getStringExtra("pictureID");
+            Log.e("picID", picID);
+        }
+        imageView = findViewById(R.id.spriteDisplay);
+        // the picture name is passed to us, but we still have to access the android studio designated ID
+        Context c = getApplicationContext();
+        int id = c.getResources().getIdentifier("drawable/" + picID, null, c.getPackageName());
+        imageView.setImageResource(id);
 
         // assigning all of our views so that we can manipulate them later
         hpInput = (EditText)findViewById(R.id.hpInput);

@@ -44,6 +44,7 @@ public class PersonalDex extends AppCompatActivity {
     ListView listView;
 
     ArrayList<Stats> pokemonStats = new ArrayList<>();
+    ArrayList<String> pokemonIDs = new ArrayList<>();
 
     // we will use an ArrayList in our listview because users can add and subtract pokemon, so the size must be changable
     ArrayList<String> arrList = new ArrayList<>();
@@ -109,6 +110,9 @@ public class PersonalDex extends AppCompatActivity {
                                 Long tempSdef = (long)ds.child("stats").child("sdef").getValue();
                                 tempStats.setSdef(tempSdef.intValue());
 
+                                String tempID = (String)ds.child("number").getValue();
+                                pokemonIDs.add(tempID);
+
                                 pokemonStats.add(tempStats);
                                 arrList.add("" + temp + ".\t" + currMonName);
                                 temp++;
@@ -146,6 +150,8 @@ public class PersonalDex extends AppCompatActivity {
                     intent.putExtra("pkmnSDEF",pokemonStats.get(position).getSdef() + "");
 
                     intent.putExtra("nickname", temp);
+                    String tempID = pokemonIDs.get(position);
+                    intent.putExtra("pictureID", "icon" + tempID);
                     startActivity(intent);
                     Toast.makeText(PersonalDex.this, arrList.get(position) + "", Toast.LENGTH_LONG).show();
                 }
