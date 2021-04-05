@@ -86,15 +86,27 @@
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="256dp"
-        android:layout_height="71dp"
+        android:layout_width="255dp"
+        android:layout_height="52dp"
         android:text="Pokedex"
         android:textSize="40sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.701"
+        app:layout_constraintHorizontal_bias="0.109"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/linearLayout"
-        app:layout_constraintVertical_bias="0.019" />
+        app:layout_constraintVertical_bias="0.023" />
+
+    <!-- JD 2021 April 5
+        Added this bar separator and justified above text to the left -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="12dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintBottom_toTopOf="@+id/listviewtxt"
+        app:layout_constraintTop_toBottomOf="@+id/pub_date"
+        tools:layout_editor_absoluteX="6dp" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -29,6 +29,10 @@ public class Main_menu_view extends AppCompatActivity {
     }
 
     // this is the code for transitioning between views with the buttons on the bottom
+    /*  ===============================================================================================
+        Should these buttons be edited so the newsView is commented out instead of the settingsView?
+        - JD Edwards 2021 April 5
+     *  ============================================================================================ */
     public void gotoAddView(View view) {
         Intent intent = new Intent(this, team_builder.class);
         startActivity(intent);
