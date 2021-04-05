@@ -1,24 +1,16 @@
 /*
  * Sample Android app for Capstone Research Milestone
- * Weighted average Pokemon Stat calculator
- *      Written by Nicholas Mueller
+ * PokeCompanion
+ * This app is a companion app for any main series Pokemon video game.
+ * Features
+ * Allows users to track their Pokemon's growth throughout their playthough so they can see the strengths and weaknesses it develops
+ * Allows users to predict how they will continue to grow
+ * Assists the user throughout their playthough by offering bits of advice concerning how to raise their Pokemon
+ * Provides an easy way to theorycraft and plan their perfect team for their game
  *
- *      This simple app takes a series of 6 numbers from the user
- *      these values represent a Pokemon's Individual Values, a
- *      set of numbers ranging from 0-31 which set a baseline for
- *      that Pokemon's respective manifested stat.
- *
- *      As an average, the number is meant to show a generalized value
- *      to represent the overall potential of the Pokemon; however, in nearly
- *      all cases, a Pokemon will only ever use either its Attack or Sp. Attack
- *      stat, whichever is higher. Therefore, by including an irrelevant number
- *      to a running average, the effective average stat is fluffed out to appear
- *      either worse or better than the Pokemon will become in practice.
- *
- *      This app makes a simple comparison to determine if the Attack and Sp. Attack
- *      differ by a factor greater than 15% of the greater stat. If so, the weaker stat
- *      is removed from the calculation, and the Pokemon's new weighted average stat is
- *      displayed.
+ * Invdividual Pokemon Detailed View
+ * This page allows users to edit the stats of Pokemon they have already created, to reflect change which will occur in-game.
+ * At any point, the user can calculate their Pokemon's hidden stat determinants known as IVs to gain insight about their Pokemon's Stats
  *
  */
 
@@ -63,11 +55,19 @@ import static java.lang.Math.floor;
 public class Individual_Pokemon_view extends AppCompatActivity {
 
     private final FirebaseDatabase db = FirebaseDatabase.getInstance();
+
+    /* ===============================
+     * Declaring Database references for data retrieval and manipulation
+     * =============================== */
     DatabaseReference dbRef = db.getReference();
     FirebaseUser currUser = FirebaseAuth.getInstance().getCurrentUser();
     String userName = currUser.getEmail().replace('.', ',');
     DatabaseReference dbRefDex = db.getReference().child("users").child(userName).child("pokedex");
     DatabaseReference dbRefBase = db.getReference().child("Pokemon");
+
+    /* ===============================
+     * Setting Default Values of most values
+     * =============================== */
     String dexNum = "001";
     String pokemonID = "Bulbasaur";
     String nature = "Hardy";
@@ -75,13 +75,19 @@ public class Individual_Pokemon_view extends AppCompatActivity {
     DatabaseReference basePoke = dbRefBase.child(dexNum);
     DatabaseReference dexPoke = dbRefDex.child(pokemonID);
 
-
+    Stats currStats = new Stats(0,0,0,0,0,0);
+    Stats baseStats = new Stats(0,0,0,0,0,0);
+    Stats evStats = new Stats(0, 0, 0, 0,0,0);
+    Stats ivStats = new Stats(0, 0, 0, 0,0,0);
 
     int HP, ATK, DEF, SPD, SATK, SDEF;
     double IRR_FACTOR = 0.85;
 
     pokemonUser displayMon;
 
+    /* ===============================
+     * Declaring Variables which will link to the elements on-screen. They must be declared beforehand to avoid nullPointerExceptions
+     * =============================== */
 
     String pokemonName="";
 
@@ -114,14 +120,16 @@ public class Individual_Pokemon_view extends AppCompatActivity {
 
     DataSnapshot snap;
 
-    Stats currStats = new Stats(0,0,0,0,0,0);
-    Stats baseStats = new Stats(0,0,0,0,0,0);
-    Stats evStats = new Stats(0, 0, 0, 0,0,0);
-    Stats ivStats = new Stats(0, 0, 0, 0,0,0);
+
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        /* ===============================
+         * Main Method of the App.
+         * All functional code occurs within this block
+         * Beginning with the initialization of the values which rely on data from the database
+         * =============================== */
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_individual__pokemon_view);
         //Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
@@ -130,11 +138,12 @@ public class Individual_Pokemon_view extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        // whenever this page is accessed, we should get a nickname value from PersonalDex
+        /* ===============================
+         * This screen is only accessible by selecting a Pokemon from  your personal Pokedex
+         * Data from that screen must be accessed by pulling extra data sent via intent switching
+         * =============================== */
         if((getIntent().getStringExtra("nickname"))!=null)
             pokemonID = getIntent().getStringExtra("nickname");
-
-        // whenever this page is accessed, we should also get all the stats for the pokemon that we are currently looking at
         if(getIntent().getStringExtra("pkmnHP") != null)
             currStats.setHp(parseInt(getIntent().getStringExtra("pkmnHP")));
         if(getIntent().getStringExtra("pkmnSPD") != null)
@@ -149,7 +158,9 @@ public class Individual_Pokemon_view extends AppCompatActivity {
             currStats.setSdef(parseInt(getIntent().getStringExtra("pkmnSDEF")));
         Log.e("stats", currStats.toString());
 
-        // the following chunk of code is for the sprite that will appear in the top left
+        /* ===============================
+         * Setting the value of the Icon which will display the Minisprite of the Pokemon
+         * =============================== */
         String picID = "icon001";
         if(getIntent().getStringExtra("pictureID") != null) {
             picID = getIntent().getStringExtra("pictureID");
@@ -161,7 +172,9 @@ public class Individual_Pokemon_view extends AppCompatActivity {
         int id = c.getResources().getIdentifier("drawable/" + picID, null, c.getPackageName());
         imageView.setImageResource(id);
 
-        // assigning all of our views so that we can manipulate them later
+        /* ===============================
+         * Linking the Editable text boxes on-screen to the values corresponding
+         * =============================== */
         hpInput = (EditText)findViewById(R.id.hpInput);
         atkInput = (EditText)findViewById(R.id.atkInput);
         defInput = (EditText)findViewById(R.id.defenseInput);
@@ -169,31 +182,35 @@ public class Individual_Pokemon_view extends AppCompatActivity {
         satkInput = (EditText)findViewById(R.id.satkInput);
         sdefInput = (EditText)findViewById(R.id.sdefInput);
 
-
+        /* ===============================
+         * Link to method which sets text in text boxes to the current stats stored in the database
+         * =============================== */
         displayCurrStats();
-         /* Commented out by JD to reduce data load from activity_individual__pokemon_view.xml
-            2021 April 4
-         baseHpDisplay = (TextView)findViewById(R.id.base_hp_num);
-         baseAtkDisplay = (TextView)findViewById(R.id.base_atk_num);
-         baseDefDisplay = (TextView)findViewById(R.id.base_def_num);
-         baseSatkDisplay = (TextView)findViewById(R.id.base_satk_num);
-         baseSdefDisplay = (TextView)findViewById(R.id.base_sdef_num);
-         baseSpdDisplay = (TextView)findViewById(R.id.base_speed_num);
-         */
 
-         ivHpDisplay = (TextView)findViewById(R.id.iv_hp_num);
-         ivAtkDisplay = (TextView)findViewById(R.id.iv_atk_num);
-         ivDefDisplay = (TextView)findViewById(R.id.iv_def_num);
-         ivSatkDisplay = (TextView)findViewById(R.id.iv_satk_num);
-         ivSdefDisplay = (TextView)findViewById(R.id.iv_sdef_num);
-         ivSpdDisplay = (TextView)findViewById(R.id.iv_speed_num);
+        /* ===============================
+         * Linking the Static number displays which show calculated IVs to their corresponding variables
+         * =============================== */
+        ivHpDisplay = (TextView)findViewById(R.id.iv_hp_num);
+        ivAtkDisplay = (TextView)findViewById(R.id.iv_atk_num);
+        ivDefDisplay = (TextView)findViewById(R.id.iv_def_num);
+        ivSatkDisplay = (TextView)findViewById(R.id.iv_satk_num);
+        ivSdefDisplay = (TextView)findViewById(R.id.iv_sdef_num);
+        ivSpdDisplay = (TextView)findViewById(R.id.iv_speed_num);
 
+        /* ===============================
+         * Final linking of elements to variables
+         * =============================== */
         statCalculation = (Button)findViewById(R.id.calcStats);
 
         dispName = (TextView) findViewById(R.id.pokemon_name);
 
 
-        // accessing the user's stored pokemon information and getting the base stats
+        /* ===============================
+         * Method which listens to the entire database for changes within it.
+         * All values which are not to be changed after a single access are set within this.
+         * These values being the base stats of the pokemon, its nature and level
+         * An additional database reference is specified to rest at the node corresponding to the Pokemon which is being edited.
+         * =============================== */
         dbRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -201,9 +218,7 @@ public class Individual_Pokemon_view extends AppCompatActivity {
                 dexNum = String.valueOf(snap.child("users").child(userName).child("pokedex").child(pokemonID).child("number").getValue());
                 basePoke = dbRefBase.child(dexNum);
                 baseStats = snapshot.child("Pokemon").child(dexNum).child("baseStats").getValue(Stats.class);
-                //showToast(""+basePoke.getKey());
 
-                // reading all the base stats from the database and converting them from longs to ints
                 Long tempAtk = (long)snapshot.child("Pokemon").child(dexNum).child("baseStats").child("atk").getValue();
                 baseStats.setAtk(tempAtk.intValue());
                 Long tempDef = (long)snapshot.child("Pokemon").child(dexNum).child("baseStats").child("def").getValue();
@@ -221,11 +236,7 @@ public class Individual_Pokemon_view extends AppCompatActivity {
                 dexPoke = dbRefDex.child(pokemonID);
                 nature = String.valueOf(snapshot.child("users").child(userName).child("pokedex").child(pokemonID).child("nature").getValue());
                 level = Integer.parseInt(String.valueOf(snapshot.child("users").child(userName).child("pokedex").child(pokemonID).child("level").getValue()));
-                //String tempText = hpInput.getText().toString();
-                //hpInput.setText("0");
-                //dexPoke.child("stats").child("hp").setValue(0);
-                //hpInput.setText(tempText);
-                //dexPoke.child("stats").child("hp").setValue(parseInt(tempText));
+
             }
 
             @Override
@@ -234,30 +245,23 @@ public class Individual_Pokemon_view extends AppCompatActivity {
             }
         });
 
-        /*basePoke.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                baseStats = snapshot.child("baseStats").getValue(Stats.class);
-                showToast("base into updated "+baseStats.getAtk());
-                //displayBaseStats();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(Individual_Pokemon_view.this,"Error: "+ error.getMessage(),Toast.LENGTH_SHORT).show();
-
-            }
-        });*/
-
-
-
+        /* ===============================
+         * Just for double checking, the stats are again set to display within the editable text boxes
+         * The display name for the pokemon is also declared
+         * =============================== */
         displayCurrStats();
-        //showToast("Current HP: "+ Integer.toString(currStats.getHp()));
         dispName.setText(pokemonID);
 
 
         final Timer[] timer = new Timer[1];
-
+        /* ===============================
+         * A timer is declared for use when editing text
+         *
+         * Each editable text box has a monitor which detects when the values within are modified.
+         * Upon the editing of text, the program will wait for one second to allow the user time to enter the number fully
+         * A calculation is performed to find the theoretical minimum and maximum values of the stat
+         * If the number provided is outside the bounds given, the number will automatically update to the closest number within the acceptable range
+         * =============================== */
         hpInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -297,6 +301,13 @@ public class Individual_Pokemon_view extends AppCompatActivity {
 
             }
         });
+        /* ===============================
+         * Monitor for Attack input
+         *
+         * Attack, Defense, Special Attack and Defense, and Speed are calculated differently than HP
+         * Based on the nature of the pokemon, A specific Stat is raised by 10% and a Stat is lowered by 10%
+         * The calculations will check for this, and will perform the proper calculations accordingly
+         * =============================== */
         atkInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -348,6 +359,9 @@ public class Individual_Pokemon_view extends AppCompatActivity {
 
             }
         });
+        /* ===============================
+         * Monitor for Defense Input
+         * =============================== */
         defInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -399,6 +413,9 @@ public class Individual_Pokemon_view extends AppCompatActivity {
 
             }
         });
+        /* ===============================
+         * Monitor for Special Attack Input
+         * =============================== */
         satkInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -450,6 +467,9 @@ public class Individual_Pokemon_view extends AppCompatActivity {
 
             }
         });
+        /* ===============================
+         * Monitor for Special Defense Input
+         * =============================== */
         sdefInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -501,6 +521,9 @@ public class Individual_Pokemon_view extends AppCompatActivity {
 
             }
         });
+        /* ===============================
+         * Monitor for Speed Input
+         * =============================== */
         spdInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -553,6 +576,11 @@ public class Individual_Pokemon_view extends AppCompatActivity {
             }
         });
 
+        /* ===============================
+         * Method for Individual Value (IV) calculation
+         * The IV of a Pokemon's Stat can be a number from 0-31
+         * This will calculate the potential IV for each stat based on the data the user has input, then the values for IVs are displayed on-screen
+         * =============================== */
         statCalculation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -576,101 +604,11 @@ public class Individual_Pokemon_view extends AppCompatActivity {
                 ivSpdDisplay.setText(Integer.toString(calculateSpd(baseStats.getSpd(), evStats.getSpd(), SPD, level)));
             }
         });
-        /*chooseGrowlithe.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                basePoke = dbRefBase.child("058");
-                dexPoke = dbRefDex.child("growlithe");
-                currStats = snap.child("users").child("user_test").child("pokedex").child("growlithe").child("stats").getValue(Stats.class);
-                baseStats = snap.child("Pokemon").child("058").child("baseStats").getValue(Stats.class);
-                try {
-                    hpInput.setText(Integer.toString(currStats.getHp()));
-                    atkInput.setText(Integer.toString(currStats.getAtk()));
-                    defInput.setText(Integer.toString(currStats.getDef()));
-                    satkInput.setText(Integer.toString(currStats.getSatk()));
-                    sdefInput.setText(Integer.toString(currStats.getSdef()));
-                    spdInput.setText(Integer.toString(currStats.getSpd()));
-                } catch (NullPointerException e) {
-                    showToast("Null exception");
-                }
-                //showToast("Current HP: "+ Integer.toString(currStats.getHp()));
-                dispName.setText(R.string.growlithe);
-                displayBaseStats();
-                //showToast("HP: " + Integer.toString(baseStats.getHp()));
-            }
-        });
-        chooseStaryu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                basePoke = dbRefBase.child("120");
-                dexPoke = dbRefDex.child("staryu");
-                currStats = snap.child("users").child("user_test").child("pokedex").child("staryu").child("stats").getValue(Stats.class);
-                baseStats = snap.child("Pokemon").child("120").child("baseStats").getValue(Stats.class);
-                try {
-                    hpInput.setText(Integer.toString(currStats.getHp()));
-                    atkInput.setText(Integer.toString(currStats.getAtk()));
-                    defInput.setText(Integer.toString(currStats.getDef()));
-                    satkInput.setText(Integer.toString(currStats.getSatk()));
-                    sdefInput.setText(Integer.toString(currStats.getSdef()));
-                    spdInput.setText(Integer.toString(currStats.getSpd()));
-                } catch (NullPointerException e) {
-                    showToast("Null exception");
-                }
-
-
-                dispName.setText(R.string.staryu);
-                displayBaseStats();
-                //showToast("HP: " + Integer.toString(baseStats.getHp()));
-
-            }
-        });
-        chooseCharizard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                basePoke = dbRefBase.child("006");
-                dexPoke = dbRefDex.child("charizard");
-                currStats = snap.child("users").child("user_test").child("pokedex").child("charizard").child("stats").getValue(Stats.class);
-                baseStats = snap.child("Pokemon").child("006").child("baseStats").getValue(Stats.class);
-                try {
-                    hpInput.setText(Integer.toString(currStats.getHp()));
-                    atkInput.setText(Integer.toString(currStats.getAtk()));
-                    defInput.setText(Integer.toString(currStats.getDef()));
-                    satkInput.setText(Integer.toString(currStats.getSatk()));
-                    sdefInput.setText(Integer.toString(currStats.getSdef()));
-                    spdInput.setText(Integer.toString(currStats.getSpd()));
-                } catch (NullPointerException e) {
-                    showToast("Null exception");
-                }
-                dispName.setText(R.string.charizard);
-                displayBaseStats();
-                //showToast("HP: " + Integer.toString(baseStats.getHp()));
-
-            }
-        });
-        chooseMew.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                basePoke = dbRefBase.child("151");
-                dexPoke = dbRefDex.child("mew");
-                currStats = snap.child("users").child("user_test").child("pokedex").child("mew").child("stats").getValue(Stats.class);
-                baseStats = snap.child("Pokemon").child("151").child("baseStats").getValue(Stats.class);
-                try {
-                    hpInput.setText(Integer.toString(currStats.getHp()));
-                    atkInput.setText(Integer.toString(currStats.getAtk()));
-                    defInput.setText(Integer.toString(currStats.getDef()));
-                    satkInput.setText(Integer.toString(currStats.getSatk()));
-                    sdefInput.setText(Integer.toString(currStats.getSdef()));
-                    spdInput.setText(Integer.toString(currStats.getSpd()));
-                } catch (NullPointerException e) {
-                    showToast("Null exception");
-                }
-                dispName.setText(R.string.mew);
-                displayBaseStats();
-                //showToast("HP: " + Integer.toString(baseStats.getHp()));
-            }
-        });*/
     }
 
+    /* ===============================
+     * Method which sets the values within each editable text box to the values from the database
+     * =============================== */
     private void displayCurrStats() {
         hpInput.setText(currStats.getHp() + "");
         atkInput.setText(currStats.getAtk() + "");
@@ -680,31 +618,49 @@ public class Individual_Pokemon_view extends AppCompatActivity {
         spdInput.setText(currStats.getSpd() + "");
     }
 
+    /* ===============================
+     * Method called when the Add Button is pressed; Switches to the Add Pokemon Activity
+     * =============================== */
     public void gotoAddView(View view) {
         Intent intent = new Intent(this, team_builder.class);
         startActivity(intent);
     }
 
+    /* ===============================
+     * Method called when the Dex Button is pressed; Switches to the general Pokedex Activity
+     * =============================== */
     public void gotoDexView(View view) {
         Intent intent = new Intent(this, PokedexView.class);
         startActivity(intent);
     }
 
+    /* ===============================
+     * Method called when the News Button is pressed; Switches to the Newsfeed Activity
+     * =============================== */
     public void gotoNewsView(View view) {
         Intent intent = new Intent(this, RSS_view.class);
         startActivity(intent);
     }
 
+    /* ===============================
+     * Method called when Team Button is pressed; Switches to the Personal Pokedex Activity
+     * =============================== */
     public void gotoTeamView(View view) {
         Intent intent = new Intent(this, PersonalDex.class);
         startActivity(intent);
     }
 
+    /* ===============================
+     * Method called when the Settings Button is pressed; Switches to the Settings Activity
+     * =============================== */
     public void gotoSettingsView(View view) {
         Intent intent = new Intent(this, Main_menu_view.class);
         startActivity(intent);
     }
 
+    /* ===============================
+     * Unknown what this method does, but it stays to prevent a crash
+     * =============================== */
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             finish();
@@ -716,6 +672,9 @@ public class Individual_Pokemon_view extends AppCompatActivity {
         return true;
     }
 
+    /* ===============================
+     * Method which calculates the IV of the Pokemon, given the information provided by the user
+     * =============================== */
     private int calculateHP(int base, int ev, int stat, int level) {
 
         int iv = (int) ceil(((stat - 10 - level) *100) / level - 2 * baseStats.getHp() - ev/4);
@@ -725,6 +684,10 @@ public class Individual_Pokemon_view extends AppCompatActivity {
             iv = 0;
         return iv;
     }
+    /* ===============================
+     * Method which calculates the IV of the Pokemon, given the information provided by the user
+     * Attack, Defense, Special Attack, Special Defense and Speed are calculated by factoring in the positive and negative affects of the Pokemon's nature
+     * =============================== */
     private int calculateAtk(int base, int ev, int stat, int level) {
         int iv;
         if (nature.equalsIgnoreCase("adamant") | nature.equalsIgnoreCase("lonely") | nature.equalsIgnoreCase("naughty") | nature.equalsIgnoreCase("brave")) {
@@ -744,6 +707,10 @@ public class Individual_Pokemon_view extends AppCompatActivity {
             iv = 0;
         return iv;
     }
+    /* ===============================
+     * Method which calculates the IV of the Pokemon, given the information provided by the user
+     * Attack, Defense, Special Attack, Special Defense and Speed are calculated by factoring in the positive and negative affects of the Pokemon's nature
+     * =============================== */
     private int calculateDef(int base, int ev, int stat, int level) {
         int iv;
         if (nature.equalsIgnoreCase("bold") | nature.equalsIgnoreCase("impish") | nature.equalsIgnoreCase("lax") | nature.equalsIgnoreCase("relaxed")) {
@@ -763,7 +730,10 @@ public class Individual_Pokemon_view extends AppCompatActivity {
             iv = 0;
         return iv;
     }
-
+    /* ===============================
+     * Method which calculates the IV of the Pokemon, given the information provided by the user
+     * Attack, Defense, Special Attack, Special Defense and Speed are calculated by factoring in the positive and negative affects of the Pokemon's nature
+     * =============================== */
     private int calculateSatk(int base, int ev, int stat, int level) {
         int iv;
         if (nature.equalsIgnoreCase("modest") | nature.equalsIgnoreCase("mild") | nature.equalsIgnoreCase("rash") | nature.equalsIgnoreCase("quiet")) {
@@ -783,7 +753,10 @@ public class Individual_Pokemon_view extends AppCompatActivity {
             iv = 0;
         return iv;
     }
-
+    /* ===============================
+     * Method which calculates the IV of the Pokemon, given the information provided by the user
+     * Attack, Defense, Special Attack, Special Defense and Speed are calculated by factoring in the positive and negative affects of the Pokemon's nature
+     * =============================== */
     private int calculateSdef(int base, int ev, int stat, int level) {
         int iv;
         if (nature.equalsIgnoreCase("calm") | nature.equalsIgnoreCase("gentle") | nature.equalsIgnoreCase("careful") | nature.equalsIgnoreCase("sassy")) {
@@ -803,7 +776,10 @@ public class Individual_Pokemon_view extends AppCompatActivity {
             iv = 0;
         return iv;
     }
-
+    /* ===============================
+     * Method which calculates the IV of the Pokemon, given the information provided by the user
+     * Attack, Defense, Special Attack, Special Defense and Speed are calculated by factoring in the positive and negative affects of the Pokemon's nature
+     * =============================== */
     private int calculateSpd(int base, int ev, int stat, int level) {
         int iv;
         if (nature.equalsIgnoreCase("timid") | nature.equalsIgnoreCase("hasty") | nature.equalsIgnoreCase("jolly") | nature.equalsIgnoreCase("naive")) {
@@ -823,38 +799,9 @@ public class Individual_Pokemon_view extends AppCompatActivity {
             iv = 0;
         return iv;
     }
-
-    private void displayBaseStats() {
-        baseHpDisplay.setText(Integer.toString(baseStats.getHp()));
-        baseAtkDisplay.setText(Integer.toString(baseStats.getAtk()));
-        baseDefDisplay.setText(Integer.toString(baseStats.getDef()));
-        baseSatkDisplay.setText(Integer.toString(baseStats.getSatk()));
-        baseSdefDisplay.setText(Integer.toString(baseStats.getSdef()));
-        baseSpdDisplay.setText(Integer.toString(baseStats.getSpd()));
-    }
-
-
-
-
-    public int weightedAverage(int hp, int atk, int def, int spd, int satk, int sdef) {
-        int avg = 0;
-        int sum = 0;
-        int count = 6;
-        if (satk < Math.round(atk * IRR_FACTOR)) {
-            count = 5;
-            sum = hp + atk + def + spd + sdef;
-        }
-        else if (atk < Math.round(satk * IRR_FACTOR)) {
-            count = 5;
-            sum = hp + def + spd + satk + sdef;
-        }
-        else {
-            sum = hp + atk + def + spd + satk + sdef;
-        }
-        avg = sum / count;
-
-        return avg;
-    }
+    /* ===============================
+     * Method which displays a toast
+     * =============================== */
     private void showToast(String t) {
         Toast.makeText(Individual_Pokemon_view.this, t, Toast.LENGTH_LONG).show();
     }
