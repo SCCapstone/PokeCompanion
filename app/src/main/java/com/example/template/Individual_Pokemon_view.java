@@ -245,6 +245,7 @@ public class Individual_Pokemon_view extends AppCompatActivity {
             }
         });
 
+
         /* ===============================
          * Just for double checking, the stats are again set to display within the editable text boxes
          * The display name for the pokemon is also declared
@@ -724,11 +725,6 @@ public class Individual_Pokemon_view extends AppCompatActivity {
         }
 
 
-        if (iv > 31)
-            iv = 31;
-        if (iv < 0)
-            iv = 0;
-        return iv;
     }
     /* ===============================
      * Method which calculates the IV of the Pokemon, given the information provided by the user
