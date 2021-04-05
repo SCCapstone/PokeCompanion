@@ -86,7 +86,7 @@ public class team_builder extends AppCompatActivity {
         setContentView(R.layout.activity_team_builder);
 
         /*
-        Declarations
+        Declarations for all of the stat inputs on the page.
          */
 
         stats = new Stats();
@@ -111,7 +111,9 @@ public class team_builder extends AppCompatActivity {
         else
             pokemonIDs = "001";
 
-
+        /*
+        Showing the pokemon sprites for the application
+         */
 
         String imageName = "icon" + pokemonIDs;
         Context c = getApplicationContext();
@@ -120,6 +122,9 @@ public class team_builder extends AppCompatActivity {
 
         imageView.setImageResource(id);
 
+        /*
+        Making sure that the array is populating with the information from FireBase
+         */
 
         if (!(getIntent().getStringArrayExtra("abilities") == null))
             abilities = getIntent().getStringArrayExtra("abilities");
@@ -158,6 +163,10 @@ public class team_builder extends AppCompatActivity {
 
             }
         });
+
+        /*
+        All Text watchers on the page for input change in the edit text fields
+         */
 
         atkInput.addTextChangedListener(new TextWatcher() {
             int temp;
@@ -283,7 +292,7 @@ public class team_builder extends AppCompatActivity {
     public void gotoDexView(View view) {
 
        /*
-       Declarations
+       Declarations for pushing the information with firebase
         */
         int hp = stats.getHp();
         int atk = stats.getAtk();
