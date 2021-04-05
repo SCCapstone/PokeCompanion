@@ -1,9 +1,11 @@
-## PokeCompanion
-
-- Welcome to the PokeCompanion ReadMe!!!!
-
+# PokeCompanion
 - This app is a companion app for any main series Pokemon video game.
-- It allows users to track their Pokemon's growth throughout their playthough so that they can see the strengths and weaknesses it develops, keep track of their stats as well as predict how they will continue to grow. The app will assist the user throughout their playthough by offering bits of advice concerning how to raise their Pokemon, as well as providing an easy way to theorycraft and plan their perfect team for their game.
+## Features
+
+- Allows users to track their Pokemon's growth throughout their playthough so they can see the strengths and weaknesses it develops
+- Allows users to predict how they will continue to grow
+- Assists the user throughout their playthough by offering bits of advice concerning how to raise their Pokemon
+- Provides an easy way to theorycraft and plan their perfect team for their game
 
 ## External requirements
 
