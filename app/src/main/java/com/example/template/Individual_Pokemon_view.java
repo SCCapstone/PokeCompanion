@@ -201,7 +201,9 @@ public class Individual_Pokemon_view extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 //showToast("basePoke updated");
                 baseStats = snapshot.child("baseStats").getValue(Stats.class);
-                displayBaseStats();
+                baseHpDisplay.setText(Integer.toString((Integer) snapshot.child("baseStats").child("hp").getValue()));
+                /*baseHpDisplay.setText(Integer.toString(baseStats.getHp()));
+                displayBaseStats();*/
             }
 
             @Override
@@ -497,12 +499,13 @@ public class Individual_Pokemon_view extends AppCompatActivity {
     }
 
     private void displayBaseStats() {
-        baseHpDisplay.setText(Integer.toString(baseStats.getHp()));
+        //baseHpDisplay.setText(Integer.toString(snapshot.child("baseStats").child)
+        /*baseHpDisplay.setText(Integer.toString(baseStats.getHp()));
         baseAtkDisplay.setText(Integer.toString(baseStats.getAtk()));
         baseDefDisplay.setText(Integer.toString(baseStats.getDef()));
         baseSatkDisplay.setText(Integer.toString(baseStats.getSatk()));
         baseSdefDisplay.setText(Integer.toString(baseStats.getSdef()));
-        baseSpdDisplay.setText(Integer.toString(baseStats.getSpd()));
+        baseSpdDisplay.setText(Integer.toString(baseStats.getSpd()));*/
     }
 
 
