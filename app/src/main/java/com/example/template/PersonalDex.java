@@ -147,7 +147,7 @@ public class PersonalDex extends AppCompatActivity {
 
                     intent.putExtra("nickname", temp);
                     startActivity(intent);
-                    Toast.makeText(PersonalDex.this, arrList.get(position) + "", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(PersonalDex.this, arrList.get(position) + "", Toast.LENGTH_LONG).show();
                 }
             });
         }
