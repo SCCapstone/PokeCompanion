@@ -53,7 +53,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import static java.lang.Integer.parseInt;
+import static java.lang.Math.ceil;
 import static java.lang.Math.floor;
 
 public class Individual_Pokemon_view extends AppCompatActivity {
@@ -66,6 +70,8 @@ public class Individual_Pokemon_view extends AppCompatActivity {
     DatabaseReference dbRefBase = db.getReference().child("Pokemon");
     String dexNum = "001";
     String pokemonID = "Bulbasaur";
+    String nature = "Hardy";
+    int level = 5;
     DatabaseReference basePoke = dbRefBase.child(dexNum);
     DatabaseReference dexPoke = dbRefDex.child(pokemonID);
 
@@ -194,6 +200,8 @@ public class Individual_Pokemon_view extends AppCompatActivity {
                 snap = snapshot;
                 dexNum = String.valueOf(snap.child("users").child(userName).child("pokedex").child(pokemonID).child("number").getValue());
                 basePoke = dbRefBase.child(dexNum);
+                baseStats = snapshot.child("Pokemon").child(dexNum).child("baseStats").getValue(Stats.class);
+                //showToast(""+basePoke.getKey());
 
                 // reading all the base stats from the database and converting them from longs to ints
                 Long tempAtk = (long)snapshot.child("Pokemon").child(dexNum).child("baseStats").child("atk").getValue();
@@ -209,8 +217,15 @@ public class Individual_Pokemon_view extends AppCompatActivity {
                 Long tempSdef = (long)snapshot.child("Pokemon").child(dexNum).child("baseStats").child("sdef").getValue();
                 baseStats.setSdef(tempSdef.intValue());
 
-                dexPoke = dbRefDex.child(pokemonID);
 
+                dexPoke = dbRefDex.child(pokemonID);
+                nature = String.valueOf(snapshot.child("users").child(userName).child("pokedex").child(pokemonID).child("nature").getValue());
+                level = Integer.parseInt(String.valueOf(snapshot.child("users").child(userName).child("pokedex").child(pokemonID).child("level").getValue()));
+                //String tempText = hpInput.getText().toString();
+                //hpInput.setText("0");
+                //dexPoke.child("stats").child("hp").setValue(0);
+                //hpInput.setText(tempText);
+                //dexPoke.child("stats").child("hp").setValue(parseInt(tempText));
             }
 
             @Override
@@ -219,18 +234,20 @@ public class Individual_Pokemon_view extends AppCompatActivity {
             }
         });
 
-        basePoke.addValueEventListener(new ValueEventListener() {
+        /*basePoke.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 baseStats = snapshot.child("baseStats").getValue(Stats.class);
+                showToast("base into updated "+baseStats.getAtk());
                 //displayBaseStats();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(Individual_Pokemon_view.this,"Error: "+ error.getMessage(),Toast.LENGTH_SHORT).show();
+
             }
-        });
+        });*/
 
 
 
@@ -239,22 +256,45 @@ public class Individual_Pokemon_view extends AppCompatActivity {
         dispName.setText(pokemonID);
 
 
-
+        final Timer[] timer = new Timer[1];
 
         hpInput.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
-
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (timer[0] !=null)
+                    timer[0].cancel();
+            }
             @Override
             public void afterTextChanged(Editable s) {
-                try {
-                    dexPoke.child("stats").child("hp").setValue(parseInt(hpInput.getText().toString()));
-                } catch (NumberFormatException e) {
-                    dexPoke.child("stats").child("hp").setValue(0);
-                }
+                timer[0] = new Timer();
+                timer[0].schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        int lowest = (int) floor(floor(((2*baseStats.getHp()+0)*level)/100)+level+10);
+                        int highest = (int) floor(floor(((2*baseStats.getHp()+31)*level)/100)+level+10);
+                        int actual = parseInt(hpInput.getText().toString());
+                        if (actual < lowest) {
+                            dexPoke.child("stats").child("hp").setValue(lowest);
+                            //showToast("HP too low");
+                            hpInput.setText(String.valueOf(lowest));
+                        }
+                        else if (actual > highest) {
+                            dexPoke.child("stats").child("hp").setValue(highest);
+                            //showToast("HP too high");
+                            hpInput.setText(String.valueOf(highest));
+                        }
+
+                        else {
+                            dexPoke.child("stats").child("hp").setValue(actual);
+                        }
+                    }
+                }, 1000);
+
+
             }
         });
         atkInput.addTextChangedListener(new TextWatcher() {
@@ -262,15 +302,50 @@ public class Individual_Pokemon_view extends AppCompatActivity {
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (timer[0] !=null)
+                    timer[0].cancel();
+            }
 
             @Override
             public void afterTextChanged(Editable s) {
-                try {
-                    dexPoke.child("stats").child("atk").setValue(parseInt(atkInput.getText().toString()));
-                } catch (NumberFormatException e) {
-                    dexPoke.child("stats").child("atk").setValue(0);
-                }
+                timer[0] = new Timer();
+                timer[0].schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        int lowest;
+                        int highest;
+                        if (nature.equalsIgnoreCase("adamant") | nature.equalsIgnoreCase("lonely") | nature.equalsIgnoreCase("naughty") | nature.equalsIgnoreCase("brave")) {
+                            lowest = (int) floor((floor(((2*baseStats.getAtk()+0)*level)/100)+5)*1.1);
+                            highest = (int) floor((floor(((2*baseStats.getAtk()+31)*level)/100)+5)*1.1);
+                        }
+                        else if (nature.equalsIgnoreCase("bold") | nature.equalsIgnoreCase("modest") | nature.equalsIgnoreCase("calm") | nature.equalsIgnoreCase("timid")) {
+                            lowest = (int) floor((floor(((2*baseStats.getAtk()+0)*level)/100)+5)*0.9);
+                            highest = (int) floor((floor(((2*baseStats.getAtk()+31)*level)/100)+5)*0.9);
+                        }
+                        else {
+                            lowest = (int) floor((floor(((2*baseStats.getAtk()+0)*level)/100)+5)*1);
+                            highest = (int) floor((floor(((2*baseStats.getAtk()+31)*level)/100)+5)*1);
+                        }
+
+                        int actual = parseInt(atkInput.getText().toString());
+                        if (actual < lowest) {
+                            dexPoke.child("stats").child("atk").setValue(lowest);
+                            //showToast("Attack too low");
+                            atkInput.setText(String.valueOf(lowest));
+                        }
+                        else if (actual > highest) {
+                            dexPoke.child("stats").child("atk").setValue(highest);
+                            //showToast("Attack too high");
+                            atkInput.setText(String.valueOf(highest));
+                        }
+
+                        else {
+                            dexPoke.child("stats").child("atk").setValue(actual);
+                        }
+                    }
+                }, 1000);
+
             }
         });
         defInput.addTextChangedListener(new TextWatcher() {
@@ -278,15 +353,50 @@ public class Individual_Pokemon_view extends AppCompatActivity {
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (timer[0] !=null)
+                    timer[0].cancel();
+            }
 
             @Override
             public void afterTextChanged(Editable s) {
-                try {
-                    dexPoke.child("stats").child("def").setValue(parseInt(defInput.getText().toString()));
-                } catch (NumberFormatException e) {
-                    dexPoke.child("stats").child("def").setValue(0);
-                }
+                timer[0] = new Timer();
+                timer[0].schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        int lowest;
+                        int highest;
+                        if (nature.equalsIgnoreCase("bold") | nature.equalsIgnoreCase("impish") | nature.equalsIgnoreCase("lax") | nature.equalsIgnoreCase("relaxed")) {
+                            lowest = (int) floor((floor(((2*baseStats.getDef()+0)*level)/100)+5)*1.1);
+                            highest = (int) floor((floor(((2*baseStats.getDef()+31)*level)/100)+5)*1.1);
+                        }
+                        else if (nature.equalsIgnoreCase("hasty") | nature.equalsIgnoreCase("gentle") | nature.equalsIgnoreCase("mild") | nature.equalsIgnoreCase("lonely")) {
+                            lowest = (int) floor((floor(((2*baseStats.getDef()+0)*level)/100)+5)*0.9);
+                            highest = (int) floor((floor(((2*baseStats.getDef()+31)*level)/100)+5)*0.9);
+                        }
+                        else {
+                            lowest = (int) floor((floor(((2*baseStats.getDef()+0)*level)/100)+5)*1);
+                            highest = (int) floor((floor(((2*baseStats.getDef()+31)*level)/100)+5)*1);
+                        }
+
+                        int actual = parseInt(defInput.getText().toString());
+                        if (actual < lowest) {
+                            dexPoke.child("stats").child("def").setValue(lowest);
+                            //showToast("Defense too low");
+                            defInput.setText(String.valueOf(lowest));
+                        }
+                        else if (actual > highest) {
+                            dexPoke.child("stats").child("def").setValue(highest);
+                            //showToast("Defense too high");
+                            defInput.setText(String.valueOf(highest));
+                        }
+
+                        else {
+                            dexPoke.child("stats").child("def").setValue(actual);
+                        }
+                    }
+                },1000);
+
             }
         });
         satkInput.addTextChangedListener(new TextWatcher() {
@@ -294,15 +404,50 @@ public class Individual_Pokemon_view extends AppCompatActivity {
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (timer[0] !=null)
+                    timer[0].cancel();
+            }
 
             @Override
             public void afterTextChanged(Editable s) {
-                try {
-                    dexPoke.child("stats").child("satk").setValue(parseInt(satkInput.getText().toString()));
-                } catch (NumberFormatException e) {
-                    dexPoke.child("stats").child("satk").setValue(0);
-                }
+                timer[0] = new Timer();
+                timer[0].schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        int lowest;
+                        int highest;
+                        if (nature.equalsIgnoreCase("modest") | nature.equalsIgnoreCase("mild") | nature.equalsIgnoreCase("rash") | nature.equalsIgnoreCase("quiet")) {
+                            lowest = (int) floor((floor(((2*baseStats.getSatk()+0)*level)/100)+5)*1.1);
+                            highest = (int) floor((floor(((2*baseStats.getSatk()+31)*level)/100)+5)*1.1);
+                        }
+                        else if (nature.equalsIgnoreCase("jolly") | nature.equalsIgnoreCase("careful") | nature.equalsIgnoreCase("impish") | nature.equalsIgnoreCase("adamant")) {
+                            lowest = (int) floor((floor(((2*baseStats.getSatk()+0)*level)/100)+5)*0.9);
+                            highest = (int) floor((floor(((2*baseStats.getSatk()+31)*level)/100)+5)*0.9);
+                        }
+                        else {
+                            lowest = (int) floor((floor(((2*baseStats.getSatk()+0)*level)/100)+5)*1);
+                            highest = (int) floor((floor(((2*baseStats.getSatk()+31)*level)/100)+5)*1);
+                        }
+
+                        int actual = parseInt(satkInput.getText().toString());
+                        if (actual < lowest) {
+                            dexPoke.child("stats").child("satk").setValue(lowest);
+                            //showToast("Sp. Attack too low");
+                            satkInput.setText(String.valueOf(lowest));
+                        }
+                        else if (actual > highest) {
+                            dexPoke.child("stats").child("satk").setValue(highest);
+                            //showToast("Sp. Attack too high");
+                            satkInput.setText(String.valueOf(highest));
+                        }
+
+                        else {
+                            dexPoke.child("stats").child("satk").setValue(actual);
+                        }
+                    }
+                },1000);
+
             }
         });
         sdefInput.addTextChangedListener(new TextWatcher() {
@@ -310,15 +455,50 @@ public class Individual_Pokemon_view extends AppCompatActivity {
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (timer[0] !=null)
+                    timer[0].cancel();
+            }
 
             @Override
             public void afterTextChanged(Editable s) {
-                try {
-                    dexPoke.child("stats").child("sdef").setValue(parseInt(sdefInput.getText().toString()));
-                } catch (NumberFormatException e) {
-                    dexPoke.child("stats").child("sdef").setValue(0);
-                }
+                timer[0] = new Timer();
+                timer[0].schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        int lowest;
+                        int highest;
+                        if (nature.equalsIgnoreCase("sassy") | nature.equalsIgnoreCase("careful") | nature.equalsIgnoreCase("gentle") | nature.equalsIgnoreCase("calm")) {
+                            lowest = (int) floor((floor(((2*baseStats.getSdef()+0)*level)/100)+5)*1.1);
+                            highest = (int) floor((floor(((2*baseStats.getSdef()+31)*level)/100)+5)*1.1);
+                        }
+                        else if (nature.equalsIgnoreCase("naughty") | nature.equalsIgnoreCase("lax") | nature.equalsIgnoreCase("rash") | nature.equalsIgnoreCase("naive")) {
+                            lowest = (int) floor((floor(((2*baseStats.getSdef()+0)*level)/100)+5)*0.9);
+                            highest = (int) floor((floor(((2*baseStats.getSdef()+31)*level)/100)+5)*0.9);
+                        }
+                        else {
+                            lowest = (int) floor((floor(((2*baseStats.getSdef()+0)*level)/100)+5)*1);
+                            highest = (int) floor((floor(((2*baseStats.getSdef()+31)*level)/100)+5)*1);
+                        }
+
+                        int actual = parseInt(sdefInput.getText().toString());
+                        if (actual < lowest) {
+                            dexPoke.child("stats").child("sdef").setValue(lowest);
+                            //showToast("Sp. Defense too low");
+                            sdefInput.setText(String.valueOf(lowest));
+                        }
+                        else if (actual > highest) {
+                            dexPoke.child("stats").child("sdef").setValue(highest);
+                            //showToast("Sp. Defense too high");
+                            sdefInput.setText(String.valueOf(highest));
+                        }
+
+                        else {
+                            dexPoke.child("stats").child("sdef").setValue(actual);
+                        }
+                    }
+                },1000);
+
             }
         });
         spdInput.addTextChangedListener(new TextWatcher() {
@@ -326,15 +506,50 @@ public class Individual_Pokemon_view extends AppCompatActivity {
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (timer[0] !=null)
+                    timer[0].cancel();
+            }
 
             @Override
             public void afterTextChanged(Editable s) {
-                try {
-                    dexPoke.child("stats").child("spd").setValue(parseInt(spdInput.getText().toString()));
-                } catch (NumberFormatException e) {
-                    dexPoke.child("stats").child("spd").setValue(0);
-                }
+                timer[0] = new Timer();
+                timer[0].schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        int lowest;
+                        int highest;
+                        if (nature.equalsIgnoreCase("timid") | nature.equalsIgnoreCase("hasty") | nature.equalsIgnoreCase("jolly") | nature.equalsIgnoreCase("naive")) {
+                            lowest = (int) floor((floor(((2*baseStats.getSpd()+0)*level)/100)+5)*1.1);
+                            highest = (int) floor((floor(((2*baseStats.getSpd()+31)*level)/100)+5)*1.1);
+                        }
+                        else if (nature.equalsIgnoreCase("sassy") | nature.equalsIgnoreCase("quiet") | nature.equalsIgnoreCase("relaxed") | nature.equalsIgnoreCase("brave")) {
+                            lowest = (int) floor((floor(((2*baseStats.getSpd()+0)*level)/100)+5)*0.9);
+                            highest = (int) floor((floor(((2*baseStats.getSpd()+31)*level)/100)+5)*0.9);
+                        }
+                        else {
+                            lowest = (int) floor((floor(((2*baseStats.getSpd()+0)*level)/100)+5)*1);
+                            highest = (int) floor((floor(((2*baseStats.getSpd()+31)*level)/100)+5)*1);
+                        }
+
+                        int actual = parseInt(spdInput.getText().toString());
+                        if (actual < lowest) {
+                            dexPoke.child("stats").child("spd").setValue(lowest);
+                            //showToast("Sped too low");
+                            spdInput.setText(String.valueOf(lowest));
+                        }
+                        else if (actual > highest) {
+                            dexPoke.child("stats").child("spd").setValue(highest);
+                            //showToast("Speed too high");
+                            spdInput.setText(String.valueOf(highest));
+                        }
+
+                        else {
+                            dexPoke.child("stats").child("spd").setValue(actual);
+                        }
+                    }
+                },1000);
+
             }
         });
 
@@ -353,12 +568,12 @@ public class Individual_Pokemon_view extends AppCompatActivity {
                     showToast("Stat values cannot be empty!");
                 }
 
-                ivHpDisplay.setText(Integer.toString(calculateHP(baseStats.getHp(), evStats.getHp(), HP, 50)));
-                ivAtkDisplay.setText(Integer.toString(calculateIV(baseStats.getAtk(), evStats.getAtk(), ATK, 50)));
-                ivDefDisplay.setText(Integer.toString(calculateIV(baseStats.getDef(), evStats.getDef(), DEF, 50)));
-                ivSatkDisplay.setText(Integer.toString(calculateIV(baseStats.getSatk(), evStats.getSatk(), SATK, 50)));
-                ivSdefDisplay.setText(Integer.toString(calculateIV(baseStats.getSdef(), evStats.getSdef(), SDEF, 50)));
-                ivSpdDisplay.setText(Integer.toString(calculateIV(baseStats.getSpd(), evStats.getSpd(), SPD, 50)));
+                ivHpDisplay.setText(Integer.toString(calculateHP(baseStats.getHp(), evStats.getHp(), HP, level)));
+                ivAtkDisplay.setText(Integer.toString(calculateAtk(baseStats.getAtk(), evStats.getAtk(), ATK, level)));
+                ivDefDisplay.setText(Integer.toString(calculateDef(baseStats.getDef(), evStats.getDef(), DEF, level)));
+                ivSatkDisplay.setText(Integer.toString(calculateSatk(baseStats.getSatk(), evStats.getSatk(), SATK, level)));
+                ivSdefDisplay.setText(Integer.toString(calculateSdef(baseStats.getSdef(), evStats.getSdef(), SDEF, level)));
+                ivSpdDisplay.setText(Integer.toString(calculateSpd(baseStats.getSpd(), evStats.getSpd(), SPD, level)));
             }
         });
         /*chooseGrowlithe.setOnClickListener(new View.OnClickListener() {
@@ -502,15 +717,106 @@ public class Individual_Pokemon_view extends AppCompatActivity {
     }
 
     private int calculateHP(int base, int ev, int stat, int level) {
-        int iv = (int) floor(((stat - 10 - level) *100) / level - 2 * base - ev/4);
+
+        int iv = (int) ceil(((stat - 10 - level) *100) / level - 2 * baseStats.getHp() - ev/4);
         if (iv > 31)
             iv = 31;
         if (iv < 0)
             iv = 0;
         return iv;
     }
-    private int calculateIV(int base, int ev, int stat, int level) {
-        int iv = (int) floor(((stat - 5) *100) / level - 2 * base - ev/4);
+    private int calculateAtk(int base, int ev, int stat, int level) {
+        int iv;
+        if (nature.equalsIgnoreCase("adamant") | nature.equalsIgnoreCase("lonely") | nature.equalsIgnoreCase("naughty") | nature.equalsIgnoreCase("brave")) {
+            iv = (int) ceil(((stat/1.1 - 5) *100) / level - 2 * baseStats.getAtk() - ev/4);
+        }
+        else if (nature.equalsIgnoreCase("bold") | nature.equalsIgnoreCase("modest") | nature.equalsIgnoreCase("calm") | nature.equalsIgnoreCase("timid")) {
+            iv = (int) ceil(((stat/0.9 - 5) *100) / level - 2 * baseStats.getAtk() - ev/4);
+        }
+        else {
+            iv = (int) ceil(((stat/1 - 5) *100) / level - 2 * baseStats.getAtk() - ev/4);
+        }
+
+
+        if (iv > 31)
+            iv = 31;
+        if (iv < 0)
+            iv = 0;
+        return iv;
+    }
+    private int calculateDef(int base, int ev, int stat, int level) {
+        int iv;
+        if (nature.equalsIgnoreCase("bold") | nature.equalsIgnoreCase("impish") | nature.equalsIgnoreCase("lax") | nature.equalsIgnoreCase("relaxed")) {
+            iv = (int) ceil(((stat/1.1 - 5) *100) / level - 2 * baseStats.getDef() - ev/4);
+        }
+        else if (nature.equalsIgnoreCase("hasty") | nature.equalsIgnoreCase("gentle") | nature.equalsIgnoreCase("mild") | nature.equalsIgnoreCase("lonely")) {
+            iv = (int) ceil(((stat/0.9 - 5) *100) / level - 2 * baseStats.getDef() - ev/4);
+        }
+        else {
+            iv = (int) ceil(((stat/1 - 5) *100) / level - 2 * baseStats.getDef() - ev/4);
+        }
+
+
+        if (iv > 31)
+            iv = 31;
+        if (iv < 0)
+            iv = 0;
+        return iv;
+    }
+
+    private int calculateSatk(int base, int ev, int stat, int level) {
+        int iv;
+        if (nature.equalsIgnoreCase("modest") | nature.equalsIgnoreCase("mild") | nature.equalsIgnoreCase("rash") | nature.equalsIgnoreCase("quiet")) {
+            iv = (int) ceil(((stat/1.1 - 5) *100) / level - 2 * baseStats.getSatk() - ev/4);
+        }
+        else if (nature.equalsIgnoreCase("adamant") | nature.equalsIgnoreCase("impish") | nature.equalsIgnoreCase("careful") | nature.equalsIgnoreCase("jolly")) {
+            iv = (int) ceil(((stat/0.9 - 5) *100) / level - 2 * baseStats.getSatk() - ev/4);
+        }
+        else {
+            iv = (int) ceil(((stat/1 - 5) *100) / level - 2 * baseStats.getSatk() - ev/4);
+        }
+
+
+        if (iv > 31)
+            iv = 31;
+        if (iv < 0)
+            iv = 0;
+        return iv;
+    }
+
+    private int calculateSdef(int base, int ev, int stat, int level) {
+        int iv;
+        if (nature.equalsIgnoreCase("calm") | nature.equalsIgnoreCase("gentle") | nature.equalsIgnoreCase("careful") | nature.equalsIgnoreCase("sassy")) {
+            iv = (int) ceil(((stat/1.1 - 5) *100) / level - 2 * baseStats.getSdef() - ev/4);
+        }
+        else if (nature.equalsIgnoreCase("naive") | nature.equalsIgnoreCase("rash") | nature.equalsIgnoreCase("lax") | nature.equalsIgnoreCase("naughty")) {
+            iv = (int) ceil(((stat/0.9 - 5) *100) / level - 2 * baseStats.getSdef() - ev/4);
+        }
+        else {
+            iv = (int) ceil(((stat/1 - 5) *100) / level - 2 * baseStats.getSdef() - ev/4);
+        }
+
+
+        if (iv > 31)
+            iv = 31;
+        if (iv < 0)
+            iv = 0;
+        return iv;
+    }
+
+    private int calculateSpd(int base, int ev, int stat, int level) {
+        int iv;
+        if (nature.equalsIgnoreCase("timid") | nature.equalsIgnoreCase("hasty") | nature.equalsIgnoreCase("jolly") | nature.equalsIgnoreCase("naive")) {
+            iv = (int) ceil(((stat/1.1 - 5) *100) / level - 2 * baseStats.getSpd() - ev/4);
+        }
+        else if (nature.equalsIgnoreCase("brave") | nature.equalsIgnoreCase("relaxed") | nature.equalsIgnoreCase("quiet") | nature.equalsIgnoreCase("sassy")) {
+            iv = (int) ceil(((stat/0.9 - 5) *100) / level - 2 * baseStats.getSpd() - ev/4);
+        }
+        else {
+            iv = (int) ceil(((stat/1 - 5) *100) / level - 2 * baseStats.getSpd() - ev/4);
+        }
+
+
         if (iv > 31)
             iv = 31;
         if (iv < 0)

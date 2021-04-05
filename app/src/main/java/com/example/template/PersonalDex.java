@@ -153,7 +153,7 @@ public class PersonalDex extends AppCompatActivity {
                     String tempID = pokemonIDs.get(position);
                     intent.putExtra("pictureID", "icon" + tempID);
                     startActivity(intent);
-                    Toast.makeText(PersonalDex.this, arrList.get(position) + "", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(PersonalDex.this, arrList.get(position) + "", Toast.LENGTH_LONG).show();
                 }
             });
         }
