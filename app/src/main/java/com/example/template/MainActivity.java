@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
             mRef.child("pokedex").child("pkm1").child("species").setValue("Pikachu");
             mRef.child("pokedex").child("pkm2").setValue("dummy");
 
-            startActivity(new Intent(this, Main_menu_view.class));
+            startActivity(new Intent(this, RSS_view.class));
         }
         else {
             Toast.makeText(this,"Error signing in",Toast.LENGTH_LONG).show();
