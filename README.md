@@ -40,7 +40,7 @@ JD Edwards
 Noah Jackson  
 
 
-## Currently under construction [WIP]
+## Team Member Contributions
 
 - Login Screen [Tyler Morehead]
     
