@@ -39,6 +39,10 @@ public class team_builder extends AppCompatActivity {
 
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
+    /*
+    Declarations
+     */
+
     pokemonUser pkmnUser;
     Stats stats;
     private final FirebaseDatabase fb = FirebaseDatabase.getInstance();
@@ -82,6 +86,10 @@ public class team_builder extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_team_builder);
 
+        /*
+        Declarations for all of the stat inputs on the page.
+         */
+
         stats = new Stats();
 
         topDisplay = (TextView)findViewById(R.id.topDisplay);
@@ -104,7 +112,9 @@ public class team_builder extends AppCompatActivity {
         else
             pokemonIDs = "001";
 
-
+        /*
+        Showing the pokemon sprites for the application
+         */
 
         String imageName = "icon" + pokemonIDs;
         Context c = getApplicationContext();
@@ -113,6 +123,9 @@ public class team_builder extends AppCompatActivity {
 
         imageView.setImageResource(id);
 
+        /*
+        Making sure that the array is populating with the information from FireBase
+         */
 
         if (!(getIntent().getStringArrayExtra("abilities") == null))
             abilities = getIntent().getStringArrayExtra("abilities");
@@ -151,6 +164,10 @@ public class team_builder extends AppCompatActivity {
 
             }
         });
+
+        /*
+        All Text watchers on the page for input change in the edit text fields
+         */
 
         atkInput.addTextChangedListener(new TextWatcher() {
             int temp;
@@ -244,29 +261,9 @@ public class team_builder extends AppCompatActivity {
 
     }
 
-    // take the name of the pokemon (pokemonID) display it at the top and let them enter the values for their stats
-    // also should be able to enter nature and ability from a dropdown menu
-
     /*
-    private void showDataSpinner() {
-        databaseReference.child("Pokemon").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                arrayList.clear();
-                for(DataSnapshot item : dataSnapshot.getChildren()){
-                    arrayList.add(item.child("Name").getValue(String.class));
-                }
-                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(team_builder.this, R.layout.style_spinner, arrayList);
-                pokemon1.setAdapter(arrayAdapter);
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
-    }*/
-
-
-
+    Tester method for adding pokemon
+     */
     private void addPokemon() {
         int temp = 0;
         //TODO level thing replace the 1, and replace the Base with the stat from the pokedex
@@ -294,6 +291,10 @@ public class team_builder extends AppCompatActivity {
     }
 
     public void gotoDexView(View view) {
+
+       /*
+       Declarations for pushing the information with firebase
+        */
         int hp = stats.getHp();
         int atk = stats.getAtk();
         int def = stats.getDef();
@@ -302,6 +303,9 @@ public class team_builder extends AppCompatActivity {
         int spd = stats.getSpd();
         System.out.println(hp + " " + atk);
 
+        /*
+        Getting spinner/edit text information
+         */
         Spinner spinner1 = (Spinner)findViewById(R.id.nature);
         String nature = spinner1.getSelectedItem().toString();
 
@@ -313,6 +317,9 @@ public class team_builder extends AppCompatActivity {
         String level = editLevel.getText().toString();
         System.out.println(level);
 
+        /*
+        Pushing edit text information to the FireBase Data Base
+         */
         FirebaseDatabase db =  FirebaseDatabase.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String userName = user.getEmail().replace('.', ',');
@@ -320,6 +327,9 @@ public class team_builder extends AppCompatActivity {
         // String pkmId = "pkm" + pokemonID;
         String pkmId = pokemonName;
 
+        /*
+        Refrencing the child that the information is pushed to
+         */
         mRef.child("pokedex").child(pkmId).child("stats").child("hp").setValue(hp);
         mRef.child("pokedex").child(pkmId).child("stats").child("atk").setValue(atk);
         mRef.child("pokedex").child(pkmId).child("stats").child("def").setValue(def);
@@ -337,6 +347,9 @@ public class team_builder extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /*
+    Buttons at the bottom of the page
+     */
     public void gotoNewsView(View view) {
         Intent intent = new Intent(this, RSS_view.class);
         startActivity(intent);

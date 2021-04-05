@@ -14,7 +14,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 //import android.support.v7.widget.Toolbar;
-import androidx.appcompat.widget.Toolbar;
+//import androidx.appcompat.widget.Toolbar;
 
 import android.view.View;
 import android.widget.AdapterView;
@@ -44,9 +44,11 @@ public class RSS_view extends ListActivity {
     // Array list for displaying articles
     ArrayList<HashMap<String, String>> rssItemList = new ArrayList<>();
 
+    // Create parser object to go through the RSS xml file
     RSSParser rssParser = new RSSParser();
-    Toolbar toolbar;
+    //Toolbar toolbar;
 
+    // Array list of items from the RSS xml
     List<RSSItem> rssItems = new ArrayList<>();
     private static String TAG_TITLE = "title";
     private static String TAG_LINK = "link";
