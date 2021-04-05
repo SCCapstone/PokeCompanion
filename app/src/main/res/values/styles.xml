@@ -11,9 +11,9 @@
 
     <style name = "SpinnerThemeLight" >
         <item name = "android:colorBackground">@color/textColorPrimary</item>
-        <item name = "android:textColorPrimary">@color/colorBackground</item>
-        <item name = "android:textColorSecondary">@color/colorBackground</item>
         <item name = "android:textColorTertiary">@color/colorBackground</item>
+        <item name = "android:textColorSecondary">@color/colorBackground</item>
+        <item name = "android:textColorPrimary">@color/colorBackground</item>
         <item name = "android:textColorPrimaryDisableOnly">@color/colorBackground</item>
     </style>
 
