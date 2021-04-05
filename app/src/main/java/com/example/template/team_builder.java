@@ -22,6 +22,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -123,12 +124,12 @@ public class team_builder extends AppCompatActivity {
         }
 
         // setting up the spinner for the natures
-        natureAdapter = new ArrayAdapter<String> (this, android.R.layout.simple_spinner_item, natures);
+        natureAdapter = new ArrayAdapter<String> (this, android.R.layout.simple_list_item_1, natures);
         natureAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         natureSpinner.setAdapter(natureAdapter);
 
         // setting up the spinners for the abilities
-        abilityAdapter = new ArrayAdapter<String> (this, android.R.layout.simple_spinner_item, abilities);
+        abilityAdapter = new ArrayAdapter<String> (this, android.R.layout.simple_list_item_1, abilities);
         abilityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         abilitySpinner.setAdapter(abilityAdapter);
 
