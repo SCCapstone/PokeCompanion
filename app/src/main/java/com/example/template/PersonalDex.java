@@ -43,6 +43,9 @@ public class PersonalDex extends AppCompatActivity {
     // our listview again for display purposes
     ListView listView;
 
+    ArrayList<Stats> pokemonStats = new ArrayList<>();
+    ArrayList<String> pokemonIDs = new ArrayList<>();
+
     // we will use an ArrayList in our listview because users can add and subtract pokemon, so the size must be changable
     ArrayList<String> arrList = new ArrayList<>();
     // array adapters are used to link Arrays and listviews
@@ -91,10 +94,29 @@ public class PersonalDex extends AppCompatActivity {
                         currMonName = ds.getKey();
                         if (!currMonName.equals("pkm1"))
                             if (!currMonName.equals("pkm2")) {
+                                // we will be making 2 array lists, one of the names for displaying and ...
+                                // one of the stats of each pokemon so that we can pass that information along to the individual screen
+                                Stats tempStats = new Stats();
+                                Long tempAtk = (long)ds.child("stats").child("atk").getValue();
+                                tempStats.setAtk(tempAtk.intValue());
+                                Long tempDef = (long)ds.child("stats").child("def").getValue();
+                                tempStats.setDef(tempDef.intValue());
+                                Long tempSpd = (long)ds.child("stats").child("spd").getValue();
+                                tempStats.setSpd(tempSpd.intValue());
+                                Long tempHp = (long)ds.child("stats").child("hp").getValue();
+                                tempStats.setHp(tempHp.intValue());
+                                Long tempSatk = (long)ds.child("stats").child("satk").getValue();
+                                tempStats.setSatk(tempSatk.intValue());
+                                Long tempSdef = (long)ds.child("stats").child("sdef").getValue();
+                                tempStats.setSdef(tempSdef.intValue());
+
+                                String tempID = (String)ds.child("number").getValue();
+                                pokemonIDs.add(tempID);
+
+                                pokemonStats.add(tempStats);
                                 arrList.add("" + temp + ".\t" + currMonName);
                                 temp++;
-                                //Articuno
-                                //0123456
+
                             }
                     }
                     /*
@@ -120,9 +142,18 @@ public class PersonalDex extends AppCompatActivity {
                     // 0123
                     String temp = arrList.get(position).substring(3);
                     Intent intent = new Intent(getBaseContext(), Individual_Pokemon_view.class);
+                    intent.putExtra("pkmnHP",pokemonStats.get(position).getHp() + "");
+                    intent.putExtra("pkmnSPD",pokemonStats.get(position).getSpd() + "");
+                    intent.putExtra("pkmnATK",pokemonStats.get(position).getAtk() + "");
+                    intent.putExtra("pkmnDEF",pokemonStats.get(position).getDef() + "");
+                    intent.putExtra("pkmnSATK",pokemonStats.get(position).getSatk() + "");
+                    intent.putExtra("pkmnSDEF",pokemonStats.get(position).getSdef() + "");
+
                     intent.putExtra("nickname", temp);
+                    String tempID = pokemonIDs.get(position);
+                    intent.putExtra("pictureID", "icon" + tempID);
                     startActivity(intent);
-                    Toast.makeText(PersonalDex.this, arrList.get(position) + "", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(PersonalDex.this, arrList.get(position) + "", Toast.LENGTH_LONG).show();
                 }
             });
         }
