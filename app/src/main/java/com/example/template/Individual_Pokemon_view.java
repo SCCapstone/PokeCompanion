@@ -724,6 +724,11 @@ public class Individual_Pokemon_view extends AppCompatActivity {
             iv = (int) ceil(((stat/1 - 5) *100) / level - 2 * baseStats.getDef() - ev/4);
         }
 
+        if (iv > 31)
+            iv = 31;
+        if (iv < 0)
+            iv = 0;
+        return iv;
 
     }
     /* ===============================
