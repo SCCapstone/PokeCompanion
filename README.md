@@ -4,7 +4,6 @@
 
 - Allows users to track their Pokemon's growth throughout their playthough so they can see the strengths and weaknesses it develops
 - Allows users to predict how they will continue to grow
-- Assists the user throughout their playthough by offering bits of advice concerning how to raise their Pokemon
 - Provides an easy way to theorycraft and plan their perfect team for their game
 
 ## External requirements
