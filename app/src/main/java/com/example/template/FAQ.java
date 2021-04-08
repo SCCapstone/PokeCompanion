@@ -36,7 +36,7 @@ public class FAQ extends AppCompatActivity {
                     "\n\nIVs or Individual Values are randomly assigned to Pokemon when they appear into the world. They often determine the Pokemon's potential. The higher" +
                     " the IVs, the higher that Pokemon's stats can go, and the better it can theoretically be." +
                     "\n\nEVs or Effort Values are values that trainers can influence, but they are also extremely difficult to track. Everytime your Pokemon defeats another, it gets a specific" +
-                    " EV from that Pokemon and then, their stats grow based on those accumulated EVs. You can pretty much just ignore EVs for the most part during your playthrough."};
+                    " EV from that Pokemon and then, their stats grow based on those accumulated EVs. You can pretty much just ignore EVs for the most part during your playthrough.\n"};
 
 
     @Override
