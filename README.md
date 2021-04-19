@@ -1,7 +1,7 @@
 # PokeCompanion
 - This app is a companion app for any main series Pokemon video game.
 
-About Us - <a href="about.md" title="About Us">About Us</a>
+<a href="/Website/about.md" title="About Us">About Us</a>
 
 ## Features
 
