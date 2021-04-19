@@ -3,7 +3,7 @@
 
 ## Demo Video (outdated)
 
-<video src="https://user-images.githubusercontent.com/43704967/115296757-59f6a700-a129-11eb-8119-0187af01a28f.mp4" width="640" height="400" controls preload></video>
+<video src="https://user-images.githubusercontent.com/43704967/115296757-59f6a700-a129-11eb-8119-0187af01a28f.mp4" width="720" height="480" controls preload></video>
 
 ## Screenshots (not complete)
 
