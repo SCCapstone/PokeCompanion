@@ -1,3 +1,4 @@
+<a href="/PokeCompanion" title="Home">Home</a>
 ## Screenshots
 
 Solarized dark             |  Solarized Ocean
