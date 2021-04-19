@@ -1,3 +1,4 @@
+<a href="/PokeCompanion" title="Home">Home</a>
 # About
 The PokeCompanion app was made as a senior design project at the University of South Carolina
 ## Creators
