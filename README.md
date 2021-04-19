@@ -2,6 +2,7 @@
 - This app is a companion app for any main series Pokemon video game..
 
 <a href="/Website/about" title="About Us">About Us</a>
+<a href="/Website/index-1" title="pics?">pics</a>
 
 ## Features
 
