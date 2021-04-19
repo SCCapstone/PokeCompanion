@@ -1,5 +1,8 @@
 # PokeCompanion
 - This app is a companion app for any main series Pokemon video game.
+
+About Us - <a href="about.md" title="About Us">About Us</a>
+
 ## Features
 
 - Allows users to track their Pokemon's growth throughout their playthough so they can see the strengths and weaknesses it develops
