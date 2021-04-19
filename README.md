@@ -1,5 +1,5 @@
 # PokeCompanion
-- This app is a companion app for any main series Pokemon video game.
+- This app is a companion app for any main series Pokemon video game..
 
 <a href="sccapstone.github.io/PokeCompanion/Website/about" title="About Us">About Us</a>
 
