@@ -17,17 +17,29 @@
 
     </LinearLayout>
 
+    <android.widget.SearchView
+        android:id="@+id/filter"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:iconifiedByDefault="false"
+        android:background="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/listviewtxt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="1.0"
+        app:queryHint="Search" />
+
     <ListView
         android:id="@+id/listviewtxt"
-        android:layout_width="401dp"
-        android:layout_height="566dp"
-        android:layout_marginTop="84dp"
-        app:layout_constraintBottom_toTopOf="@+id/homebutton"
+        android:layout_width="416dp"
+        android:layout_height="473dp"
+        android:layout_marginTop="164dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.555"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toTopOf="parent">
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -84,6 +96,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@mipmap/settings_button_foreground" />
 
+    <!-- JD 2021 April 5
+        Added this bar separator and justified above text to the left -->
+
     <TextView
         android:id="@+id/textView2"
         android:layout_width="255dp"
@@ -92,17 +107,15 @@
         android:textSize="40sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.109"
+        app:layout_constraintHorizontal_bias="0.102"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/linearLayout"
         app:layout_constraintVertical_bias="0.023" />
 
-    <!-- JD 2021 April 5
-        Added this bar separator and justified above text to the left -->
     <View
+        android:id="@+id/view2"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="12dp"
         android:background="@android:color/darker_gray"
         app:layout_constraintBottom_toTopOf="@+id/listviewtxt"
         tools:layout_editor_absoluteX="6dp" />
