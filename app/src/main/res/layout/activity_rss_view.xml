@@ -9,28 +9,47 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/constraintLayout"
     android:orientation="vertical">
 
     <!--Displays list of news articles-->
 
     <!--Bottom menu buttons-->
 
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="255dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="16dp"
+        android:text="Newsfeed"
+        android:textSize="40sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.102"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="84dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp" />
+
     <ListView
         android:id="@android:id/list"
         style="@android:style/Widget.DeviceDefault.ExpandableListView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="84dp"
         android:cacheColorHint="#FFFFFF"
         android:dividerHeight="1dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.021" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/homebutton"
@@ -38,9 +57,9 @@
         android:layout_height="80dp"
         android:background="#3166B1"
         android:onClick="gotoNewsView"
+        android:src="@mipmap/home_button_foreground"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:src="@mipmap/home_button_foreground" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageButton
         android:id="@+id/pokedexbutton"
@@ -48,9 +67,9 @@
         android:layout_height="80dp"
         android:background="#3166B1"
         android:onClick="gotoDexView"
+        android:src="@mipmap/pokedex_button_foreground"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/homebutton"
-        android:src="@mipmap/pokedex_button_foreground" />
+        app:layout_constraintStart_toEndOf="@+id/homebutton" />
 
     <ImageButton
         android:id="@+id/addpkmnbutton"
@@ -58,10 +77,10 @@
         android:layout_height="80dp"
         android:background="#3166B1"
         android:onClick="gotoAddView"
+        android:src="@mipmap/addpokemon_button_foreground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/yourpkmnbutton"
-        app:layout_constraintStart_toEndOf="@+id/pokedexbutton"
-        android:src="@mipmap/addpokemon_button_foreground" />
+        app:layout_constraintStart_toEndOf="@+id/pokedexbutton" />
 
     <ImageButton
         android:id="@+id/yourpkmnbutton"
@@ -69,9 +88,9 @@
         android:layout_height="80dp"
         android:background="#3166B1"
         android:onClick="gotoTeamView"
+        android:src="@mipmap/yourpokemon_button_foreground"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/settingsbutton"
-        android:src="@mipmap/yourpokemon_button_foreground" />
+        app:layout_constraintEnd_toStartOf="@+id/settingsbutton" />
 
     <ImageButton
         android:id="@+id/settingsbutton"
@@ -79,8 +98,8 @@
         android:layout_height="80dp"
         android:background="#3166B1"
         android:onClick="gotoSettingsView"
+        android:src="@mipmap/settings_button_foreground"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:src="@mipmap/settings_button_foreground" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

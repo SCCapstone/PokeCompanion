@@ -12,7 +12,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
-// in addition to being a pseudo main menu, this page functions as the settings page, and is accessed by pressing the cog button
+// this page functions as the settings page, and is accessed by pressing the cog button
 public class Main_menu_view extends AppCompatActivity {
     // the 5 views we want
     /*home/newsfeed
@@ -29,6 +29,10 @@ public class Main_menu_view extends AppCompatActivity {
     }
 
     // this is the code for transitioning between views with the buttons on the bottom
+    /*  ===============================================================================================
+        Should these buttons be edited so the newsView is commented out instead of the settingsView?
+        - JD Edwards 2021 April 5
+     *  ============================================================================================ */
     public void gotoAddView(View view) {
         Intent intent = new Intent(this, team_builder.class);
         startActivity(intent);
@@ -55,16 +59,17 @@ public class Main_menu_view extends AppCompatActivity {
     }
 
 
-
+    //signs the user out of Firebase(Google if they're using it) and returns them to the login ui
     public void signOut(View view) {
+        final Intent intent = new Intent(this, MainActivity.class);
         AuthUI.getInstance()
                 .signOut(this)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     public void onComplete(@NonNull Task<Void> task) {
-                        // ...
+                        startActivity(intent);
                     }
                 });
-        Intent intent = new Intent(this, MainActivity.class);
+        //Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
 
     }

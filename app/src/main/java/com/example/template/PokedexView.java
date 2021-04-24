@@ -1,30 +1,17 @@
 package com.example.template;
 
 import android.content.Intent;
-import android.os.Build;
 
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,9 +19,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.jar.Attributes;
 
-// this class is coded by
+// this class was coded in its entirety by Jacob Letizia in March 2021
 public class PokedexView extends AppCompatActivity {
     private final FirebaseDatabase fb = FirebaseDatabase.getInstance();
     DatabaseReference db = fb.getReference();
@@ -51,11 +37,13 @@ public class PokedexView extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // first establish a bunch of variables
         setContentView(R.layout.activity_pokedexview);
         listView = (ListView)findViewById(R.id.listviewtxt);
         arrAdapter = new ArrayAdapter<String> (this, android.R.layout.simple_list_item_1, arrList);
-
         listView.setAdapter(arrAdapter);
+
+        // this function will load the pokemon into a local array so that they can be displayed
         db.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -66,9 +54,9 @@ public class PokedexView extends AppCompatActivity {
                 //long numInDex = snapshot.child("Pokemon").getChildrenCount();
                 //Log.e("number", numInDex + " this is the number it is going until");
                 for (int i = 1; i <= 151; i++) {
-                    // all pokemon have a number with three digits from 001 to currently 898
-                    // if that number is < 10, it has to be populated by a "00" to the left in order to
-                    // match up with our database, and so on for >10 but <100
+                    /* all pokemon have a number with three digits from 001 to currently 898
+                    if that number is < 10, it has to be populated by a "00" to the left in order to
+                    match up with our database, and so on for >10 but <100 */
                     if(i < 10)
                         currMon = "00" + i;
                     else if(i < 100)
@@ -94,12 +82,11 @@ public class PokedexView extends AppCompatActivity {
                     currMonName = (String)snapshot.child("Pokemon").child(currMon).child("Name").getValue();
                     currMonName = (currMonName.substring(0,1).toUpperCase()) + currMonName.substring(1);
                     // add that pokemon to the array list
-                    arrList.add(currMon + "\t\t" + currMonName);
+                    arrList.add(currMon + "\t" + currMonName);
                 }
-                //Log.e("firebase", "exiting dataChange");
                 listView = (ListView)findViewById(R.id.listviewtxt);
                 listView.setAdapter(arrAdapter);
-                //Log.e("dsc", "data set is changing");
+                // NDSC lets the array know that it has new values and that it should be displayed
                 arrAdapter.notifyDataSetChanged();
             }
 
@@ -108,10 +95,10 @@ public class PokedexView extends AppCompatActivity {
                 Toast.makeText(PokedexView.this,"Error: "+ error.getMessage(),Toast.LENGTH_SHORT).show();
             }
         });
+
         listView = (ListView)findViewById(R.id.listviewtxt);
         arrAdapter = new ArrayAdapter<String> (this, android.R.layout.simple_list_item_1, arrList);
         listView.setAdapter(arrAdapter);
-        //Log.e("dsc", "data set is changing");
         arrAdapter.notifyDataSetChanged();
 
         // this occurs when the list is clicked, should route to add pokemon view of that pokemon
@@ -119,20 +106,21 @@ public class PokedexView extends AppCompatActivity {
            @Override
            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                String temp = arrList.get(position).substring(4);
+
+               String tempID = arrList.get(position).substring(0,3);
+               Log.e("tempID",tempID);
+               /* we will be passing some information to the add pokemon view
+               so that the database doesn't have to be read again */
                int pokemonID = Integer.parseInt(arrList.get(position).substring(0,3));
                String[] possibleAbilities = abilities[pokemonID];
                Intent intent = new Intent(getBaseContext(), team_builder.class);
                intent.putExtra("pokemon", temp);
                intent.putExtra("abilities", possibleAbilities);
-               //Toast.makeText(PokedexView.this, arrList.get(position)+"", Toast.LENGTH_SHORT).show();
+               intent.putExtra("pokemonID", tempID);
 
                startActivity(intent);
-               //Toast.makeText(PokedexView.this, "past start activity", Toast.LENGTH_SHORT).show();
-
            }
         });
-
-
     }
 
     // this is the code for transitioning between views with the buttons on the bottom
@@ -160,30 +148,4 @@ public class PokedexView extends AppCompatActivity {
         Intent intent = new Intent(this, Main_menu_view.class);
         startActivity(intent);
     }
-
-
-
-
-    /*private void populate() {
-        // 'i' will represent our spot in the pokedex
-        String currMon;
-        String currMonName;
-        long numInDex = snap.child("Pokemon").getChildrenCount();
-        for (int i = 1; i < numInDex; i++) {
-            // all pokemon have a number with three digits from 001 to currently 898
-            // if that number is < 10, it has to be populated by a "00" to the left in order to
-            // match up with our database, and so on for >10 but <100
-            if(i < 10)
-                currMon = "00" + i;
-            else if(i < 100)
-                currMon = "0" + i;
-            else
-                currMon = "" + i;
-            // finds the name of the pokemon associated with the current number
-            currMonName = (String)snap.child("Pokemon").child(currMon).child("Name").getValue();
-            // add that pokemon to the array list
-            arrList.add(currMon + "\t" + currMonName);
-        }
-    }*/
-
 }
