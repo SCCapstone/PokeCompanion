@@ -3,11 +3,16 @@ package com.example.template;
 import android.content.Intent;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.SearchView;
+import android.widget.SearchView.OnQueryTextListener;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,13 +26,17 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 // this class was coded in its entirety by Jacob Letizia in March 2021
+// for the searchbar funtionality, I loosely followed this tutorial: https://camposha.info/android-simple-listview-search-filter/
 public class PokedexView extends AppCompatActivity {
     private final FirebaseDatabase fb = FirebaseDatabase.getInstance();
     DatabaseReference db = fb.getReference();
     // the actual thing being displayed
     ListView listView;
+    // the search bar that sits above the listView
+    SearchView searchbar;
     // this is the array list we will be passing onto the ListView item
     ArrayList<String> arrList = new ArrayList<>();
+    String[][] pokemonIDs = new String[160][2];
     // there can only be a maximum of 3 ablities
     String[][] abilities = new String[160][3];
 
@@ -39,9 +48,24 @@ public class PokedexView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         // first establish a bunch of variables
         setContentView(R.layout.activity_pokedexview);
+        searchbar =  (SearchView)findViewById(R.id.filter);
         listView = (ListView)findViewById(R.id.listviewtxt);
-        arrAdapter = new ArrayAdapter<String> (this, android.R.layout.simple_list_item_1, arrList);
+        arrAdapter = new ArrayAdapter<String> (this, android.R.layout.simple_list_item_1, android.R.id.text1, arrList);
         listView.setAdapter(arrAdapter);
+
+        // this function provides the search functionality
+        searchbar.setOnQueryTextListener(new OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                arrAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
 
         // this function will load the pokemon into a local array so that they can be displayed
         db.addValueEventListener(new ValueEventListener() {
@@ -82,8 +106,11 @@ public class PokedexView extends AppCompatActivity {
                     currMonName = (String)snapshot.child("Pokemon").child(currMon).child("Name").getValue();
                     currMonName = (currMonName.substring(0,1).toUpperCase()) + currMonName.substring(1);
                     // add that pokemon to the array list
-                    arrList.add(currMon + "\t" + currMonName);
+                    pokemonIDs[i][0] = currMon;
+                    pokemonIDs[i][1] = currMonName;
+                    arrList.add(currMonName);
                 }
+
                 listView = (ListView)findViewById(R.id.listviewtxt);
                 listView.setAdapter(arrAdapter);
                 // NDSC lets the array know that it has new values and that it should be displayed
@@ -105,18 +132,31 @@ public class PokedexView extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
            @Override
            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-               String temp = arrList.get(position).substring(4);
+               // this is the name of the pokemon that was just selected
+               String pokemonName = (String) arrAdapter.getItem(position);
+               String pokemonID = "001";
+               /* after we get the name of the pokemon, we need to find the id.
+               normally, we could just assume the id is the position in the array list,
+               HOWEVER: when you search, the position in the array list gets changed
+               so we can no longer assume that the pokemon is in the spot it needs to be in
+                */
+               for (int i = 0; i < 151; i++) {
+                   //Log.e("test", "test: " + pokemonIDs[i][1]);
+                   String temp = pokemonIDs[i][1];
+                   if (temp == pokemonName) {
+                       // we found the match, so the ID gets assigned to the string version of i
+                       pokemonID = pokemonIDs[i][0];
+                   }
 
-               String tempID = arrList.get(position).substring(0,3);
-               Log.e("tempID",tempID);
+               }
+               Log.e("info", "pokemonID#: " + pokemonID + "\npokemon name: " + pokemonName);
                /* we will be passing some information to the add pokemon view
                so that the database doesn't have to be read again */
-               int pokemonID = Integer.parseInt(arrList.get(position).substring(0,3));
-               String[] possibleAbilities = abilities[pokemonID];
+               String[] possibleAbilities = abilities[Integer.parseInt(pokemonID)];
                Intent intent = new Intent(getBaseContext(), team_builder.class);
-               intent.putExtra("pokemon", temp);
+               intent.putExtra("pokemon", pokemonName);
                intent.putExtra("abilities", possibleAbilities);
-               intent.putExtra("pokemonID", tempID);
+               intent.putExtra("pokemonID", pokemonID);
 
                startActivity(intent);
            }
