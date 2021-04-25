@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/topDisplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Choose Pokemon from the Pokedex"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.039" />
+
+    <Button
+        android:id="@+id/choosePokemon"
+        android:layout_width="164dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="112dp"
+        android:onClick="goPickOne"
+        android:text="Pick a Pokemon"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.064"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/level"
+        android:layout_width="81dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="532dp"
+        android:layout_marginEnd="264dp"
+        android:layout_marginRight="264dp"
+        android:ems="10"
+        android:hint="Level"
+        android:inputType="number"
+        android:background="#FFCC01"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/HPInput"
+        android:layout_width="105dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="208dp"
+        android:ems="10"
+        android:hint="HP"
+        android:inputType="numberDecimal"
+        android:background="#FFCC01"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/defenseInput"
+        android:layout_width="105dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="360dp"
+        android:ems="10"
+        android:hint="Defense"
+        android:inputType="numberDecimal"
+        android:background="#FFCC01"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/speedInput"
+        android:layout_width="105dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="208dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginRight="60dp"
+        android:ems="10"
+        android:hint="Speed"
+        android:inputType="numberDecimal"
+        android:background="#FFCC01"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintStart_toEndOf="@+id/HPInput"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/attackInput"
+        android:layout_width="105dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="288dp"
+        android:ems="10"
+        android:hint="Attack"
+        android:inputType="numberDecimal"
+        android:background="#FFCC01"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/sdefenseInput"
+        android:layout_width="105dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="360dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginRight="60dp"
+        android:ems="10"
+        android:hint="Sp Defense"
+        android:inputType="numberDecimal"
+        android:background="#FFCC01"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintStart_toEndOf="@+id/defenseInput"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/sattackInput"
+        android:layout_width="105dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="288dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginRight="60dp"
+        android:ems="10"
+        android:hint="Sp Attack"
+        android:inputType="numberDecimal"
+        android:background="#FFCC01"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintStart_toEndOf="@+id/attackInput"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/homebutton"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="#3166B1"
+        android:onClick="gotoNewsView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@mipmap/home_button_foreground" />
+
+    <ImageButton
+        android:id="@+id/pokedexbutton"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="#3166B1"
+        android:onClick="goPickOne"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/homebutton"
+        app:srcCompat="@mipmap/pokedex_button_foreground" />
+
+    <ImageButton
+        android:id="@+id/addpkmnbutton"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:background="#3166B1"
+        android:onClick="gotoAddView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/yourpkmnbutton"
+        app:layout_constraintStart_toEndOf="@+id/pokedexbutton"
+        app:srcCompat="@mipmap/addpokemon_button_foreground" />
+
+    <ImageButton
+        android:id="@+id/yourpkmnbutton"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="#3166B1"
+        android:onClick="gotoTeamView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/settingsbutton"
+        app:srcCompat="@mipmap/yourpokemon_button_foreground" />
+
+    <ImageButton
+        android:id="@+id/settingsbutton"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="#3166B1"
+        android:onClick="gotoSettingsView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@mipmap/settings_button_foreground" />
+
+    <Spinner
+        android:id="@+id/nature"
+        android:layout_width="185dp"
+        android:layout_height="26dp"
+        android:layout_marginTop="428dp"
+        android:background="#FF0000"
+        android:textColor="@color/colorBackground"
+        android:popupBackground="#FF0000"
+        android:theme="@style/SpinnerThemeLight"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.707"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/ability"
+        android:layout_width="185dp"
+        android:layout_height="26dp"
+        android:layout_marginTop="20dp"
+        android:background="#FF0000"
+        android:popupBackground="#FF0000"
+        android:textColor="@color/colorBackground"
+        android:theme="@style/SpinnerThemeLight"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.707"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nature" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="57dp"
+        android:layout_height="27dp"
+        android:layout_marginTop="24dp"
+        android:text="Nature"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/nature"
+        app:layout_constraintHorizontal_bias="0.638"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/defenseInput" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Abilities"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/ability"
+        app:layout_constraintHorizontal_bias="0.687"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <Button
+        android:id="@+id/submit"
+        android:layout_width="105dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="528dp"
+        android:layout_marginEnd="84dp"
+        android:layout_marginRight="84dp"
+        android:ems="10"
+        android:onClick="gotoDexView"
+        android:text="Submit"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="146dp"
+        android:layout_height="134dp"
+        android:layout_marginTop="56dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/icon001" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
