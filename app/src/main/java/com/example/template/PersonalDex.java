@@ -102,6 +102,7 @@ public class PersonalDex extends AppCompatActivity {
                         currMonName = ds.getKey();
                         if (!currMonName.equals("pkm1"))
                             if (!currMonName.equals("pkm2")) {
+                                String types = "";
                                 /* we will be making 2 array lists, one of the names for displaying and
                                 one of the stats of each pokemon so that we can pass that information along to the individual screen*/
                                 Stats tempStats = new Stats();
@@ -118,11 +119,13 @@ public class PersonalDex extends AppCompatActivity {
                                 Long tempSdef = (long)ds.child("stats").child("sdef").getValue();
                                 tempStats.setSdef(tempSdef.intValue());
 
+                                // every pokemon has at least 1 type
+                                types = (String)ds.child("type").getValue();
+
                                 String tempID = (String)ds.child("number").getValue();
                                 pokemonIDs.add(tempID);
-
                                 pokemonStats.add(tempStats);
-                                arrList.add(currMonName);
+                                arrList.add(currMonName + "- " +  types);
                                 pokemonNames[numPokemon][0] = currMonName;
                                 pokemonNames[numPokemon][1] = numPokemon + "";
                                 numPokemon++;
@@ -144,6 +147,7 @@ public class PersonalDex extends AppCompatActivity {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     String individualName = arrList.get(position);
+                    individualName = individualName.substring(0,individualName.indexOf("-"));
                     //System.out.println(arrList.get(position));
                     /* similarly to in pokedex view, we want to pass along a lot of information I stored in a bunch of arrays,
                     however the index of those arrays is based on the list being unfiltered, so we
