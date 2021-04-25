@@ -11,6 +11,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
+import android.widget.SearchView;
+import android.widget.SearchView.OnQueryTextListener;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,11 +30,17 @@ import java.util.ArrayList;
 public class PersonalDex extends AppCompatActivity {
     private final FirebaseDatabase fb = FirebaseDatabase.getInstance();
     DatabaseReference db = fb.getReference();
-    // our listview again for display purposes
+    // our listview again for display purposes and searchbar for filtering that listview
     ListView listView;
+    SearchView searchbar;
 
+    // these arrays are used to make sure we can pass along information about the pokemon that we pull
     ArrayList<Stats> pokemonStats = new ArrayList<>();
     ArrayList<String> pokemonIDs = new ArrayList<>();
+    // this array is to help make sure we keep everything in order after the array has been filtered
+    // and the indexes have been all messed up
+    String[][] pokemonNames = new String[151][2];
+    int numPokemon = 0;
 
     // we will use an ArrayList in our listview because users can add and subtract pokemon, so the size must be changable
     ArrayList<String> arrList = new ArrayList<>();
@@ -51,8 +59,10 @@ public class PersonalDex extends AppCompatActivity {
         int duration = Toast.LENGTH_LONG;
         Toast notLoggedInToast = Toast.makeText(context, dispText, duration);
 
+        // we will assign our objects here and set up the adapter
         listView = (ListView)findViewById(R.id.listViewPersonalDex);
-        arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, arrList);
+        searchbar = (SearchView)findViewById(R.id.filtersearch);
+        arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, arrList);
         listView.setAdapter(arrayAdapter);
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -60,10 +70,23 @@ public class PersonalDex extends AppCompatActivity {
         // if user is null, no one is logged in, if user isn't null, then someone is logged in
         if (user != null) {
             // this method accesses the database
+            searchbar.setOnQueryTextListener(new OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    return false;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    arrayAdapter.getFilter().filter(newText);
+                    return false;
+                }
+            });
+
             db.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    Log.e("data", "reading from personal dex");
+                    //Log.e("data", "reading from personal dex");
                     String currMon;
                     String currMonName = "";
                     String userName = FirebaseAuth.getInstance().getCurrentUser().getEmail();
@@ -73,8 +96,7 @@ public class PersonalDex extends AppCompatActivity {
                     // this should return the number of pokemon the user currently have
                     // I am subtracting 2 because we populate each user with 2 dummy pokemon
                     long numInDex = snapshot.child("users").child(userName).child("pokedex").getChildrenCount();
-                    // this temp value will be for display purposes, it will go before each pokemon
-                    int temp = 1;
+
                     // for each loop so that we can get to access each pokemon
                     for (DataSnapshot ds: snapshot.child("users").child(userName).child("pokedex").getChildren()) {
                         currMonName = ds.getKey();
@@ -100,8 +122,10 @@ public class PersonalDex extends AppCompatActivity {
                                 pokemonIDs.add(tempID);
 
                                 pokemonStats.add(tempStats);
-                                arrList.add("" + temp + ".\t" + currMonName);
-                                temp++;
+                                arrList.add(currMonName);
+                                pokemonNames[numPokemon][0] = currMonName;
+                                pokemonNames[numPokemon][1] = numPokemon + "";
+                                numPokemon++;
                             }
                     }
                     listView = (ListView)findViewById(R.id.listViewPersonalDex);
@@ -113,40 +137,54 @@ public class PersonalDex extends AppCompatActivity {
                     Log.e("error","error reading");
                 }
 
+                    //Log.e("name", individualName);
             });
             // when a pokemon is clicked, we will be passing in a lot of information
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    String temp = arrList.get(position).substring(3);
-                    System.out.println("arrList.get(position) +++++++++++++++");
-                    System.out.println(arrList.get(position));
+                    String individualName = arrList.get(position);
+                    //System.out.println(arrList.get(position));
+                    /* similarly to in pokedex view, we want to pass along a lot of information I stored in a bunch of arrays,
+                    however the index of those arrays is based on the list being unfiltered, so we
+                    just need to find the index real quick through a helper array I constructed
+                     */
+                    int index = 0;
+                    for (int i = 0; i < numPokemon; i++) {
+                        String temp = pokemonNames[i][0];
+                        if (temp == individualName) {
+                            index = i;
+                        }
+                    }
+                    String tempID = pokemonIDs.get(index);
+                    Log.e("help", "pokemonName: " + individualName + "\npkmnID:" + tempID + "\nindex: " + index + "\nstats" + pokemonStats.get(index));
                     // we will be going to the Individual Pokemon view
                     Intent intent = new Intent(getBaseContext(), Individual_Pokemon_view.class);
                     /* we will be passing all the current stats for the pokemon to the next screen so that
                     they don't need to be loaded again */
-                    intent.putExtra("pkmnHP",pokemonStats.get(position).getHp() + "");
-                    intent.putExtra("pkmnSPD",pokemonStats.get(position).getSpd() + "");
-                    intent.putExtra("pkmnATK",pokemonStats.get(position).getAtk() + "");
-                    intent.putExtra("pkmnDEF",pokemonStats.get(position).getDef() + "");
-                    intent.putExtra("pkmnSATK",pokemonStats.get(position).getSatk() + "");
-                    intent.putExtra("pkmnSDEF",pokemonStats.get(position).getSdef() + "");
+                    intent.putExtra("pkmnHP",pokemonStats.get(index).getHp() + "");
+                    intent.putExtra("pkmnSPD",pokemonStats.get(index).getSpd() + "");
+                    intent.putExtra("pkmnATK",pokemonStats.get(index).getAtk() + "");
+                    intent.putExtra("pkmnDEF",pokemonStats.get(index).getDef() + "");
+                    intent.putExtra("pkmnSATK",pokemonStats.get(index).getSatk() + "");
+                    intent.putExtra("pkmnSDEF",pokemonStats.get(index).getSdef() + "");
+
+
 
                     // nickname is the name of the pokemon that will be going into the next screen
-                    intent.putExtra("nickname", temp);
-                    String tempID = pokemonIDs.get(position);
+                    intent.putExtra("nickname", individualName);
                     intent.putExtra("pictureID", "icon" + tempID);
                     startActivity(intent);
                     // Toast.makeText(PersonalDex.this, arrList.get(position) + "", Toast.LENGTH_LONG).show();
                 }
             });
-
+            // this code works for the click and hold option to delete
             listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                 @Override
                 public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                    final String str = arrList.get(position).substring(2).replaceAll("\\s", "");
-                    System.out.println("arrList.get(position) str +++++++++++++++");
-                    System.out.println(str);
+
+                    final String str = arrList.get(position).replaceAll("\\s", "");
+
                     db.child("users").child(str).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
