@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Looper;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -279,26 +280,27 @@ public class Individual_Pokemon_view extends AppCompatActivity {
                 timer[0].schedule(new TimerTask() {
                     @Override
                     public void run() {
+                        Looper.prepare();
                         int lowest = (int) floor(floor(((2*baseStats.getHp()+0)*level)/100)+level+10);
                         int highest = (int) floor(floor(((2*baseStats.getHp()+31)*level)/100)+level+10);
-                        int actual = parseInt(hpInput.getText().toString());
-                        if (actual < lowest) {
-                            dexPoke.child("stats").child("hp").setValue(lowest);
-                            //showToast("HP too low");
-                            hpInput.setText(String.valueOf(lowest));
-                        }
-                        else if (actual > highest) {
-                            dexPoke.child("stats").child("hp").setValue(highest);
-                            //showToast("HP too high");
-                            hpInput.setText(String.valueOf(highest));
-                        }
 
-                        else {
-                            dexPoke.child("stats").child("hp").setValue(actual);
+                        if (!(hpInput.getText().toString().trim().isEmpty())) {
+                            int actual = parseInt(hpInput.getText().toString());
+                            if (actual < lowest) {
+                                dexPoke.child("stats").child("hp").setValue(lowest);
+                                showToast("HP too low");
+                                hpInput.setText(String.valueOf(lowest));
+                            } else if (actual > highest) {
+                                dexPoke.child("stats").child("hp").setValue(highest);
+                                showToast("HP too high");
+                                hpInput.setText(String.valueOf(highest));
+                            } else {
+                                dexPoke.child("stats").child("hp").setValue(actual);
+                            }
                         }
                     }
                 }, 1000);
-
+                //showToast("Stat value invalid. Too low/high!");
 
             }
         });
@@ -325,6 +327,7 @@ public class Individual_Pokemon_view extends AppCompatActivity {
                 timer[0].schedule(new TimerTask() {
                     @Override
                     public void run() {
+                        Looper.prepare();
                         int lowest;
                         int highest;
                         if (nature.equalsIgnoreCase("adamant") | nature.equalsIgnoreCase("lonely") | nature.equalsIgnoreCase("naughty") | nature.equalsIgnoreCase("brave")) {
@@ -340,23 +343,24 @@ public class Individual_Pokemon_view extends AppCompatActivity {
                             highest = (int) floor((floor(((2*baseStats.getAtk()+31)*level)/100)+5)*1);
                         }
 
-                        int actual = parseInt(atkInput.getText().toString());
-                        if (actual < lowest) {
-                            dexPoke.child("stats").child("atk").setValue(lowest);
-                            //showToast("Attack too low");
-                            atkInput.setText(String.valueOf(lowest));
-                        }
-                        else if (actual > highest) {
-                            dexPoke.child("stats").child("atk").setValue(highest);
-                            //showToast("Attack too high");
-                            atkInput.setText(String.valueOf(highest));
-                        }
 
-                        else {
-                            dexPoke.child("stats").child("atk").setValue(actual);
+                        if (!(atkInput.getText().toString().trim().isEmpty())) {
+                            int actual = parseInt(atkInput.getText().toString());
+                            if (actual < lowest) {
+                                dexPoke.child("stats").child("atk").setValue(lowest);
+                                //showToast("Attack too low");
+                                atkInput.setText(String.valueOf(lowest));
+                            } else if (actual > highest) {
+                                dexPoke.child("stats").child("atk").setValue(highest);
+                                //showToast("Attack too high");
+                                atkInput.setText(String.valueOf(highest));
+                            } else {
+                                dexPoke.child("stats").child("atk").setValue(actual);
+                            }
                         }
                     }
                 }, 1000);
+                showToast("Stat value invalid. Too low/high!");
 
             }
         });
@@ -379,6 +383,7 @@ public class Individual_Pokemon_view extends AppCompatActivity {
                 timer[0].schedule(new TimerTask() {
                     @Override
                     public void run() {
+                        Looper.prepare();
                         int lowest;
                         int highest;
                         if (nature.equalsIgnoreCase("bold") | nature.equalsIgnoreCase("impish") | nature.equalsIgnoreCase("lax") | nature.equalsIgnoreCase("relaxed")) {
@@ -394,23 +399,24 @@ public class Individual_Pokemon_view extends AppCompatActivity {
                             highest = (int) floor((floor(((2*baseStats.getDef()+31)*level)/100)+5)*1);
                         }
 
-                        int actual = parseInt(defInput.getText().toString());
-                        if (actual < lowest) {
-                            dexPoke.child("stats").child("def").setValue(lowest);
-                            //showToast("Defense too low");
-                            defInput.setText(String.valueOf(lowest));
-                        }
-                        else if (actual > highest) {
-                            dexPoke.child("stats").child("def").setValue(highest);
-                            //showToast("Defense too high");
-                            defInput.setText(String.valueOf(highest));
-                        }
 
-                        else {
-                            dexPoke.child("stats").child("def").setValue(actual);
+                        if (!(defInput.getText().toString().trim().isEmpty())) {
+                            int actual = parseInt(defInput.getText().toString());
+                            if (actual < lowest) {
+                                dexPoke.child("stats").child("def").setValue(lowest);
+                                //showToast("Defense too low");
+                                defInput.setText(String.valueOf(lowest));
+                            } else if (actual > highest) {
+                                dexPoke.child("stats").child("def").setValue(highest);
+                                //showToast("Defense too high");
+                                defInput.setText(String.valueOf(highest));
+                            } else {
+                                dexPoke.child("stats").child("def").setValue(actual);
+                            }
                         }
                     }
                 },1000);
+                showToast("Stat value invalid. Too low/high!");
 
             }
         });
@@ -433,6 +439,7 @@ public class Individual_Pokemon_view extends AppCompatActivity {
                 timer[0].schedule(new TimerTask() {
                     @Override
                     public void run() {
+                        Looper.prepare();
                         int lowest;
                         int highest;
                         if (nature.equalsIgnoreCase("modest") | nature.equalsIgnoreCase("mild") | nature.equalsIgnoreCase("rash") | nature.equalsIgnoreCase("quiet")) {
@@ -448,23 +455,24 @@ public class Individual_Pokemon_view extends AppCompatActivity {
                             highest = (int) floor((floor(((2*baseStats.getSatk()+31)*level)/100)+5)*1);
                         }
 
-                        int actual = parseInt(satkInput.getText().toString());
-                        if (actual < lowest) {
-                            dexPoke.child("stats").child("satk").setValue(lowest);
-                            //showToast("Sp. Attack too low");
-                            satkInput.setText(String.valueOf(lowest));
-                        }
-                        else if (actual > highest) {
-                            dexPoke.child("stats").child("satk").setValue(highest);
-                            //showToast("Sp. Attack too high");
-                            satkInput.setText(String.valueOf(highest));
-                        }
 
-                        else {
-                            dexPoke.child("stats").child("satk").setValue(actual);
+                        if (!(satkInput.getText().toString().trim().isEmpty())) {
+                            int actual = parseInt(satkInput.getText().toString());
+                            if (actual < lowest) {
+                                dexPoke.child("stats").child("satk").setValue(lowest);
+                                //showToast("Sp. Attack too low");
+                                satkInput.setText(String.valueOf(lowest));
+                            } else if (actual > highest) {
+                                dexPoke.child("stats").child("satk").setValue(highest);
+                                //showToast("Sp. Attack too high");
+                                satkInput.setText(String.valueOf(highest));
+                            } else {
+                                dexPoke.child("stats").child("satk").setValue(actual);
+                            }
                         }
                     }
                 },1000);
+                showToast("Stat value invalid. Too low/high!");
 
             }
         });
@@ -487,6 +495,7 @@ public class Individual_Pokemon_view extends AppCompatActivity {
                 timer[0].schedule(new TimerTask() {
                     @Override
                     public void run() {
+                        Looper.prepare();
                         int lowest;
                         int highest;
                         if (nature.equalsIgnoreCase("sassy") | nature.equalsIgnoreCase("careful") | nature.equalsIgnoreCase("gentle") | nature.equalsIgnoreCase("calm")) {
@@ -502,23 +511,24 @@ public class Individual_Pokemon_view extends AppCompatActivity {
                             highest = (int) floor((floor(((2*baseStats.getSdef()+31)*level)/100)+5)*1);
                         }
 
-                        int actual = parseInt(sdefInput.getText().toString());
-                        if (actual < lowest) {
-                            dexPoke.child("stats").child("sdef").setValue(lowest);
-                            //showToast("Sp. Defense too low");
-                            sdefInput.setText(String.valueOf(lowest));
-                        }
-                        else if (actual > highest) {
-                            dexPoke.child("stats").child("sdef").setValue(highest);
-                            //showToast("Sp. Defense too high");
-                            sdefInput.setText(String.valueOf(highest));
-                        }
 
-                        else {
-                            dexPoke.child("stats").child("sdef").setValue(actual);
+                        if (!(sdefInput.getText().toString().trim().isEmpty())) {
+                            int actual = parseInt(sdefInput.getText().toString());
+                            if (actual < lowest) {
+                                dexPoke.child("stats").child("sdef").setValue(lowest);
+                                //showToast("Sp. Defense too low");
+                                sdefInput.setText(String.valueOf(lowest));
+                            } else if (actual > highest) {
+                                dexPoke.child("stats").child("sdef").setValue(highest);
+                                //showToast("Sp. Defense too high");
+                                sdefInput.setText(String.valueOf(highest));
+                            } else {
+                                dexPoke.child("stats").child("sdef").setValue(actual);
+                            }
                         }
                     }
                 },1000);
+                showToast("Stat value invalid. Too low/high!");
 
             }
         });
@@ -541,6 +551,7 @@ public class Individual_Pokemon_view extends AppCompatActivity {
                 timer[0].schedule(new TimerTask() {
                     @Override
                     public void run() {
+                        Looper.prepare();
                         int lowest;
                         int highest;
                         if (nature.equalsIgnoreCase("timid") | nature.equalsIgnoreCase("hasty") | nature.equalsIgnoreCase("jolly") | nature.equalsIgnoreCase("naive")) {
@@ -556,23 +567,24 @@ public class Individual_Pokemon_view extends AppCompatActivity {
                             highest = (int) floor((floor(((2*baseStats.getSpd()+31)*level)/100)+5)*1);
                         }
 
-                        int actual = parseInt(spdInput.getText().toString());
-                        if (actual < lowest) {
-                            dexPoke.child("stats").child("spd").setValue(lowest);
-                            //showToast("Sped too low");
-                            spdInput.setText(String.valueOf(lowest));
-                        }
-                        else if (actual > highest) {
-                            dexPoke.child("stats").child("spd").setValue(highest);
-                            //showToast("Speed too high");
-                            spdInput.setText(String.valueOf(highest));
-                        }
 
-                        else {
-                            dexPoke.child("stats").child("spd").setValue(actual);
+                        if (!(spdInput.getText().toString().trim().isEmpty())) {
+                            int actual = parseInt(spdInput.getText().toString());
+                            if (actual < lowest) {
+                                dexPoke.child("stats").child("spd").setValue(lowest);
+                                //showToast("Sped too low");
+                                spdInput.setText(String.valueOf(lowest));
+                            } else if (actual > highest) {
+                                dexPoke.child("stats").child("spd").setValue(highest);
+                                //showToast("Speed too high");
+                                spdInput.setText(String.valueOf(highest));
+                            } else {
+                                dexPoke.child("stats").child("spd").setValue(actual);
+                            }
                         }
                     }
                 },1000);
+                showToast("Stat value invalid. Too low/high!");
 
             }
         });
