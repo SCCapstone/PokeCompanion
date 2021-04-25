@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
@@ -19,70 +19,89 @@
 
     <ListView
         android:id="@+id/listviewtxt"
-        android:layout_width="401dp"
-        android:layout_height="566dp"
-        android:layout_marginTop="84dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/homebutton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.555"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></ListView>
+        app:layout_constraintStart_toStartOf="parent">
+
+        <View
+            android:id="@+id/view5"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray" />
+    </ListView>
 
     <ImageButton
         android:id="@+id/homebutton"
-        android:layout_width="80dp"
+        android:layout_width="0dp"
         android:layout_height="80dp"
+        android:layout_weight="1"
         android:background="#3166B1"
         android:onClick="gotoNewsView"
+        android:scaleType="center"
+        android:src="@mipmap/home_button_foreground"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@mipmap/home_button_foreground" />
+        app:layout_constraintEnd_toStartOf="@+id/pokedexbutton"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageButton
         android:id="@+id/pokedexbutton"
-        android:layout_width="80dp"
+        android:layout_width="0dp"
         android:layout_height="80dp"
+        android:layout_weight="1"
         android:background="#3166B1"
         android:onClick="gotoDexView"
+        android:scaleType="center"
+        android:src="@mipmap/pokedex_button_foreground"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/homebutton"
-        app:srcCompat="@mipmap/pokedex_button_foreground" />
+        app:layout_constraintEnd_toStartOf="@+id/addpkmnbutton"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/homebutton" />
 
     <ImageButton
         android:id="@+id/addpkmnbutton"
         android:layout_width="0dp"
         android:layout_height="80dp"
+        android:layout_weight="1"
         android:background="#3166B1"
         android:onClick="gotoAddView"
+        android:scaleType="center"
+        android:src="@mipmap/addpokemon_button_foreground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/yourpkmnbutton"
-        app:layout_constraintStart_toEndOf="@+id/pokedexbutton"
-        app:srcCompat="@mipmap/addpokemon_button_foreground" />
-
-    <ImageButton
-        android:id="@+id/yourpkmnbutton"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:background="#3166B1"
-        android:onClick="gotoTeamView"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/settingsbutton"
-        app:srcCompat="@mipmap/yourpokemon_button_foreground" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/pokedexbutton" />
 
     <ImageButton
         android:id="@+id/settingsbutton"
-        android:layout_width="80dp"
+        android:layout_width="0dp"
         android:layout_height="80dp"
+        android:layout_weight="1"
         android:background="#3166B1"
         android:onClick="gotoSettingsView"
+        android:scaleType="center"
+        android:src="@mipmap/settings_button_foreground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@mipmap/settings_button_foreground" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/yourpkmnbutton" />
+
+    <ImageButton
+        android:id="@+id/yourpkmnbutton"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:layout_weight="1"
+        android:background="#3166B1"
+        android:onClick="gotoTeamView"
+        android:scaleType="center"
+        android:src="@mipmap/yourpokemon_button_foreground"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/settingsbutton"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/addpkmnbutton" />
 
     <TextView
         android:id="@+id/textView2"
@@ -99,13 +118,6 @@
 
     <!-- JD 2021 April 5
         Added this bar separator and justified above text to the left -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="12dp"
-        android:background="@android:color/darker_gray"
-        app:layout_constraintBottom_toTopOf="@+id/listviewtxt"
-        tools:layout_editor_absoluteX="6dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

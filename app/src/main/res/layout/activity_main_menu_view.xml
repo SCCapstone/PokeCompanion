@@ -16,58 +16,77 @@
             android:layout_height="match_parent"
             tools:context=".MainActivity"
             tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="-35dp">
+            tools:layout_editor_absoluteY="-51dp">
 
             <ImageButton
                 android:id="@+id/homebutton"
-                android:layout_width="80dp"
+                android:layout_width="0dp"
                 android:layout_height="80dp"
+                android:layout_weight="1"
                 android:background="#3166B1"
                 android:onClick="gotoNewsView"
+                android:scaleType="center"
+                android:src="@mipmap/home_button_foreground"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:srcCompat="@mipmap/home_button_foreground" />
+                app:layout_constraintEnd_toStartOf="@+id/pokedexbutton"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <ImageButton
                 android:id="@+id/pokedexbutton"
-                android:layout_width="80dp"
+                android:layout_width="0dp"
                 android:layout_height="80dp"
+                android:layout_weight="1"
                 android:background="#3166B1"
                 android:onClick="gotoDexView"
+                android:scaleType="center"
+                android:src="@mipmap/pokedex_button_foreground"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/homebutton"
-                app:srcCompat="@mipmap/pokedex_button_foreground" />
+                app:layout_constraintEnd_toStartOf="@+id/addpkmnbutton"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/homebutton" />
 
             <ImageButton
                 android:id="@+id/addpkmnbutton"
                 android:layout_width="0dp"
                 android:layout_height="80dp"
+                android:layout_weight="1"
                 android:background="#3166B1"
                 android:onClick="gotoAddView"
+                android:scaleType="center"
+                android:src="@mipmap/addpokemon_button_foreground"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/yourpkmnbutton"
-                app:layout_constraintStart_toEndOf="@+id/pokedexbutton"
-                app:srcCompat="@mipmap/addpokemon_button_foreground" />
-
-            <ImageButton
-                android:id="@+id/yourpkmnbutton"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:background="#3166B1"
-                android:onClick="gotoTeamView"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/settingsbutton"
-                app:srcCompat="@mipmap/yourpokemon_button_foreground" />
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/pokedexbutton" />
 
             <ImageButton
                 android:id="@+id/settingsbutton"
-                android:layout_width="80dp"
+                android:layout_width="0dp"
                 android:layout_height="80dp"
+                android:layout_weight="1"
                 android:background="#3166B1"
                 android:onClick="gotoSettingsView"
+                android:scaleType="center"
+                android:src="@mipmap/settings_button_foreground"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:srcCompat="@mipmap/settings_button_foreground" />
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/yourpkmnbutton" />
+
+            <ImageButton
+                android:id="@+id/yourpkmnbutton"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:layout_weight="1"
+                android:background="#3166B1"
+                android:onClick="gotoTeamView"
+                android:scaleType="center"
+                android:src="@mipmap/yourpokemon_button_foreground"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/settingsbutton"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/addpkmnbutton" />
 
 
             <TextView
@@ -87,22 +106,6 @@
                 app:layout_constraintVertical_bias="0.023" />
 
             <Button
-                android:id="@+id/button2"
-                android:layout_width="130dp"
-                android:layout_height="50dp"
-                android:background="#ff0000"
-                android:onClick="signOut"
-                android:text="Sign Out"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textColor="#ffffff"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.056"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.339" />
-
-            <Button
                 android:id="@+id/faqbutton"
                 android:layout_width="130dp"
                 android:layout_height="50dp"
@@ -115,10 +118,26 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.056"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.557" />
+                app:layout_constraintTop_toBottomOf="@+id/view3" />
+
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="130dp"
+                android:layout_height="50dp"
+                android:background="#ff0000"
+                android:onClick="signOut"
+                android:text="Sign Out"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textColor="#ffffff"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.056"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/faqbutton"
+                app:layout_constraintVertical_bias="0.053" />
 
             <View
+                android:id="@+id/view3"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="84dp"
