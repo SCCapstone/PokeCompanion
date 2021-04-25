@@ -1,8 +1,8 @@
 # PokeCompanion
 - This app is a companion app for any main series Pokemon video game.
 
-<a href="/PokeCompanion/Website/about" title="About Us">About Us</a>  
-<a href="/PokeCompanion/Website/screenshots" title="pics?">pics</a>
+<a href="https://sccapstone.github.io/PokeCompanion/Website/about" title="About Us">About Us</a>  
+<a href="https://sccapstone.github.io/PokeCompanion/Website/screenshots" title="pics?">pics</a>
 
 ## Features
 
