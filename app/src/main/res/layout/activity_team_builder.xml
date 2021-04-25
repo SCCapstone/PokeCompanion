@@ -39,7 +39,7 @@
         android:layout_marginRight="264dp"
         android:ems="10"
         android:hint="Level"
-        android:inputType="numberDecimal"
+        android:inputType="number"
         android:background="#FFCC01"
         android:textColor="#000000"
         android:textColorHint="#000000"

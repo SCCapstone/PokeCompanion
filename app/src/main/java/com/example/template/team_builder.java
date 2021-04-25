@@ -30,6 +30,7 @@ import android.widget.TextView;
 import android.widget.Button;
 
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -292,9 +293,7 @@ public class team_builder extends AppCompatActivity {
 
     public void gotoDexView(View view) {
 
-       /*
-       Declarations for pushing the information with firebase
-        */
+        // Declarations for pushing the information with firebase
         int hp = stats.getHp();
         int atk = stats.getAtk();
         int def = stats.getDef();
@@ -303,9 +302,7 @@ public class team_builder extends AppCompatActivity {
         int spd = stats.getSpd();
         System.out.println(hp + " " + atk);
 
-        /*
-        Getting spinner/edit text information
-         */
+        // Getting spinner/edit text information
         Spinner spinner1 = (Spinner)findViewById(R.id.nature);
         String nature = spinner1.getSelectedItem().toString();
 
@@ -315,36 +312,54 @@ public class team_builder extends AppCompatActivity {
 
         EditText editLevel = (EditText)findViewById(R.id.level);
         String level = editLevel.getText().toString();
+        if (level.equals("")) {
+            level = "00";
+        }
+        int levelInt = Integer.parseInt(level);
         System.out.println(level);
 
-        /*
-        Pushing edit text information to the FireBase Data Base
-         */
-        FirebaseDatabase db =  FirebaseDatabase.getInstance();
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String userName = user.getEmail().replace('.', ',');
-        DatabaseReference mRef = db.getReference().child("users").child(userName);
-        // String pkmId = "pkm" + pokemonID;
-        String pkmId = pokemonName;
+        if (pokemonName == "") {
+            Toast.makeText(team_builder.this, "Select one pokemon, please", Toast.LENGTH_LONG).show();
+            return;
+        } else if ((hp == 0) || (atk == 0) || (def == 0) || (satk == 0) || (sdef == 0) || (spd == 0) || (levelInt == 0)) {
+            Toast.makeText(team_builder.this, "Fill all number fields, please", Toast.LENGTH_LONG).show();
+            return;
+        } else if (ability == "") {
+            Toast.makeText(team_builder.this, "Select Ability, please", Toast.LENGTH_LONG).show();
+            return;
+        } else if (nature == "") {
+            Toast.makeText(team_builder.this, "Select Nature, please", Toast.LENGTH_LONG).show();
+            return;
+        } else if ((hp > 100) || (atk > 100) || (def > 100) || (satk > 100) || (sdef > 100) || (spd > 100) || (levelInt > 100)) {
+            Toast.makeText(team_builder.this, "All input number values should be less than 100.", Toast.LENGTH_LONG).show();
+            return;
+        } else {
 
-        /*
-        Refrencing the child that the information is pushed to
-         */
-        mRef.child("pokedex").child(pkmId).child("stats").child("hp").setValue(hp);
-        mRef.child("pokedex").child(pkmId).child("stats").child("atk").setValue(atk);
-        mRef.child("pokedex").child(pkmId).child("stats").child("def").setValue(def);
-        mRef.child("pokedex").child(pkmId).child("stats").child("satk").setValue(satk);
-        mRef.child("pokedex").child(pkmId).child("stats").child("sdef").setValue(sdef);
-        mRef.child("pokedex").child(pkmId).child("stats").child("spd").setValue(spd);
+            // Pushing edit text information to the FireBase Data Base
+            FirebaseDatabase db = FirebaseDatabase.getInstance();
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            String userName = user.getEmail().replace('.', ',');
+            DatabaseReference mRef = db.getReference().child("users").child(userName);
+            // String pkmId = "pkm" + pokemonID;
+            String pkmId = pokemonName;
 
-        mRef.child("pokedex").child(pkmId).child("nature").setValue(nature);
-        mRef.child("pokedex").child(pkmId).child("ability").setValue(ability);
-        mRef.child("pokedex").child(pkmId).child("level").setValue(level);
+            // Refrencing the child that the information is pushed to
+            mRef.child("pokedex").child(pkmId).child("stats").child("hp").setValue(hp);
+            mRef.child("pokedex").child(pkmId).child("stats").child("atk").setValue(atk);
+            mRef.child("pokedex").child(pkmId).child("stats").child("def").setValue(def);
+            mRef.child("pokedex").child(pkmId).child("stats").child("satk").setValue(satk);
+            mRef.child("pokedex").child(pkmId).child("stats").child("sdef").setValue(sdef);
+            mRef.child("pokedex").child(pkmId).child("stats").child("spd").setValue(spd);
 
-        mRef.child("pokedex").child(pkmId).child("number").setValue(pokemonIDs);
+            mRef.child("pokedex").child(pkmId).child("nature").setValue(nature);
+            mRef.child("pokedex").child(pkmId).child("ability").setValue(ability);
+            mRef.child("pokedex").child(pkmId).child("level").setValue(level);
 
-        Intent intent = new Intent(this, PersonalDex.class);
-        startActivity(intent);
+            mRef.child("pokedex").child(pkmId).child("number").setValue(pokemonIDs);
+
+            Intent intent = new Intent(this, PersonalDex.class);
+            startActivity(intent);
+        }
     }
 
     /*

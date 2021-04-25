@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -39,9 +40,6 @@ public class PersonalDex extends AppCompatActivity {
     // array adapters are used to link Arrays and listviews
     ArrayAdapter<String> arrayAdapter;
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +54,7 @@ public class PersonalDex extends AppCompatActivity {
         listView = (ListView)findViewById(R.id.listViewPersonalDex);
         arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, arrList);
         listView.setAdapter(arrayAdapter);
+
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         // if user is null, no one is logged in, if user isn't null, then someone is logged in
@@ -68,7 +67,7 @@ public class PersonalDex extends AppCompatActivity {
                     String currMon;
                     String currMonName = "";
                     String userName = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-                    userName = userName.replace('.', ',');
+                     userName = userName.replace('.', ',');
 
 
                     // this should return the number of pokemon the user currently have
@@ -113,12 +112,15 @@ public class PersonalDex extends AppCompatActivity {
                 public void onCancelled(@NonNull DatabaseError error) {
                     Log.e("error","error reading");
                 }
+
             });
             // when a pokemon is clicked, we will be passing in a lot of information
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     String temp = arrList.get(position).substring(3);
+                    System.out.println("arrList.get(position) +++++++++++++++");
+                    System.out.println(arrList.get(position));
                     // we will be going to the Individual Pokemon view
                     Intent intent = new Intent(getBaseContext(), Individual_Pokemon_view.class);
                     /* we will be passing all the current stats for the pokemon to the next screen so that
@@ -135,9 +137,38 @@ public class PersonalDex extends AppCompatActivity {
                     String tempID = pokemonIDs.get(position);
                     intent.putExtra("pictureID", "icon" + tempID);
                     startActivity(intent);
-                    //Toast.makeText(PersonalDex.this, arrList.get(position) + "", Toast.LENGTH_LONG).show();
+                    // Toast.makeText(PersonalDex.this, arrList.get(position) + "", Toast.LENGTH_LONG).show();
                 }
             });
+
+            listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                    final String str = arrList.get(position).substring(2).replaceAll("\\s", "");
+                    System.out.println("arrList.get(position) str +++++++++++++++");
+                    System.out.println(str);
+                    db.child("users").child(str).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            FirebaseDatabase db =  FirebaseDatabase.getInstance();
+                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                            String userName = user.getEmail().replace('.', ',');
+                            DatabaseReference mRef = db.getReference().child("users").child(userName);
+                            mRef.child("pokedex").child(str).removeValue();
+                            Toast.makeText(PersonalDex.this, "Item is deleted", Toast.LENGTH_LONG);
+                            finish();
+                            startActivity(getIntent());
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            Toast.makeText(PersonalDex.this, "Item delete cancel", Toast.LENGTH_LONG);
+                        }
+                    });
+                    return false;
+                }
+            });
+
         }
         else // user isn't logged in
             notLoggedInToast.show();
