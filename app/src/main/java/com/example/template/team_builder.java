@@ -18,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.os.Looper;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -35,6 +36,11 @@ import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import static java.lang.Integer.parseInt;
+import static java.lang.Math.floor;
 
 public class team_builder extends AppCompatActivity {
 
@@ -93,6 +99,7 @@ public class team_builder extends AppCompatActivity {
          */
 
         stats = new Stats();
+        final Stats[] baseStats = {new Stats(0, 0, 0, 0, 0, 0)};
 
         topDisplay = (TextView)findViewById(R.id.topDisplay);
         // all the edit texts have to be instantiated
@@ -111,6 +118,7 @@ public class team_builder extends AppCompatActivity {
 
         if (!(getIntent().getStringExtra("pokemonID") == null))
             pokemonIDs = getIntent().getStringExtra("pokemonID");
+
         else
             pokemonIDs = "001";
 
@@ -152,115 +160,373 @@ public class team_builder extends AppCompatActivity {
         abilityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         abilitySpinner.setAdapter(abilityAdapter);
 
+
+
+        db.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String dexNum = pokemonIDs;
+                DatabaseReference basePoke = fb.getReference().child("Pokemon").child(dexNum);
+                baseStats[0] = snapshot.child("Pokemon").child(dexNum).child("baseStats").getValue(Stats.class);
+
+                Long tempAtk = (long)snapshot.child("Pokemon").child(dexNum).child("baseStats").child("atk").getValue();
+                baseStats[0].setAtk(tempAtk.intValue());
+                Long tempDef = (long)snapshot.child("Pokemon").child(dexNum).child("baseStats").child("def").getValue();
+                baseStats[0].setDef(tempDef.intValue());
+                Long tempHp = (long)snapshot.child("Pokemon").child(dexNum).child("baseStats").child("hp").getValue();
+                baseStats[0].setHp(tempHp.intValue());
+                Long tempSpd = (long)snapshot.child("Pokemon").child(dexNum).child("baseStats").child("spd").getValue();
+                baseStats[0].setSpd(tempSpd.intValue());
+                Long tempSatk = (long)snapshot.child("Pokemon").child(dexNum).child("baseStats").child("satk").getValue();
+                baseStats[0].setSatk(tempSatk.intValue());
+                Long tempSdef = (long)snapshot.child("Pokemon").child(dexNum).child("baseStats").child("sdef").getValue();
+                baseStats[0].setSdef(tempSdef.intValue());
+
+
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(team_builder.this,"Error: "+ error.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+        });
+
         //Text Watcher for each stat edit text box
+
+        final Timer[] timer = new Timer[1];
         hpInput.addTextChangedListener(new TextWatcher() {
-            int temp;
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
-
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (timer[0] !=null)
+                    timer[0].cancel();
+            }
+            @Override
             public void afterTextChanged(Editable s) {
-                try {
-                    stats.setHp(Integer.parseInt(hpInput.getText().toString()));
-                } catch (NumberFormatException e) {
-                    stats.setHp(0);
-                }
+                timer[0] = new Timer();
+                timer[0].schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        Looper.prepare();
+                        int lowest = (int) floor(floor(((2* baseStats[0].getHp()+0)*1)/100)+1+10);
+                        int highest = (int) floor(floor(((2* baseStats[0].getHp()+31)*100)/100)+100+10);
+
+                        if (!(hpInput.getText().toString().trim().isEmpty())) {
+                            int actual = parseInt(hpInput.getText().toString());
+                            if (actual < lowest) {
+                                //dexPoke.child("stats").child("hp").setValue(lowest);
+                                showToast("HP too low");
+                                hpInput.setText(String.valueOf(lowest));
+                            } else if (actual > highest) {
+                                //dexPoke.child("stats").child("hp").setValue(highest);
+                                showToast("HP too high");
+                                hpInput.setText(String.valueOf(highest));
+                            } else {
+                                //dexPoke.child("stats").child("hp").setValue(actual);
+                            }
+                        }
+                    }
+                }, 1000);
+                //showToast("Stat value invalid. Too low/high!");
 
             }
         });
-
-        /*
-        All Text watchers on the page for input change in the edit text fields
-         */
-
+        /* ===============================
+         * Monitor for Attack input
+         *
+         * Attack, Defense, Special Attack and Defense, and Speed are calculated differently than HP
+         * Based on the nature of the pokemon, A specific Stat is raised by 10% and a Stat is lowered by 10%
+         * The calculations will check for this, and will perform the proper calculations accordingly
+         * =============================== */
         atkInput.addTextChangedListener(new TextWatcher() {
-            int temp;
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (timer[0] !=null)
+                    timer[0].cancel();
+            }
 
+            @Override
             public void afterTextChanged(Editable s) {
-                try {
-                    stats.setAtk(Integer.parseInt(s.toString()));
-                } catch (NumberFormatException e) {
-                    stats.setAtk(0);
-                }
+                timer[0] = new Timer();
+                timer[0].schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        Looper.prepare();
+                        int lowest;
+                        int highest;
+                        Spinner spinner1 = (Spinner)findViewById(R.id.nature);
+                        String nature = spinner1.getSelectedItem().toString();
+                        if (nature.equalsIgnoreCase("adamant") | nature.equalsIgnoreCase("lonely") | nature.equalsIgnoreCase("naughty") | nature.equalsIgnoreCase("brave")) {
+                            lowest = (int) floor((floor(((2* baseStats[0].getAtk()+0)*1)/100)+5)*1.1);
+                            highest = (int) floor((floor(((2* baseStats[0].getAtk()+31)*100)/100)+5)*1.1);
+                        }
+                        else if (nature.equalsIgnoreCase("bold") | nature.equalsIgnoreCase("modest") | nature.equalsIgnoreCase("calm") | nature.equalsIgnoreCase("timid")) {
+                            lowest = (int) floor((floor(((2* baseStats[0].getAtk()+0)*1)/100)+5)*0.9);
+                            highest = (int) floor((floor(((2* baseStats[0].getAtk()+31)*100)/100)+5)*0.9);
+                        }
+                        else {
+                            lowest = (int) floor((floor(((2* baseStats[0].getAtk()+0)*1)/100)+5)*1);
+                            highest = (int) floor((floor(((2* baseStats[0].getAtk()+31)*100)/100)+5)*1);
+                        }
+
+
+                        if (!(atkInput.getText().toString().trim().isEmpty())) {
+                            int actual = parseInt(atkInput.getText().toString());
+                            if (actual < lowest) {
+                                //dexPoke.child("stats").child("atk").setValue(lowest);
+                                showToast("Attack too low");
+                                atkInput.setText(String.valueOf(lowest));
+                            } else if (actual > highest) {
+                                //dexPoke.child("stats").child("atk").setValue(highest);
+                                showToast("Attack too high");
+                                atkInput.setText(String.valueOf(highest));
+                            } else {
+                                //.child("stats").child("atk").setValue(actual);
+                            }
+                        }
+                    }
+                }, 1000);
+                //showToast("Stat value invalid. Too low/high!");
 
             }
         });
-
+        /* ===============================
+         * Monitor for Defense Input
+         * =============================== */
         defInput.addTextChangedListener(new TextWatcher() {
-            int temp;
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (timer[0] !=null)
+                    timer[0].cancel();
+            }
 
+            @Override
             public void afterTextChanged(Editable s) {
-                try {
-                    stats.setDef(Integer.parseInt(defInput.getText().toString()));
-                } catch (NumberFormatException e) {
-                    stats.setDef(0);
-                }
+                timer[0] = new Timer();
+                timer[0].schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        Looper.prepare();
+                        int lowest;
+                        int highest;
+                        Spinner spinner1 = (Spinner)findViewById(R.id.nature);
+                        String nature = spinner1.getSelectedItem().toString();
+                        if (nature.equalsIgnoreCase("bold") | nature.equalsIgnoreCase("impish") | nature.equalsIgnoreCase("lax") | nature.equalsIgnoreCase("relaxed")) {
+                            lowest = (int) floor((floor(((2* baseStats[0].getDef()+0)*1)/100)+5)*1.1);
+                            highest = (int) floor((floor(((2* baseStats[0].getDef()+31)*100)/100)+5)*1.1);
+                        }
+                        else if (nature.equalsIgnoreCase("hasty") | nature.equalsIgnoreCase("gentle") | nature.equalsIgnoreCase("mild") | nature.equalsIgnoreCase("lonely")) {
+                            lowest = (int) floor((floor(((2* baseStats[0].getDef()+0)*1)/100)+5)*0.9);
+                            highest = (int) floor((floor(((2* baseStats[0].getDef()+31)*100)/100)+5)*0.9);
+                        }
+                        else {
+                            lowest = (int) floor((floor(((2* baseStats[0].getDef()+0)*1)/100)+5)*1);
+                            highest = (int) floor((floor(((2* baseStats[0].getDef()+31)*100)/100)+5)*1);
+                        }
+
+
+                        if (!(defInput.getText().toString().trim().isEmpty())) {
+                            int actual = parseInt(defInput.getText().toString());
+                            if (actual < lowest) {
+                                //dexPoke.child("stats").child("def").setValue(lowest);
+                                showToast("Defense too low");
+                                defInput.setText(String.valueOf(lowest));
+                            } else if (actual > highest) {
+                                //dexPoke.child("stats").child("def").setValue(highest);
+                                showToast("Defense too high");
+                                defInput.setText(String.valueOf(highest));
+                            } else {
+                                //dexPoke.child("stats").child("def").setValue(actual);
+                            }
+                        }
+                    }
+                },1000);
+                //showToast("Stat value invalid. Too low/high!");
 
             }
         });
-
-        spdInput.addTextChangedListener(new TextWatcher() {
-            int temp;
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
-
-            public void afterTextChanged(Editable s) {
-                try {
-                    stats.setSpd(Integer.parseInt(spdInput.getText().toString()));
-                } catch (NumberFormatException e) {
-                    stats.setSpd(0);
-                }
-
-            }
-        });
-
+        /* ===============================
+         * Monitor for Special Attack Input
+         * =============================== */
         satkInput.addTextChangedListener(new TextWatcher() {
-            int temp;
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (timer[0] !=null)
+                    timer[0].cancel();
+            }
 
+            @Override
             public void afterTextChanged(Editable s) {
-                try {
-                    stats.setSatk(Integer.parseInt(satkInput.getText().toString()));
-                } catch (NumberFormatException e) {
-                    stats.setSatk(0);
-                }
+                timer[0] = new Timer();
+                timer[0].schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        Looper.prepare();
+                        int lowest;
+                        int highest;
+                        Spinner spinner1 = (Spinner)findViewById(R.id.nature);
+                        String nature = spinner1.getSelectedItem().toString();
+                        if (nature.equalsIgnoreCase("modest") | nature.equalsIgnoreCase("mild") | nature.equalsIgnoreCase("rash") | nature.equalsIgnoreCase("quiet")) {
+                            lowest = (int) floor((floor(((2* baseStats[0].getSatk()+0)*1)/100)+5)*1.1);
+                            highest = (int) floor((floor(((2* baseStats[0].getSatk()+31)*100)/100)+5)*1.1);
+                        }
+                        else if (nature.equalsIgnoreCase("jolly") | nature.equalsIgnoreCase("careful") | nature.equalsIgnoreCase("impish") | nature.equalsIgnoreCase("adamant")) {
+                            lowest = (int) floor((floor(((2* baseStats[0].getSatk()+0)*1)/100)+5)*0.9);
+                            highest = (int) floor((floor(((2* baseStats[0].getSatk()+31)*100)/100)+5)*0.9);
+                        }
+                        else {
+                            lowest = (int) floor((floor(((2* baseStats[0].getSatk()+0)*1)/100)+5)*1);
+                            highest = (int) floor((floor(((2* baseStats[0].getSatk()+31)*100)/100)+5)*1);
+                        }
+
+
+                        if (!(satkInput.getText().toString().trim().isEmpty())) {
+                            int actual = parseInt(satkInput.getText().toString());
+                            if (actual < lowest) {
+                                //dexPoke.child("stats").child("satk").setValue(lowest);
+                                showToast("Sp. Attack too low");
+                                satkInput.setText(String.valueOf(lowest));
+                            } else if (actual > highest) {
+                                //dexPoke.child("stats").child("satk").setValue(highest);
+                                showToast("Sp. Attack too high");
+                                satkInput.setText(String.valueOf(highest));
+                            } else {
+                                //dexPoke.child("stats").child("satk").setValue(actual);
+                            }
+                        }
+                    }
+                },1000);
+                //showToast("Stat value invalid. Too low/high!");
 
             }
         });
-
+        /* ===============================
+         * Monitor for Special Defense Input
+         * =============================== */
         sdefInput.addTextChangedListener(new TextWatcher() {
-            int temp;
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (timer[0] !=null)
+                    timer[0].cancel();
+            }
 
+            @Override
             public void afterTextChanged(Editable s) {
-                try {
-                    stats.setSdef(Integer.parseInt(sdefInput.getText().toString()));
-                } catch (NumberFormatException e) {
-                    stats.setSdef(0);
-                }
+                timer[0] = new Timer();
+                timer[0].schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        Looper.prepare();
+                        int lowest;
+                        int highest;
+                        Spinner spinner1 = (Spinner)findViewById(R.id.nature);
+                        String nature = spinner1.getSelectedItem().toString();
+                        if (nature.equalsIgnoreCase("sassy") | nature.equalsIgnoreCase("careful") | nature.equalsIgnoreCase("gentle") | nature.equalsIgnoreCase("calm")) {
+                            lowest = (int) floor((floor(((2* baseStats[0].getSdef()+0)*1)/100)+5)*1.1);
+                            highest = (int) floor((floor(((2* baseStats[0].getSdef()+31)*100)/100)+5)*1.1);
+                        }
+                        else if (nature.equalsIgnoreCase("naughty") | nature.equalsIgnoreCase("lax") | nature.equalsIgnoreCase("rash") | nature.equalsIgnoreCase("naive")) {
+                            lowest = (int) floor((floor(((2* baseStats[0].getSdef()+0)*1)/100)+5)*0.9);
+                            highest = (int) floor((floor(((2* baseStats[0].getSdef()+31)*100)/100)+5)*0.9);
+                        }
+                        else {
+                            lowest = (int) floor((floor(((2* baseStats[0].getSdef()+0)*1)/100)+5)*1);
+                            highest = (int) floor((floor(((2* baseStats[0].getSdef()+31)*100)/100)+5)*1);
+                        }
+
+
+                        if (!(sdefInput.getText().toString().trim().isEmpty())) {
+                            int actual = parseInt(sdefInput.getText().toString());
+                            if (actual < lowest) {
+                               //dexPoke.child("stats").child("sdef").setValue(lowest);
+                                showToast("Sp. Defense too low");
+                                sdefInput.setText(String.valueOf(lowest));
+                            } else if (actual > highest) {
+                               // dexPoke.child("stats").child("sdef").setValue(highest);
+                                showToast("Sp. Defense too high");
+                                sdefInput.setText(String.valueOf(highest));
+                            } else {
+                                //dexPoke.child("stats").child("sdef").setValue(actual);
+                            }
+                        }
+                    }
+                },1000);
+                //showToast("Stat value invalid. Too low/high!");
+
+            }
+        });
+        /* ===============================
+         * Monitor for Speed Input
+         * =============================== */
+        spdInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (timer[0] !=null)
+                    timer[0].cancel();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                timer[0] = new Timer();
+                timer[0].schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        Looper.prepare();
+                        int lowest;
+                        int highest;
+                        Spinner spinner1 = (Spinner)findViewById(R.id.nature);
+                        String nature = spinner1.getSelectedItem().toString();
+                        if (nature.equalsIgnoreCase("timid") | nature.equalsIgnoreCase("hasty") | nature.equalsIgnoreCase("jolly") | nature.equalsIgnoreCase("naive")) {
+                            lowest = (int) floor((floor(((2* baseStats[0].getSpd()+0)*1)/100)+5)*1.1);
+                            highest = (int) floor((floor(((2* baseStats[0].getSpd()+31)*100)/100)+5)*1.1);
+                        }
+                        else if (nature.equalsIgnoreCase("sassy") | nature.equalsIgnoreCase("quiet") | nature.equalsIgnoreCase("relaxed") | nature.equalsIgnoreCase("brave")) {
+                            lowest = (int) floor((floor(((2* baseStats[0].getSpd()+0)*1)/100)+5)*0.9);
+                            highest = (int) floor((floor(((2* baseStats[0].getSpd()+31)*100)/100)+5)*0.9);
+                        }
+                        else {
+                            lowest = (int) floor((floor(((2* baseStats[0].getSpd()+0)*1)/100)+5)*1);
+                            highest = (int) floor((floor(((2* baseStats[0].getSpd()+31)*100)/100)+5)*1);
+                        }
+
+
+                        if (!(spdInput.getText().toString().trim().isEmpty())) {
+                            int actual = parseInt(spdInput.getText().toString());
+                            if (actual < lowest) {
+                                //dexPoke.child("stats").child("spd").setValue(lowest);
+                                showToast("Speed too low");
+                                spdInput.setText(String.valueOf(lowest));
+                            } else if (actual > highest) {
+                                //dexPoke.child("stats").child("spd").setValue(highest);
+                                showToast("Speed too high");
+                                spdInput.setText(String.valueOf(highest));
+                            } else {
+                                //dexPoke.child("stats").child("spd").setValue(actual);
+                            }
+                        }
+                    }
+                },1000);
+                //showToast("Stat value invalid. Too low/high!");
 
             }
         });
@@ -299,12 +565,12 @@ public class team_builder extends AppCompatActivity {
     public void gotoDexView(View view) {
 
         // Declarations for pushing the information with firebase
-        int hp = stats.getHp();
-        int atk = stats.getAtk();
-        int def = stats.getDef();
-        int satk = stats.getSatk();
-        int sdef = stats.getSdef();
-        int spd = stats.getSpd();
+        int hp = Integer.parseInt(String.valueOf(hpInput.getText()));
+        int atk =  Integer.parseInt(String.valueOf(atkInput.getText()));
+        int def =  Integer.parseInt(String.valueOf(defInput.getText()));
+        int satk =  Integer.parseInt(String.valueOf(satkInput.getText()));
+        int sdef =  Integer.parseInt(String.valueOf(sdefInput.getText()));
+        int spd =  Integer.parseInt(String.valueOf(spdInput.getText()));
         System.out.println(hp + " " + atk);
 
         // Getting spinner/edit text information
@@ -335,10 +601,7 @@ public class team_builder extends AppCompatActivity {
         } else if (nature == "") {
             Toast.makeText(team_builder.this, "Select Nature, please", Toast.LENGTH_LONG).show();
             return;
-        } else if ((hp > 100) || (atk > 100) || (def > 100) || (satk > 100) || (sdef > 100) || (spd > 100) || (levelInt > 100)) {
-            Toast.makeText(team_builder.this, "All input number values should be less than 100.", Toast.LENGTH_LONG).show();
-            return;
-        } else {
+        }else {
 
             // Pushing edit text information to the FireBase Data Base
             FirebaseDatabase db = FirebaseDatabase.getInstance();
@@ -385,6 +648,10 @@ public class team_builder extends AppCompatActivity {
     public void gotoSettingsView(View view) {
         Intent intent = new Intent(this, Main_menu_view.class);
         startActivity(intent);
+    }
+
+    private void showToast(String t) {
+        Toast.makeText(team_builder.this, t, Toast.LENGTH_LONG).show();
     }
 
 }

@@ -39,6 +39,7 @@
     <string name="iv_sdef_val">-</string>
     <string name="health">Health</string>
     <string name="attack">Attack</string>
+    <string name="IV">IV</string>
     <string name="pokemon_display_name">Growlithe</string>
     <string name="mew">Mew</string>
     <string name="charizard">Charizard</string>

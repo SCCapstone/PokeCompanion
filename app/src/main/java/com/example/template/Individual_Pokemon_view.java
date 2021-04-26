@@ -196,7 +196,7 @@ public class Individual_Pokemon_view extends AppCompatActivity {
         ivDefDisplay = (TextView)findViewById(R.id.iv_def_num);
         ivSatkDisplay = (TextView)findViewById(R.id.iv_satk_num);
         ivSdefDisplay = (TextView)findViewById(R.id.iv_sdef_num);
-        ivSpdDisplay = (TextView)findViewById(R.id.iv_speed_num);
+        ivSpdDisplay = (TextView)findViewById(R.id.iv_spd_num);
 
         /* ===============================
          * Final linking of elements to variables
