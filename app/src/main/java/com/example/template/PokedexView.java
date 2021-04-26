@@ -39,12 +39,15 @@ public class PokedexView extends AppCompatActivity {
     String[][] pokemonIDs = new String[160][2];
     // there can only be a maximum of 3 ablities
     String[][] abilities = new String[160][3];
+    String[] types = new String[160];
 
     // Array Adapter lets ListView find the array list it is supposed to display
     ArrayAdapter<String> arrAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        pokemonIDs[0][0] = "000";
+        pokemonIDs[0][1] = "none";
         super.onCreate(savedInstanceState);
         // first establish a bunch of variables
         setContentView(R.layout.activity_pokedexview);
@@ -75,6 +78,7 @@ public class PokedexView extends AppCompatActivity {
                 // 'i' will represent our spot in the pokedex
                 String currMon;
                 String currMonName;
+                String temp;
                 //long numInDex = snapshot.child("Pokemon").getChildrenCount();
                 //Log.e("number", numInDex + " this is the number it is going until");
                 for (int i = 1; i <= 151; i++) {
@@ -103,12 +107,25 @@ public class PokedexView extends AppCompatActivity {
                     else
                         abilities[i][2] = "none";
 
+                    // pulling the name
                     currMonName = (String)snapshot.child("Pokemon").child(currMon).child("Name").getValue();
                     currMonName = (currMonName.substring(0,1).toUpperCase()) + currMonName.substring(1);
+
+                    // pulling the types
+                    temp = (String)snapshot.child("Pokemon").child(currMon).child("type").child("type1").getValue();
+                    temp = (temp.substring(0,1).toUpperCase() + temp.substring(1));
+                    types[i] = temp;
+                    if (snapshot.child("Pokemon").child(currMon).child("type/type2").exists()) {
+                        types[i] += " | ";
+                        temp = (String) snapshot.child("Pokemon").child(currMon).child("type").child("type2").getValue();
+                        temp = (temp.substring(0, 1).toUpperCase() + temp.substring(1));
+                        types[i] += temp;
+                    }
+
                     // add that pokemon to the array list
                     pokemonIDs[i][0] = currMon;
                     pokemonIDs[i][1] = currMonName;
-                    arrList.add(currMonName);
+                    arrList.add(currMonName + "- " + types[i]);
                 }
 
                 listView = (ListView)findViewById(R.id.listviewtxt);
@@ -134,26 +151,34 @@ public class PokedexView extends AppCompatActivity {
            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                // this is the name of the pokemon that was just selected
                String pokemonName = (String) arrAdapter.getItem(position);
+               pokemonName = pokemonName.substring(0,pokemonName.indexOf("-"));
                String pokemonID = "001";
                /* after we get the name of the pokemon, we need to find the id.
                normally, we could just assume the id is the position in the array list,
                HOWEVER: when you search, the position in the array list gets changed
                so we can no longer assume that the pokemon is in the spot it needs to be in
                 */
+               int index = 0;
                for (int i = 0; i < 151; i++) {
                    //Log.e("test", "test: " + pokemonIDs[i][1]);
                    String temp = pokemonIDs[i][1];
-                   if (temp == pokemonName) {
+                   if (temp.equalsIgnoreCase(pokemonName)) {
                        // we found the match, so the ID gets assigned to the string version of i
                        pokemonID = pokemonIDs[i][0];
-                   }
 
+                       index = i;
+                   }
                }
                Log.e("info", "pokemonID#: " + pokemonID + "\npokemon name: " + pokemonName);
                /* we will be passing some information to the add pokemon view
                so that the database doesn't have to be read again */
                String[] possibleAbilities = abilities[Integer.parseInt(pokemonID)];
+               for (int i = 0; i < possibleAbilities.length; i++) {
+                   if (possibleAbilities[i].contains("_"))
+                       possibleAbilities[i].replace("_", " ");
+               }
                Intent intent = new Intent(getBaseContext(), team_builder.class);
+               intent.putExtra("type", types[index]);
                intent.putExtra("pokemon", pokemonName);
                intent.putExtra("abilities", possibleAbilities);
                intent.putExtra("pokemonID", pokemonID);

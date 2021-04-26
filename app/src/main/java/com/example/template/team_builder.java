@@ -48,6 +48,7 @@ public class team_builder extends AppCompatActivity {
     Stats stats;
     private final FirebaseDatabase fb = FirebaseDatabase.getInstance();
     DatabaseReference db = fb.getReference();
+    String type;
 
     String pokemonName = "";
     int currPkmnLevel;
@@ -135,6 +136,10 @@ public class team_builder extends AppCompatActivity {
         if (!(getIntent().getStringExtra("pokemon") == null)) {
             pokemonName = getIntent().getStringExtra("pokemon");
             topDisplay.setText(pokemonName);
+        }
+
+        if (!(getIntent().getStringExtra("type") == null)) {
+            type = getIntent().getStringExtra("type");
         }
 
         // setting up the spinner for the natures
@@ -350,6 +355,8 @@ public class team_builder extends AppCompatActivity {
             mRef.child("pokedex").child(pkmId).child("stats").child("satk").setValue(satk);
             mRef.child("pokedex").child(pkmId).child("stats").child("sdef").setValue(sdef);
             mRef.child("pokedex").child(pkmId).child("stats").child("spd").setValue(spd);
+
+            mRef.child("pokedex").child(pkmId).child("type").setValue(type);
 
             mRef.child("pokedex").child(pkmId).child("nature").setValue(nature);
             mRef.child("pokedex").child(pkmId).child("ability").setValue(ability);
