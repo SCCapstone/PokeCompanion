@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
                 //creates a node in the database for the user to store their unique pokemon and stats
                 String userId = user.getUid();
-                //replaces all '.' with ',' before storing email in database because Firebase does not like commas
+                //replaces all '.' with ',' before storing email in database because Firebase does not like periods
                 String userName = user.getEmail().replace('.', ',');
                 DatabaseReference mRef = db.getReference().child("users").child(userName);
                 mRef.child("uid").setValue(userId);
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
             }
             //gives an error code and lets the user try to login again
             else {
-                Toast.makeText(this,"sign in failed: error code " + response.getError().getErrorCode(),Toast.LENGTH_LONG).show();
+                Toast.makeText(this,"sign in failed: error code " + response.getError(),Toast.LENGTH_LONG).show();
                 super.onActivityResult(requestCode, resultCode, data);
             }
         }

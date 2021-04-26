@@ -70,8 +70,7 @@ public class Main_menu_view extends AppCompatActivity {
                     }
                 });
         //Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-
+        //startActivity(intent);
     }
 
     public void gotoFAQ(View view) {
