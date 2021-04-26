@@ -9,8 +9,8 @@
 
     <Button
         android:id="@+id/googleSignIn"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
+        android:layout_width="148dp"
+        android:layout_height="56dp"
         android:layout_marginBottom="136dp"
         android:text="Sign in with Google"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -20,8 +20,8 @@
 
     <Button
         android:id="@+id/emailSignIn"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
+        android:layout_width="148dp"
+        android:layout_height="56dp"
         android:layout_marginBottom="32dp"
         android:text="Sign in with email"
         app:layout_constraintBottom_toTopOf="@+id/googleSignIn"
