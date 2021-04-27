@@ -3,7 +3,7 @@
 
 ## Demo Video
 
-<video src="https://youtu.be/SuYrd-PuQAE" width="720" height="480" controls preload></video>
+<video src="https://youtu.be/embed/SuYrd-PuQAE" width="720" height="480" controls preload></video>
 
 ## Screenshots (not complete)
 
