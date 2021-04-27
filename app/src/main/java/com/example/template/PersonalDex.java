@@ -156,7 +156,7 @@ public class PersonalDex extends AppCompatActivity {
                     int index = 0;
                     for (int i = 0; i < numPokemon; i++) {
                         String temp = pokemonNames[i][0];
-                        if (temp == individualName) {
+                        if (temp.equalsIgnoreCase(individualName)) {
                             index = i;
                         }
                     }
