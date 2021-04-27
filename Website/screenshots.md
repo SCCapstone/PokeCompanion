@@ -1,9 +1,9 @@
 <a href="/PokeCompanion" title="Home">Home</a>
 
 
-## Demo Video (outdated)
+## Demo Video
 
-<video src="https://user-images.githubusercontent.com/43704967/115296757-59f6a700-a129-11eb-8119-0187af01a28f.mp4" width="720" height="480" controls preload></video>
+<video src="https://youtu.be/SuYrd-PuQAE" width="720" height="480" controls preload></video>
 
 ## Screenshots (not complete)
 
