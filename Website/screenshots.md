@@ -3,11 +3,7 @@
 
 ## Demo Video
 
-<video src="https://youtu.be/embed/SuYrd-PuQAE" width="720" height="480" controls preload></video>
-
-<iframe width="420" height="315"
-src="https://youtu.be/SuYrd-PuQAE">
-</iframe>
+https://youtu.be/SuYrd-PuQAE
 
 ## Screenshots (not complete)
 
